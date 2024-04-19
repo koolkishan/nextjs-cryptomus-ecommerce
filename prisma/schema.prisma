@@ -25,6 +25,16 @@ model User {
   @@map("users")
 }
 
+model admin_user {
+  id        String   @id @default(cuid())
+  firstName String
+  lastName  String
+  email     String   @unique()
+  password  String
+  status    Boolean
+  roles     String[]
+}
+
 enum UserRole {
   ADMIN
   USER
