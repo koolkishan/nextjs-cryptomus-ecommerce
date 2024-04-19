@@ -4,7 +4,6 @@ import { db } from "./lib/db";
 export const register = async () => {
   // if (process.env.NEXT_RUNTIME === "nodejs") {
   // Check for admins
-  console.log("first");
 
   const admin = await db.admin_user.count();
   console.log("register ~ admin:", admin);
@@ -19,7 +18,6 @@ export const register = async () => {
         roles: ["ADMIN"],
       },
     });
-    console.log("register ~ data:", data);
   }
 };
 // };
