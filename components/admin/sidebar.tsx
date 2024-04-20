@@ -48,7 +48,7 @@ const Side = () => {
         {
           label: "Products",
           icon: <GoDotFill />,
-          link: "/admin/category/add-category",
+          link: "/admin/products",
         },
         {
           label: "Orders",
@@ -88,7 +88,7 @@ const Side = () => {
 
   const handleItemClick = (link: string) => {
     setSelectedItem(link);
-    //   router.push(link);
+      router.push(link);
   };
 
   return (
@@ -99,7 +99,7 @@ const Side = () => {
     >
       <Sidebar
         collapsed={collapsSidbar}
-        className={cn("h-full overflow-hidden border-none", )}
+        className={cn("h-full overflow-hidden border-none")}
         toggled={toggled}
         onBackdropClick={() => setToggled((prev) => !prev)}
         rootStyles={{

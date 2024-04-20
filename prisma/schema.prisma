@@ -14,11 +14,11 @@ datasource db {
 }
 
 model User {
-  id                String   @id @default(cuid())
-  name              String?
-  email             String?  @unique
-  image             String?
-  role              UserRole @default(USER)
+  id    String   @id @default(cuid())
+  name  String?
+  email String?  @unique
+  image String?
+  role  UserRole @default(USER)
 
   @@map("users")
 }
@@ -36,4 +36,23 @@ model admin_user {
 enum UserRole {
   ADMIN
   USER
+}
+
+model Products {
+  id          String   @id @default(cuid())
+  productName String
+  price       Float
+  discount    Float
+  description String
+  images      String[]
+  tags        String[]
+  category    String
+  quantity    Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Categories {
+  id           String @id @default(cuid())
+  categoryName String @unique
 }

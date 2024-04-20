@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Table,
   TableBody,
@@ -17,11 +17,20 @@ import { Ghost } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export const DataTable = () => {
+  const [isMounted, setIsMounted] = useState<boolean>(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedRows, setSelectedRows] = useState<any>([]);
   const [allSelected, setAllSelected] = useState<boolean>(false);
   console.log("DataTable ~ selectedRows:", selectedRows);
-  const itemsPerPage = 10; // Number of items per page
+  const itemsPerPage = 10;
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  if (!isMounted) {
+    return null;
+  }
 
   const dummyData = [
     {
@@ -421,6 +430,8 @@ export const DataTable = () => {
     return selectedRows.some((row: any) => row.id === item.id);
   };
 
+   const tableHeaderKeys = Object.keys(dummyData[0]).filter((key) => key !== "id");
+
   return (
     <div className="bg-surface rounded-3xl">
       <div className=" felx justify-center items-center py-4 px-5 mt-4">
@@ -450,12 +461,11 @@ export const DataTable = () => {
                   onChange={toggleSelectAll}
                 />
               </TableHead>
-              <TableHead className="text-custom-font">Product Name</TableHead>
-              <TableHead className="text-custom-font">Product No.</TableHead>
-              <TableHead className="text-custom-font">Category Name</TableHead>
-              <TableHead className="text-custom-font">Date</TableHead>
-              <TableHead className="text-custom-font">Price</TableHead>
-              <TableHead className="text-custom-font">Status</TableHead>
+              {tableHeaderKeys.map((key) => (
+                <TableHead key={key} className="text-custom-font">
+                  {key}
+                </TableHead>
+              ))}
             </TableRow>
           </TableHeader>
           <TableBody>
