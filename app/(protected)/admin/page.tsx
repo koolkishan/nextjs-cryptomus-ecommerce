@@ -5,7 +5,7 @@ const AdminPage = async () => {
   await loginIsRequiredServer();
 
   return (
-    <div>
+    <div >
       <Header />
     </div>
   );

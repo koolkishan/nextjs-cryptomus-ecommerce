@@ -1,4 +1,5 @@
 // 'use server';
+
 import { NextAuthOptions, User, getServerSession } from "next-auth";
 import { useSession } from "next-auth/react";
 import { redirect, useRouter } from "next/navigation";
@@ -6,8 +7,7 @@ import { redirect, useRouter } from "next/navigation";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import GithubProvider from "next-auth/providers/github";
-
-// import prisma from "./prisma";
+// import { createUser } from "@/actions/user";
 import { db } from "./db";
 
 export const authConfig: NextAuthOptions = {
@@ -38,28 +38,45 @@ export const authConfig: NextAuthOptions = {
           const { password, id } = dbUser;
           return dbUser;
         }
-
         return null;
       },
     }),
-    // GoogleProvider({
-    //   clientId: process.env.GOOGLE_CLIENT_ID as string,
-    //   clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
-    // }),
-    // GithubProvider({
-    //   clientId: process.env.GITHUB_CLIENT_ID as string,
-    //   clientSecret: process.env.GITHUB_CLIENT_SECRET as string,
-    // }),
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID as string,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+    }),
+    GithubProvider({
+      clientId: process.env.GITHUB_CLIENT_ID as string,
+      clientSecret: process.env.GITHUB_CLIENT_SECRET as string,
+    }),
   ],
+  
+  callbacks: {
+    async jwt({ token, account }) {
+      if (account) {
+        token.id = account.providerAccountId;
+        token.accessToken = account.access_token;
+      }
+      return token;
+    },
+   
+    async signIn({ account, profile }) {
+      if (account?.provider !== "credentials") return true;
+      return true;
+    },
+    async session({ token, user, session }) {
+      return session;
+    },
+    
+  },
 };
 
 export async function loginIsRequiredServer() {
   const session = await getServerSession(authConfig);
-  console.log("loginIsRequiredServer ~ session:", session);
   if (!session) return redirect("/");
 }
 
-// export function oginIsRequiredClient() {
+// export function loginIsRequiredClient() {
 //   if (typeof window !== "undefined") {
 //     const session = useSession();
 //     const router = useRouter();
