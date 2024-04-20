@@ -24,7 +24,7 @@ export function CredentialsForm(props: CredentialsFormProps) {
 
     if (signInResponse && !signInResponse.error) {
       console.log(signInResponse);
-      router.push("/admin");
+      router.push("/admin/dashboard");
     } else {
       console.log("Error: ", signInResponse);
       setError("Your Email or Password is wrong!");

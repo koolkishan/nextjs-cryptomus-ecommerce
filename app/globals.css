@@ -5,6 +5,7 @@
 @layer base {
   :root {
     --primary-background: #1D1E24;
+    --primary-text: #fff;
     --surface: #23262B;
     --custom-font: #93959C;
     --background: 0 0% 100%;

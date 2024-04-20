@@ -3,10 +3,12 @@ import type { Config } from "tailwindcss";
 const config = {
   darkMode: ["class"],
   content: [
-    "./pages/**/*.{ts,tsx}",
-    "./components/**/*.{ts,tsx}",
-    "./app/**/*.{ts,tsx}",
-    "./src/**/*.{ts,tsx}",
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./components/**/*.{js,ts,jsx,tsx,mdx}",
+
+    // Or if using `src` directory:
+    "./src/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   prefix: "",
   theme: {
@@ -19,8 +21,9 @@ const config = {
     },
     extend: {
       colors: {
+        "primary-text" :"var(--primary-text)",
         surface: "var(--surface)",
-        "primary-background" : "var(--primary-background)",
+        "primary-background": "var(--primary-background)",
         "custom-font": "var( --custom-font)",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
