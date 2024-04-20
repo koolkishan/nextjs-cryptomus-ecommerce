@@ -1,5 +1,4 @@
-import { Side } from "@/components/admin";
-import Header from "@/components/admin/header";
+import { Header, Side } from "@/components/admin";
 import { loginIsRequiredServer } from "@/lib/auth";
 
 export const metadata = {
@@ -15,16 +14,16 @@ export default async function RootLayout({
   await loginIsRequiredServer();
   return (
     <html lang="en">
-      <body className="w-full">
+      <body className="w-full h-full">
         <div className="flex w-full bg-[#1D1E24]">
           <div className="">
             <Side />
           </div>
-          <div className="border-none w-full">
-            <div className="w-full border py-1 border-custom-font">
+          <div className="flex flex-col h-screen marker:border-none w-full">
+            <div className="w-full border-b py-1 border-custom-font">
               <Header />
             </div>
-            <div>{children}</div>
+            <div className="flex-1 h-[calc(100vh-59px)]">{children}</div>
           </div>
         </div>
       </body>

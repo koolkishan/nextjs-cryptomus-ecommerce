@@ -1,9 +1,11 @@
-const DashBoard = () => {
+import { DashBoard } from "@/components/admin";
+
+const DashBoardPage = () => {
     return ( 
         <div>
-            dashboard page
+            <DashBoard/>
         </div>
      );
 }
  
-export default DashBoard;
+export default DashBoardPage;

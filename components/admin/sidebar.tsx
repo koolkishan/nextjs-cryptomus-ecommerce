@@ -1,13 +1,13 @@
 "use client";
 import Image from "next/image";
-import { usePathname, useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
-import { BiSolidCategory } from "react-icons/bi";
-import { FaHome, FaShoppingCart } from "react-icons/fa";
-import { BsFillBarChartFill, BsPhoneFill } from "react-icons/bs";
-import { MdAddBox } from "react-icons/md";
-import { HiCollection, HiOutlineMenuAlt2 } from "react-icons/hi";
+import { cn } from "@/lib/utils";
+import { useAppStore } from "@/store";
 import { LuLogOut } from "react-icons/lu";
+import { GoDotFill } from "react-icons/go";
+import { RxDashboard } from "react-icons/rx";
+import { FiShoppingCart } from "react-icons/fi";
+import React, { useEffect, useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
 import {
   Sidebar,
   Menu,
@@ -15,19 +15,25 @@ import {
   SubMenu,
   sidebarClasses,
 } from "react-pro-sidebar";
-import { Button } from "../ui/button";
-import { RxDashboard } from "react-icons/rx";
-import { FiShoppingCart } from "react-icons/fi";
-import { GoDotFill } from "react-icons/go";
-import { useAppStore } from "@/store";
-import { cn } from "@/lib/utils";
 
 const Side = () => {
   const router = useRouter();
   const pathname = usePathname();
   const [selectedItem, setSelectedItem] = useState("/admin/dashboard");
   const [toggled, setToggled] = useState(false);
-  const { collapsSidbar } = useAppStore();
+  const { collapsSidbar, setCollapsSidbar } = useAppStore();
+
+  // const screenWidth = typeof window !== "undefined" ? window.innerWidth : 0;
+  // const isSmallScreen = screenWidth >= 768;
+  // console.log("Side ~ isSmallScreen:", isSmallScreen);
+
+  // useEffect(() => {
+  //   if (isSmallScreen) {
+  //     console.log("useEffect ~ isSmallScreen:", isSmallScreen);
+  //     setCollapsSidbar(true);
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [isSmallScreen]);
 
   useEffect(() => {
     setSelectedItem(pathname);
@@ -93,7 +99,7 @@ const Side = () => {
     >
       <Sidebar
         collapsed={collapsSidbar}
-        className="h-full overflow-hidden border-nonde"
+        className={cn("h-full overflow-hidden border-none", )}
         toggled={toggled}
         onBackdropClick={() => setToggled((prev) => !prev)}
         rootStyles={{
