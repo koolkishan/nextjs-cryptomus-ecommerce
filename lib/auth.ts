@@ -29,7 +29,6 @@ export const authConfig: NextAuthOptions = {
         const dbUser = await db.admin_user.findFirst({
           where: { email: credentials.email },
         });
-        console.log("authorize ~ dbUser:", dbUser);
 
         //Verify Password here
         //We are going to use a simple === operator

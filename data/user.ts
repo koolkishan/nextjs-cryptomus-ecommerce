@@ -18,7 +18,6 @@ export const createUserdb = async (
   image: string
 ) => {
   try {
-    console.log("user table database");
     const createdUser = await db.user.create({
       data: {
         name,
@@ -26,6 +25,5 @@ export const createUserdb = async (
         image,
       },
     });
-    console.log('createdUser:', createdUser)
   } catch {}
 };

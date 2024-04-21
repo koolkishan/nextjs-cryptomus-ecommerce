@@ -9,7 +9,6 @@ const EcommerceLandingPage = () => {
     async function createUser() {
       if (user?.email && user?.name && user?.image) {
         const dbUser = await getUserbyEmail(user.email);
-        console.log("dbUser:", dbUser);
         if (!dbUser) {
           await createUserdb(user.name, user.email, user.image);
         }

@@ -15,13 +15,21 @@ import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 import { Button } from "../ui/button";
 import { Ghost } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { ProductTypes } from "@/types";
+import { useAppStore } from "@/store";
 
-export const DataTable = () => {
+interface DataTableProps {
+  products: boolean;
+  orders: [];
+}
+export const DataTable = ({ products }: DataTableProps) => {
+  // console.log("DataTable ~ products:", products);
   const [isMounted, setIsMounted] = useState<boolean>(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedRows, setSelectedRows] = useState<any>([]);
   const [allSelected, setAllSelected] = useState<boolean>(false);
-  console.log("DataTable ~ selectedRows:", selectedRows);
+  const { productsData } = useAppStore();
+  // console.log("DataTable ~ selectedRows:", selectedRows);
   const itemsPerPage = 10;
 
   useEffect(() => {
@@ -32,374 +40,379 @@ export const DataTable = () => {
     return null;
   }
 
-  const dummyData = [
-    {
-      id: 1,
-      productName: "Product A",
-      productNo: "P001",
-      categoryName: "Category 1",
-      date: "2024-04-01",
-      price: "$50.00",
-      status: "Available",
-    },
-    {
-      id: 2,
-      productName: "Product B",
-      productNo: "P002",
-      categoryName: "Category 2",
-      date: "2024-04-02",
-      price: "$60.00",
-      status: "Not Available",
-    },
-    {
-      id: 3,
-      productName: "Product C",
-      productNo: "P003",
-      categoryName: "Category 1",
-      date: "2024-04-03",
-      price: "$70.00",
-      status: "Available",
-    },
-    {
-      id: 4,
-      productName: "Product D",
-      productNo: "P004",
-      categoryName: "Category 3",
-      date: "2024-04-04",
-      price: "$80.00",
-      status: "Not Available",
-    },
-    {
-      id: 5,
-      productName: "Product E",
-      productNo: "P005",
-      categoryName: "Category 2",
-      date: "2024-04-05",
-      price: "$90.00",
-      status: "Available",
-    },
-    {
-      id: 6,
-      productName: "Product F",
-      productNo: "P006",
-      categoryName: "Category 1",
-      date: "2024-04-06",
-      price: "$100.00",
-      status: "Not Available",
-    },
-    {
-      id: 7,
-      productName: "Product G",
-      productNo: "P007",
-      categoryName: "Category 3",
-      date: "2024-04-07",
-      price: "$110.00",
-      status: "Available",
-    },
-    {
-      id: 8,
-      productName: "Product H",
-      productNo: "P008",
-      categoryName: "Category 2",
-      date: "2024-04-08",
-      price: "$120.00",
-      status: "Not Available",
-    },
-    {
-      id: 9,
-      productName: "Product I",
-      productNo: "P009",
-      categoryName: "Category 1",
-      date: "2024-04-09",
-      price: "$130.00",
-      status: "Available",
-    },
-    {
-      id: 10,
-      productName: "Product J",
-      productNo: "P010",
-      categoryName: "Category 3",
-      date: "2024-04-10",
-      price: "$140.00",
-      status: "Not Available",
-    },
-    {
-      id: 11,
-      productName: "Product K",
-      productNo: "P011",
-      categoryName: "Category 2",
-      date: "2024-04-11",
-      price: "$150.00",
-      status: "Available",
-    },
-    {
-      id: 12,
-      productName: "Product L",
-      productNo: "P012",
-      categoryName: "Category 1",
-      date: "2024-04-12",
-      price: "$160.00",
-      status: "Not Available",
-    },
-    {
-      id: 13,
-      productName: "Product M",
-      productNo: "P013",
-      categoryName: "Category 3",
-      date: "2024-04-13",
-      price: "$170.00",
-      status: "Available",
-    },
-    {
-      id: 14,
-      productName: "Product N",
-      productNo: "P014",
-      categoryName: "Category 1",
-      date: "2024-04-14",
-      price: "$180.00",
-      status: "Not Available",
-    },
-    {
-      id: 15,
-      productName: "Product O",
-      productNo: "P015",
-      categoryName: "Category 2",
-      date: "2024-04-15",
-      price: "$190.00",
-      status: "Available",
-    },
-    {
-      id: 16,
-      productName: "Product P",
-      productNo: "P016",
-      categoryName: "Category 3",
-      date: "2024-04-16",
-      price: "$200.00",
-      status: "Not Available",
-    },
-    {
-      id: 17,
-      productName: "Product Q",
-      productNo: "P017",
-      categoryName: "Category 1",
-      date: "2024-04-17",
-      price: "$210.00",
-      status: "Available",
-    },
-    {
-      id: 18,
-      productName: "Product R",
-      productNo: "P018",
-      categoryName: "Category 2",
-      date: "2024-04-18",
-      price: "$220.00",
-      status: "Not Available",
-    },
-    {
-      id: 19,
-      productName: "Product S",
-      productNo: "P019",
-      categoryName: "Category 3",
-      date: "2024-04-19",
-      price: "$230.00",
-      status: "Available",
-    },
-    {
-      id: 20,
-      productName: "Product T",
-      productNo: "P020",
-      categoryName: "Category 1",
-      date: "2024-04-20",
-      price: "$240.00",
-      status: "Not Available",
-    },
-    {
-      id: 21,
-      productName: "Product U",
-      productNo: "P021",
-      categoryName: "Category 2",
-      date: "2024-04-21",
-      price: "$250.00",
-      status: "Available",
-    },
-    {
-      id: 22,
-      productName: "Product V",
-      productNo: "P022",
-      categoryName: "Category 1",
-      date: "2024-04-22",
-      price: "$260.00",
-      status: "Not Available",
-    },
-    {
-      id: 23,
-      productName: "Product W",
-      productNo: "P023",
-      categoryName: "Category 3",
-      date: "2024-04-23",
-      price: "$270.00",
-      status: "Available",
-    },
-    {
-      id: 24,
-      productName: "Product X",
-      productNo: "P024",
-      categoryName: "Category 2",
-      date: "2024-04-24",
-      price: "$280.00",
-      status: "Not Available",
-    },
-    {
-      id: 25,
-      productName: "Product Y",
-      productNo: "P025",
-      categoryName: "Category 1",
-      date: "2024-04-25",
-      price: "$290.00",
-      status: "Available",
-    },
-    {
-      id: 26,
-      productName: "Product Z",
-      productNo: "P026",
-      categoryName: "Category 3",
-      date: "2024-04-26",
-      price: "$300.00",
-      status: "Not Available",
-    },
-    {
-      id: 27,
-      productName: "Product AA",
-      productNo: "P027",
-      categoryName: "Category 2",
-      date: "2024-04-27",
-      price: "$310.00",
-      status: "Available",
-    },
-    {
-      id: 28,
-      productName: "Product AB",
-      productNo: "P028",
-      categoryName: "Category 1",
-      date: "2024-04-28",
-      price: "$320.00",
-      status: "Not Available",
-    },
-    {
-      id: 29,
-      productName: "Product AC",
-      productNo: "P029",
-      categoryName: "Category 3",
-      date: "2024-04-29",
-      price: "$330.00",
-      status: "Available",
-    },
-    {
-      id: 30,
-      productName: "Product AD",
-      productNo: "P030",
-      categoryName: "Category 2",
-      date: "2024-04-30",
-      price: "$340.00",
-      status: "Not Available",
-    },
-    {
-      id: 31,
-      productName: "Product AE",
-      productNo: "P031",
-      categoryName: "Category 1",
-      date: "2024-05-01",
-      price: "$350.00",
-      status: "Available",
-    },
-    {
-      id: 32,
-      productName: "Product AF",
-      productNo: "P032",
-      categoryName: "Category 3",
-      date: "2024-05-02",
-      price: "$360.00",
-      status: "Not Available",
-    },
-    {
-      id: 33,
-      productName: "Product AG",
-      productNo: "P033",
-      categoryName: "Category 2",
-      date: "2024-05-03",
-      price: "$370.00",
-      status: "Available",
-    },
-    {
-      id: 34,
-      productName: "Product AH",
-      productNo: "P034",
-      categoryName: "Category 1",
-      date: "2024-05-04",
-      price: "$380.00",
-      status: "Not Available",
-    },
-    {
-      id: 35,
-      productName: "Product AI",
-      productNo: "P035",
-      categoryName: "Category 3",
-      date: "2024-05-05",
-      price: "$390.00",
-      status: "Available",
-    },
-    {
-      id: 36,
-      productName: "Product AJ",
-      productNo: "P036",
-      categoryName: "Category 2",
-      date: "2024-05-06",
-      price: "$400.00",
-      status: "Not Available",
-    },
-    {
-      id: 37,
-      productName: "Product AK",
-      productNo: "P037",
-      categoryName: "Category 1",
-      date: "2024-05-07",
-      price: "$410.00",
-      status: "Available",
-    },
-    {
-      id: 38,
-      productName: "Product AL",
-      productNo: "P038",
-      categoryName: "Category 3",
-      date: "2024-05-08",
-      price: "$420.00",
-      status: "Not Available",
-    },
-    {
-      id: 39,
-      productName: "Product AM",
-      productNo: "P039",
-      categoryName: "Category 2",
-      date: "2024-05-09",
-      price: "$430.00",
-      status: "Available",
-    },
-    {
-      id: 40,
-      productName: "Product AN",
-      productNo: "P040",
-      categoryName: "Category 1",
-      date: "2024-05-10",
-      price: "$440.00",
-      status: "Not Available",
-    },
-  ];
+  // const dummyData = [
+  //   {
+  //     id: 1,
+  //     productName: "Product A",
+  //     productNo: "P001",
+  //     categoryName: "Category 1",
+  //     date: "2024-04-01",
+  //     price: "$50.00",
+  //     status: "Available",
+  //   },
+  //   {
+  //     id: 2,
+  //     productName: "Product B",
+  //     productNo: "P002",
+  //     categoryName: "Category 2",
+  //     date: "2024-04-02",
+  //     price: "$60.00",
+  //     status: "Not Available",
+  //   },
+  //   {
+  //     id: 3,
+  //     productName: "Product C",
+  //     productNo: "P003",
+  //     categoryName: "Category 1",
+  //     date: "2024-04-03",
+  //     price: "$70.00",
+  //     status: "Available",
+  //   },
+  //   {
+  //     id: 4,
+  //     productName: "Product D",
+  //     productNo: "P004",
+  //     categoryName: "Category 3",
+  //     date: "2024-04-04",
+  //     price: "$80.00",
+  //     status: "Not Available",
+  //   },
+  //   {
+  //     id: 5,
+  //     productName: "Product E",
+  //     productNo: "P005",
+  //     categoryName: "Category 2",
+  //     date: "2024-04-05",
+  //     price: "$90.00",
+  //     status: "Available",
+  //   },
+  //   {
+  //     id: 6,
+  //     productName: "Product F",
+  //     productNo: "P006",
+  //     categoryName: "Category 1",
+  //     date: "2024-04-06",
+  //     price: "$100.00",
+  //     status: "Not Available",
+  //   },
+  //   {
+  //     id: 7,
+  //     productName: "Product G",
+  //     productNo: "P007",
+  //     categoryName: "Category 3",
+  //     date: "2024-04-07",
+  //     price: "$110.00",
+  //     status: "Available",
+  //   },
+  //   {
+  //     id: 8,
+  //     productName: "Product H",
+  //     productNo: "P008",
+  //     categoryName: "Category 2",
+  //     date: "2024-04-08",
+  //     price: "$120.00",
+  //     status: "Not Available",
+  //   },
+  //   {
+  //     id: 9,
+  //     productName: "Product I",
+  //     productNo: "P009",
+  //     categoryName: "Category 1",
+  //     date: "2024-04-09",
+  //     price: "$130.00",
+  //     status: "Available",
+  //   },
+  //   {
+  //     id: 10,
+  //     productName: "Product J",
+  //     productNo: "P010",
+  //     categoryName: "Category 3",
+  //     date: "2024-04-10",
+  //     price: "$140.00",
+  //     status: "Not Available",
+  //   },
+  //   {
+  //     id: 11,
+  //     productName: "Product K",
+  //     productNo: "P011",
+  //     categoryName: "Category 2",
+  //     date: "2024-04-11",
+  //     price: "$150.00",
+  //     status: "Available",
+  //   },
+  //   {
+  //     id: 12,
+  //     productName: "Product L",
+  //     productNo: "P012",
+  //     categoryName: "Category 1",
+  //     date: "2024-04-12",
+  //     price: "$160.00",
+  //     status: "Not Available",
+  //   },
+  //   {
+  //     id: 13,
+  //     productName: "Product M",
+  //     productNo: "P013",
+  //     categoryName: "Category 3",
+  //     date: "2024-04-13",
+  //     price: "$170.00",
+  //     status: "Available",
+  //   },
+  //   {
+  //     id: 14,
+  //     productName: "Product N",
+  //     productNo: "P014",
+  //     categoryName: "Category 1",
+  //     date: "2024-04-14",
+  //     price: "$180.00",
+  //     status: "Not Available",
+  //   },
+  //   {
+  //     id: 15,
+  //     productName: "Product O",
+  //     productNo: "P015",
+  //     categoryName: "Category 2",
+  //     date: "2024-04-15",
+  //     price: "$190.00",
+  //     status: "Available",
+  //   },
+  //   {
+  //     id: 16,
+  //     productName: "Product P",
+  //     productNo: "P016",
+  //     categoryName: "Category 3",
+  //     date: "2024-04-16",
+  //     price: "$200.00",
+  //     status: "Not Available",
+  //   },
+  //   {
+  //     id: 17,
+  //     productName: "Product Q",
+  //     productNo: "P017",
+  //     categoryName: "Category 1",
+  //     date: "2024-04-17",
+  //     price: "$210.00",
+  //     status: "Available",
+  //   },
+  //   {
+  //     id: 18,
+  //     productName: "Product R",
+  //     productNo: "P018",
+  //     categoryName: "Category 2",
+  //     date: "2024-04-18",
+  //     price: "$220.00",
+  //     status: "Not Available",
+  //   },
+  //   {
+  //     id: 19,
+  //     productName: "Product S",
+  //     productNo: "P019",
+  //     categoryName: "Category 3",
+  //     date: "2024-04-19",
+  //     price: "$230.00",
+  //     status: "Available",
+  //   },
+  //   {
+  //     id: 20,
+  //     productName: "Product T",
+  //     productNo: "P020",
+  //     categoryName: "Category 1",
+  //     date: "2024-04-20",
+  //     price: "$240.00",
+  //     status: "Not Available",
+  //   },
+  //   {
+  //     id: 21,
+  //     productName: "Product U",
+  //     productNo: "P021",
+  //     categoryName: "Category 2",
+  //     date: "2024-04-21",
+  //     price: "$250.00",
+  //     status: "Available",
+  //   },
+  //   {
+  //     id: 22,
+  //     productName: "Product V",
+  //     productNo: "P022",
+  //     categoryName: "Category 1",
+  //     date: "2024-04-22",
+  //     price: "$260.00",
+  //     status: "Not Available",
+  //   },
+  //   {
+  //     id: 23,
+  //     productName: "Product W",
+  //     productNo: "P023",
+  //     categoryName: "Category 3",
+  //     date: "2024-04-23",
+  //     price: "$270.00",
+  //     status: "Available",
+  //   },
+  //   {
+  //     id: 24,
+  //     productName: "Product X",
+  //     productNo: "P024",
+  //     categoryName: "Category 2",
+  //     date: "2024-04-24",
+  //     price: "$280.00",
+  //     status: "Not Available",
+  //   },
+  //   {
+  //     id: 25,
+  //     productName: "Product Y",
+  //     productNo: "P025",
+  //     categoryName: "Category 1",
+  //     date: "2024-04-25",
+  //     price: "$290.00",
+  //     status: "Available",
+  //   },
+  //   {
+  //     id: 26,
+  //     productName: "Product Z",
+  //     productNo: "P026",
+  //     categoryName: "Category 3",
+  //     date: "2024-04-26",
+  //     price: "$300.00",
+  //     status: "Not Available",
+  //   },
+  //   {
+  //     id: 27,
+  //     productName: "Product AA",
+  //     productNo: "P027",
+  //     categoryName: "Category 2",
+  //     date: "2024-04-27",
+  //     price: "$310.00",
+  //     status: "Available",
+  //   },
+  //   {
+  //     id: 28,
+  //     productName: "Product AB",
+  //     productNo: "P028",
+  //     categoryName: "Category 1",
+  //     date: "2024-04-28",
+  //     price: "$320.00",
+  //     status: "Not Available",
+  //   },
+  //   {
+  //     id: 29,
+  //     productName: "Product AC",
+  //     productNo: "P029",
+  //     categoryName: "Category 3",
+  //     date: "2024-04-29",
+  //     price: "$330.00",
+  //     status: "Available",
+  //   },
+  //   {
+  //     id: 30,
+  //     productName: "Product AD",
+  //     productNo: "P030",
+  //     categoryName: "Category 2",
+  //     date: "2024-04-30",
+  //     price: "$340.00",
+  //     status: "Not Available",
+  //   },
+  //   {
+  //     id: 31,
+  //     productName: "Product AE",
+  //     productNo: "P031",
+  //     categoryName: "Category 1",
+  //     date: "2024-05-01",
+  //     price: "$350.00",
+  //     status: "Available",
+  //   },
+  //   {
+  //     id: 32,
+  //     productName: "Product AF",
+  //     productNo: "P032",
+  //     categoryName: "Category 3",
+  //     date: "2024-05-02",
+  //     price: "$360.00",
+  //     status: "Not Available",
+  //   },
+  //   {
+  //     id: 33,
+  //     productName: "Product AG",
+  //     productNo: "P033",
+  //     categoryName: "Category 2",
+  //     date: "2024-05-03",
+  //     price: "$370.00",
+  //     status: "Available",
+  //   },
+  //   {
+  //     id: 34,
+  //     productName: "Product AH",
+  //     productNo: "P034",
+  //     categoryName: "Category 1",
+  //     date: "2024-05-04",
+  //     price: "$380.00",
+  //     status: "Not Available",
+  //   },
+  //   {
+  //     id: 35,
+  //     productName: "Product AI",
+  //     productNo: "P035",
+  //     categoryName: "Category 3",
+  //     date: "2024-05-05",
+  //     price: "$390.00",
+  //     status: "Available",
+  //   },
+  //   {
+  //     id: 36,
+  //     productName: "Product AJ",
+  //     productNo: "P036",
+  //     categoryName: "Category 2",
+  //     date: "2024-05-06",
+  //     price: "$400.00",
+  //     status: "Not Available",
+  //   },
+  //   {
+  //     id: 37,
+  //     productName: "Product AK",
+  //     productNo: "P037",
+  //     categoryName: "Category 1",
+  //     date: "2024-05-07",
+  //     price: "$410.00",
+  //     status: "Available",
+  //   },
+  //   {
+  //     id: 38,
+  //     productName: "Product AL",
+  //     productNo: "P038",
+  //     categoryName: "Category 3",
+  //     date: "2024-05-08",
+  //     price: "$420.00",
+  //     status: "Not Available",
+  //   },
+  //   {
+  //     id: 39,
+  //     productName: "Product AM",
+  //     productNo: "P039",
+  //     categoryName: "Category 2",
+  //     date: "2024-05-09",
+  //     price: "$430.00",
+  //     status: "Available",
+  //   },
+  //   {
+  //     id: 40,
+  //     productName: "Product AN",
+  //     productNo: "P040",
+  //     categoryName: "Category 1",
+  //     date: "2024-05-10",
+  //     price: "$440.00",
+  //     status: "Not Available",
+  //   },
+  // ];
 
   // Calculate pagination
   const lastIndex = currentPage * itemsPerPage;
   const firstIndex = lastIndex - itemsPerPage;
-  const currentItems = dummyData.slice(firstIndex, lastIndex);
+  // const currentItems = dummyData.slice(firstIndex, lastIndex);
+  let currentItems;
+  // console.log("currentItems: ", currentItems);
 
+  if (products) {
+    currentItems = productsData.slice(firstIndex, lastIndex);
+  }
   // Handle pagination change
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
@@ -411,8 +424,10 @@ export const DataTable = () => {
       setAllSelected(false);
       setSelectedRows([]);
     } else {
-      setSelectedRows([...dummyData]);
-      setAllSelected(true);
+      if (products) {
+        setSelectedRows([...productsData]);
+        setAllSelected(true);
+      }
     }
   };
 
@@ -430,7 +445,19 @@ export const DataTable = () => {
     return selectedRows.some((row: any) => row.id === item.id);
   };
 
-   const tableHeaderKeys = Object.keys(dummyData[0]).filter((key) => key !== "id");
+  const tableHeaderKeys = productsData.length
+    ? Object.keys(productsData[0])
+        .filter(
+          (key) =>
+            key !== "id" &&
+            key !== "createdAt" &&
+            key !== "updatedAt" &&
+            key !== "images" &&
+            key !== "description" &&
+            key !== "tags"
+        )
+        .map((key) => key.charAt(0).toUpperCase() + key.slice(1))
+    : [];
 
   return (
     <div className="bg-surface rounded-3xl">
@@ -457,7 +484,7 @@ export const DataTable = () => {
                 <Input
                   type="checkbox"
                   className="h-5 w-5 rounded border-red-500 checked:bg-red-500 checked:border-transparent"
-                  checked={selectedRows.length === dummyData.length}
+                  checked={selectedRows.length === productsData.length}
                   onChange={toggleSelectAll}
                 />
               </TableHead>
@@ -466,45 +493,49 @@ export const DataTable = () => {
                   {key}
                 </TableHead>
               ))}
+              <TableHead className="text-custom-font">Available</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            {currentItems.map((item) => (
-              <TableRow
-                key={item.id}
-                className="hover:bg-primary-background  border-b-custom-font"
-              >
-                <TableCell>
-                  <Input
-                    type="checkbox"
-                    className="h-5 w-5 rounded border-red-500 checked:bg-red-500 checked:border-transparent"
-                    checked={isRowSelected(item)}
-                    onChange={() => toggleRowSelection(item)}
-                  />
-                </TableCell>
-                <TableCell>{item.productName}</TableCell>
-                <TableCell className="text-custom-font font-medium">
-                  {item.productNo}
-                </TableCell>
-                <TableCell>{item.categoryName}</TableCell>
-                <TableCell className="text-custom-font font-medium">
-                  {item.date}
-                </TableCell>
-                <TableCell>{item.price}</TableCell>
-                <TableCell>
-                  <p
-                    className={cn(
-                      "w-[50%] text-center py-[2px]",
-                      item.status === "Available"
-                        ? "rounded-md bg-emerald-500/15  text-sm text-emerald-500"
-                        : " rounded-md bg-destructive/15 text-sm text-destructive"
-                    )}
-                  >
-                    {item.status}
-                  </p>
-                </TableCell>
-              </TableRow>
-            ))}
+            {currentItems &&
+              currentItems.map((item: ProductTypes) => (
+                <TableRow
+                  key={item.id}
+                  className="hover:bg-primary-background  border-b-custom-font"
+                >
+                  <TableCell>
+                    <Input
+                      type="checkbox"
+                      className="h-5 w-5 rounded border-red-500 checked:bg-red-500 checked:border-transparent"
+                      checked={isRowSelected(item)}
+                      onChange={() => toggleRowSelection(item)}
+                    />
+                  </TableCell>
+                  <TableCell className="line-clamp-1">
+                    {item.productName}
+                  </TableCell>
+                  <TableCell className="text-custom-font font-medium">
+                    ${item.price}
+                  </TableCell>
+                  <TableCell>{item.discount}%</TableCell>
+                  <TableCell className="text-custom-font font-medium">
+                    {item.category}
+                  </TableCell>
+                  <TableCell>{item.quantity}</TableCell>
+                  <TableCell>
+                    <p
+                      className={cn(
+                        "w-[50%] text-center py-[2px]",
+                        item.quantity > 0
+                          ? "rounded-md bg-emerald-500/15  text-sm text-emerald-500"
+                          : " rounded-md bg-destructive/15 text-sm text-destructive"
+                      )}
+                    >
+                      {item.quantity > 0 ? "Yes" : "No"}
+                    </p>
+                  </TableCell>
+                </TableRow>
+              ))}
           </TableBody>
         </Table>
         {/* Pagination */}
@@ -520,7 +551,7 @@ export const DataTable = () => {
             </Button>
 
             {/* Page Numbers */}
-            {[...Array(Math.ceil(dummyData.length / itemsPerPage))].map(
+            {[...Array(Math.ceil(productsData.length / itemsPerPage))].map(
               (_, i) =>
                 i >= currentPage - 2 &&
                 i <= currentPage + 2 && ( // Show 5 page numbers at a time
@@ -539,7 +570,7 @@ export const DataTable = () => {
               className={`bg-primary-background hover:bg-primary-background`}
               onClick={() => handlePageChange(currentPage + 1)}
               disabled={
-                currentPage === Math.ceil(dummyData.length / itemsPerPage)
+                currentPage === Math.ceil(productsData.length / itemsPerPage)
               }
             >
               <MdKeyboardArrowRight size={22} />

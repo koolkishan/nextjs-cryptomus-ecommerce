@@ -9,8 +9,6 @@ export const createProduct = async (
   imagesUrl: string[]
 ) => {
   const validation = ProductSchema.safeParse(value);
-  console.log("imagesUrl:", imagesUrl);
-  console.log("validation:", validation);
 
   if (!validation.success) {
     return { error: "Invalid Fields!" };

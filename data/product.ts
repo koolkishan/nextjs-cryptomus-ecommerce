@@ -10,7 +10,7 @@ export const createProductInDb = async ({
   tags,
   images,
   discount,
-  quantity
+  quantity,
 }: {
   productName: string;
   description: string;
@@ -19,9 +19,9 @@ export const createProductInDb = async ({
   tags: string[];
   images: string[];
   discount: number;
-  quantity:number;
+  quantity: number;
 }) => {
-await db.products.create({
+  await db.products.create({
     data: {
       productName,
       description,
@@ -30,7 +30,15 @@ await db.products.create({
       tags,
       images,
       discount,
-      quantity
+      quantity,
     },
   });
+};
+
+export const getProduct = async (limit: number, offset: number) => {
+  return await db.products.findMany({
+    take: limit,
+    skip: offset,
+  });
+
 };
