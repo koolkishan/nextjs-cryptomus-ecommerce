@@ -13,10 +13,7 @@ const Header = () => {
   const router = useRouter();
   const user = useAuthUser();
 
-  const handleLogOut = () => {
-    signOut();
-    router.push("/");
-  };
+  
 
   return (
     <div className="flex">
@@ -28,7 +25,7 @@ const Header = () => {
           <HiOutlineMenuAlt2 size={22} />
         </Button>
       </div>
-      <div className="border border-l border-custom-font mr-10 my-2"></div>
+      <div className="border border-l border-secondary-black mr-10 my-2"></div>
       <div className="mr-10 text-primary-text">
         <div className="flex justify-center items-center gap-4 ">
           <Avatar className="rounded-full">

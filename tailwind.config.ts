@@ -21,10 +21,16 @@ const config = {
     },
     extend: {
       colors: {
-        "primary-text" :"var(--primary-text)",
+        "primary-text": "var(--primary-text)",
         surface: "var(--surface)",
         "primary-background": "var(--primary-background)",
         "custom-font": "var( --custom-font)",
+
+        "primary-gray":"var(--primary-gray)",
+        "secondary-gray": "var(--secondary-gray)",
+        "secondary-black": "var(--secondary-black)",
+        "secondary-blue": "var(--secondary-blue)",
+
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

@@ -13,7 +13,7 @@ export interface EcommerceAppSliceTypes {
   setOpenModal: (data: boolean) => void;
   viewingProductId: string;
   setviewingProductId: (data: string) => void;
-  
+
 }
 const createEcommerceAppSlice: StateCreator<EcommerceAppSliceTypes> = (set, get) => ({
   collapsSidbar: false,
