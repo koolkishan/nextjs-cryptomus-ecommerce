@@ -36,7 +36,16 @@ export default function Home() {
           </h1>
           <GoogleSignInButton />
           <GithubSignInButton />
-          <p className="text-center mt-7 text-base text-custom-font">Or Login With Email</p>
+          <div className="grid grid-cols-3 text-[12px] ">
+            <div className="border-b border-secondary-black"></div>
+            <div className="">
+              <p className="text-center mt-7 mb-[-8px] text-custom-font">
+                OR LOGIN WITH EMAIL
+              </p>
+            </div>
+            <div className="border-b border-secondary-black"></div>
+          </div>
+
           <CredentialsForm />
         </div>
       </div>

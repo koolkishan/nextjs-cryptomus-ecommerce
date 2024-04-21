@@ -465,21 +465,21 @@ export const DataTable = ({ products }: DataTableProps) => {
         <label className="relative block">
           <span className="sr-only">Search</span>
           <span className="absolute inset-y-0 left-0 flex items-center pl-2">
-            <IoIosSearch size={22} className="text-custom-font " />
+            <IoIosSearch size={22} className="text-secondary-gray " />
           </span>
           <Input
-            className="placeholder:italic placeholder:text-custom-font bg-transparent w-full border  rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none  sm:text-sm"
-            placeholder="Search Products"
+            className="placeholder:text-secondary-gray bg-transparent w-full border border-secondary-black focus:border-none rounded-md py-2 pl-9 pr-3 shadow-sm sm:text-sm"
+            placeholder="Search Products..."
             type="text"
             name="search"
           />
         </label>
       </div>
-      <div className="px-5">
+      <div className="">
         <Table>
-          <TableCaption>A list of your products.</TableCaption>
+          {/* <TableCaption>A list of your products.</TableCaption> */}
           <TableHeader>
-            <TableRow className="hover:bg-surface border-b-custom-font">
+            <TableRow className="hover:bg-surface border-b-secondary-black">
               <TableHead>
                 <Input
                   type="checkbox"
@@ -501,7 +501,7 @@ export const DataTable = ({ products }: DataTableProps) => {
               currentItems.map((item: ProductTypes) => (
                 <TableRow
                   key={item.id}
-                  className="hover:bg-primary-background  border-b-custom-font"
+                  className="hover:bg-primary-background  border-b-secondary-black"
                 >
                   <TableCell>
                     <Input
@@ -539,11 +539,11 @@ export const DataTable = ({ products }: DataTableProps) => {
           </TableBody>
         </Table>
         {/* Pagination */}
-        <div className="flex justify-end mt-4 pb-2">
+        <div className="flex justify-end mt-4 pb-2 mx-5 mb-3 cursor-pointer">
           <div className="flex justify-center items-center">
             {/* Previous Button */}
             <Button
-              className={`bg-primary-background hover:bg-primary-background`}
+              className={`bg-primary-background hover:bg-primary-background rounded-xl`}
               onClick={() => handlePageChange(currentPage - 1)}
               disabled={currentPage === 1}
             >
@@ -556,9 +556,10 @@ export const DataTable = ({ products }: DataTableProps) => {
                 i >= currentPage - 2 &&
                 i <= currentPage + 2 && ( // Show 5 page numbers at a time
                   <Button
-                    variant={"ghost"}
+                    // variant={"ghost"}
+
                     key={i}
-                    className={`px-3 py-1 mx-1`}
+                    className={`px-4 mx-3 bg-secondary-blue h-9 rounded-xl hover:bg-secondary-blue`}
                     onClick={() => handlePageChange(i + 1)}
                   >
                     {i + 1}
@@ -567,7 +568,7 @@ export const DataTable = ({ products }: DataTableProps) => {
             )}
             {/* Next Button */}
             <Button
-              className={`bg-primary-background hover:bg-primary-background`}
+              className={`bg-primary-background hover:bg-primary-background rounded-xl`}
               onClick={() => handlePageChange(currentPage + 1)}
               disabled={
                 currentPage === Math.ceil(productsData.length / itemsPerPage)

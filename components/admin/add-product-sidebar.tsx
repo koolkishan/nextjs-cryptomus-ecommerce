@@ -11,21 +11,21 @@ import {
 import { Button } from "@/components/ui/button";
 import { FiPlus } from "react-icons/fi";
 import AddProductForm from "./add-product-form";
+import { useAppStore } from "@/store";
 
 const AddProductSideBar = () => {
-  const [toggle, setToggle] = useState<boolean>(false);
-
+  const { toggleSheet, setToggleSheet } = useAppStore();
   const toggleMenu = () => {
-    setToggle((prevToggle) => !prevToggle);
+    setToggleSheet(!toggleSheet);
   };
 
   return (
-    <div>
-      <Sheet open={toggle} onOpenChange={setToggle}>
+    <div className="">
+      <Sheet open={toggleSheet} onOpenChange={setToggleSheet}>
         <SheetTrigger onClick={toggleMenu}>
           <Button
             variant={"ghost"}
-            className="bg-[#2b90ff] rounded-2xl hover:bg-[#2b90ff]"
+            className="bg-secondary-blue rounded-2xl hover:bg-secondary-blue"
           >
             <FiPlus />
           </Button>
@@ -40,7 +40,7 @@ const AddProductSideBar = () => {
             </SheetTitle>
             <SheetDescription className="text-primary-txt h-full">
               <div className="h-full">
-                <AddProductForm/>
+                <AddProductForm />
               </div>
             </SheetDescription>
           </SheetHeader>

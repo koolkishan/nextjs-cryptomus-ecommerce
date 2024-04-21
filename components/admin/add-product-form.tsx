@@ -35,7 +35,7 @@ const AddProductForm = () => {
   const [error, setError] = useState<string | undefined>();
   const [success, setSuccess] = useState<string | undefined>();
   const [uploadedImageUrl, setUploadedImageUrl] = useState<string[] | []>([]);
-  const {setProductsData} = useAppStore();
+  const { setProductsData, setToggleSheet } = useAppStore();
 
   const form = useForm({
     resolver: zodResolver(ProductSchema),
@@ -64,10 +64,10 @@ const AddProductForm = () => {
     setSuccess(success);
     setUploadedImageUrl([]);
     const response = await getProductByLimit(20);
-      if (response && response.length > 0) {
-        // @ts-ignore
-        setProductsData(response);
-      }
+    if (response && response.length > 0) {
+      // @ts-ignore
+      setProductsData(response);
+    }
     form.reset();
     return;
   };
@@ -75,15 +75,21 @@ const AddProductForm = () => {
   const removeImage = async (url: string) => {
     setUploadedImageUrl((prev) => prev.filter((item) => item !== url));
   };
+
+  const handleCancle = () => {
+    setUploadedImageUrl([]);
+    setToggleSheet(false);
+    form.reset();
+  };
   const isLoading = form.formState.isSubmitting;
 
   return (
     <>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="h-full">
-          <div className="flex h-full flex-col">
-            <div className="flex-1 ">
-              <div className="my-4 text-primary-text">
+          <div className="flex h-screen flex-col">
+            <div className="h-[80%] overflow-y-scroll scrollbar-hide">
+              <div className="my-6 text-primary-text">
                 <FormField
                   control={form.control}
                   name="productName"
@@ -95,7 +101,7 @@ const AddProductForm = () => {
                       <FormControl>
                         <Input
                           disabled={isLoading}
-                          className="bg-transparent border-custom-font focus:outline-none"
+                          className="bg-transparent border-secondary-black focus:outline-none placeholder:text-custom-font"
                           placeholder="Enter product name"
                           {...field}
                         />
@@ -105,7 +111,7 @@ const AddProductForm = () => {
                   )}
                 />
               </div>
-              <div className="my-4 text-primary-text">
+              <div className="my-6 text-primary-text">
                 <FormField
                   control={form.control}
                   name="description"
@@ -117,7 +123,7 @@ const AddProductForm = () => {
                       <FormControl>
                         <Textarea
                           disabled={isLoading}
-                          className="bg-transparent border-custom-font focus:outline-none"
+                          className="bg-transparent border-secondary-black focus:outline-none placeholder:text-custom-font"
                           placeholder="Type something"
                           {...field}
                         />
@@ -127,7 +133,7 @@ const AddProductForm = () => {
                   )}
                 />
               </div>
-              <div className="my-4 text-primary-text">
+              <div className="my-6 text-primary-text">
                 <FormField
                   control={form.control}
                   name="category"
@@ -144,10 +150,10 @@ const AddProductForm = () => {
                           }}
                           defaultValue={field.value}
                         >
-                          <SelectTrigger className=" bg-transparent outline-none border-custom-font">
+                          <SelectTrigger className=" bg-transparent outline-none border-secondary-black">
                             <SelectValue placeholder="" />
                           </SelectTrigger>
-                          <SelectContent className=" text-primary-text hover:bg-surface  bg-primary-background outline-none border-gray-500">
+                          <SelectContent className=" text-primary-text hover:bg-surface  bg-primary-background outline-none border-secondary-black">
                             <SelectItem
                               className="hover:bg-surface"
                               value="Electronics"
@@ -180,7 +186,7 @@ const AddProductForm = () => {
                   )}
                 />
               </div>
-              <div className="flex gap-4 my-4 text-primary-text">
+              <div className="flex gap-4 my-6 text-primary-text">
                 <FormField
                   control={form.control}
                   name="price"
@@ -190,7 +196,7 @@ const AddProductForm = () => {
                       <FormControl>
                         <Input
                           disabled={isLoading}
-                          className="bg-transparent border-custom-font focus:outline-none"
+                          className="bg-transparent border-secondary-black focus:outline-none placeholder:text-custom-font"
                           placeholder="Enter price"
                           {...field}
                           type="number"
@@ -207,12 +213,12 @@ const AddProductForm = () => {
                   render={({ field }) => (
                     <FormItem className="">
                       <FormLabel className="text-custom-font">
-                        Product Name
+                        Discount
                       </FormLabel>
                       <FormControl>
                         <Input
                           disabled={isLoading}
-                          className="bg-transparent border-custom-font focus:outline-none"
+                          className="bg-transparent border-secondary-black focus:outline-none placeholder:text-custom-font"
                           placeholder="Enter discount"
                           {...field}
                           type="number"
@@ -234,7 +240,7 @@ const AddProductForm = () => {
                       <FormControl>
                         <Input
                           disabled={isLoading}
-                          className="bg-transparent border-custom-font focus:outline-none"
+                          className="bg-transparent border-secondary-black focus:outline-none placeholder:text-custom-font"
                           placeholder="Enter quantity"
                           {...field}
                           type="number"
@@ -246,7 +252,7 @@ const AddProductForm = () => {
                   )}
                 />
               </div>
-              <div className="my-4 text-primary-text">
+              <div className="my-6 text-primary-text">
                 <FormField
                   control={form.control}
                   name="tags"
@@ -256,7 +262,7 @@ const AddProductForm = () => {
                       <FormControl>
                         <Input
                           disabled={isLoading}
-                          className="bg-transparent border-custom-font focus:outline-none"
+                          className="bg-transparent border-secondary-black focus:outline-none placeholder:text-custom-font"
                           placeholder="Enter comma seprated tags"
                           {...field}
                         />
@@ -266,7 +272,7 @@ const AddProductForm = () => {
                   )}
                 />
               </div>
-              <div className="my-4 text-primary-text">
+              <div className="my-6 text-primary-text">
                 <p className="text-custom-font">Product Images</p>
                 <div className="border rounded-xl border-dashed border-custom-font my-2 h-[100px] flex flex-col justify-center items-center">
                   <div>
@@ -308,10 +314,26 @@ const AddProductForm = () => {
               <FormError message={error} />
               <FormSuccess message={success} />
             </div>
-            <div>
-              <Button disabled={isLoading} className="w-full">
-                Create
-              </Button>
+            <div className="fixed bottom-0 right-0 w-[384px]  p-4 flex justify-end gap-4">
+              <div className="w-full">
+                <Button
+                  size={"sm"}
+                  type="submit"
+                  disabled={isLoading}
+                  className="w-1/4 bg-secondary-blue border-none hover:bg-secondary-blue rounded-xl mr-4"
+                >
+                  Save
+                </Button>
+                <Button
+                  size={"sm"}
+                  type="reset"
+                  disabled={isLoading}
+                  onClick={handleCancle}
+                  className="w-1/4 bg-transparent border border-secondary-black hover:bg-transparent rounded-xl"
+                >
+                  Cancel
+                </Button>
+              </div>
             </div>
           </div>
         </form>

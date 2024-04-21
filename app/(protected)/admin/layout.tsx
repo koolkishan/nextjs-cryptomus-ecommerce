@@ -20,7 +20,7 @@ export default async function RootLayout({
             <Side />
           </div>
           <div className="flex flex-col h-screen marker:border-none w-full">
-            <div className="w-full border-b py-1 border-custom-font">
+            <div className="w-full border-b py-1 border-secondary-black">
               <Header />
             </div>
             <div className="flex-1 h-[calc(100vh-59px)]">{children}</div>

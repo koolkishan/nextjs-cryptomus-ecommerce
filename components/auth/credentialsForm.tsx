@@ -40,25 +40,41 @@ export function CredentialsForm(props: CredentialsFormProps) {
           {error}
         </span>
       )}
-      <input
-        type="email"
-        name="email"
-        placeholder="Email"
-        required
-        className="w-full px-4 py-2 mb-4 border text-custom-font rounded-xl bg-transparent border-custom-font focus:border-custom-font"
-      />
+      <div>
+        <label
+          htmlFor=""
+          className="text-primary-gray font-normal text-base mb-2"
+        >
+          Email
+        </label>
+        <input
+          type="email"
+          name="email"
+          placeholder="Enter your email address"
+          required
+          className="w-full px-4 py-2 mb-4  text-custom-font rounded-xl border border-secondary-black bg-transparent focus:border-custom-font placeholder:font-extralight placeholder:text-sm"
+        />
+      </div>
 
-      <input
-        type="password"
-        name="password"
-        placeholder="Password"
-        required
-        className="w-full px-4 py-2 mb-4 border text-custom-font rounded-xl bg-transparent border-custom-font focus:border-custom-font"
-      />
+      <div>
+        <label
+          htmlFor=""
+          className="text-primary-gray font-normal text-base mb-2"
+        >
+          Password
+        </label>
+        <input
+          type="password"
+          name="password"
+          placeholder="Enter your password"
+          required
+          className="w-full px-4 py-2 mb-4  text-custom-font rounded-xl border border-secondary-black bg-transparent focus:border-custom-font placeholder:font-extralight placeholder:text-sm"
+        />
+      </div>
 
       <button
         type="submit"
-        className="w-full h-12 px-6 mt-4 text-lg text-white transition-colors duration-150 bg-blue-600 rounded-lg focus:shadow-outline hover:bg-blue-700"
+        className="w-full h-10 px-6 mt-4 text-lg text-white transition-colors duration-150 bg-secondary-blue  rounded-2xl focus:shadow-outline"
       >
         Log in
       </button>

@@ -88,7 +88,7 @@ const Side = () => {
 
   const handleItemClick = (link: string) => {
     setSelectedItem(link);
-      router.push(link);
+    router.push(link);
   };
 
   return (
@@ -162,13 +162,14 @@ const Side = () => {
               )}
             </React.Fragment>
           ))}
-          <MenuItem
+          {/* <MenuItem
+          
             onClick={() => handleItemClick("/admin/logout")}
             icon={<LuLogOut />}
             active={selectedItem === "/admin/logout"}
           >
             Logout
-          </MenuItem>
+          </MenuItem> */}
         </Menu>
       </Sidebar>
     </div>

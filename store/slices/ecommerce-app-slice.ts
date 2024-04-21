@@ -7,6 +7,8 @@ export interface EcommerceAppSliceTypes {
   setCollapsSidbar: (data: boolean) => void;
   productsData: ProductTypes[] | [];
   setProductsData: (data: ProductTypes[]) => void;
+  toggleSheet?: boolean;
+  setToggleSheet: (data: boolean) => void;
   // openModal?: boolean;
   // setOpenModal: (data: boolean) => void;
   // productCarouselImage?: string | null;
@@ -36,6 +38,10 @@ const createEcommerceAppSlice: StateCreator<EcommerceAppSliceTypes> = (set, get)
   productsData: [],
   setProductsData: (data: ProductTypes[]) => {
     set({ productsData: data });
+  },
+  toggleSheet: false,
+  setToggleSheet: (open: boolean) => {
+    set({ toggleSheet: open });
   }
   // productCarouselImage: null,
   // setProductCarouselImage: (image: string | null) => {

@@ -11,6 +11,11 @@
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
 
+    --primary-gray: #93959C;
+    --secondary-gray: #b5b7bf;
+    --secondary-black: #33363d;
+    --secondary-blue: #0090ff;
+
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
 
@@ -77,4 +82,15 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/* For Webkit-based browsers (Chrome, Safari and Opera) */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* For IE, Edge and Firefox */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }
