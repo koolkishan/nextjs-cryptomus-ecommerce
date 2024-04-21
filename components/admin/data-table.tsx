@@ -28,7 +28,7 @@ export const DataTable = ({ products }: DataTableProps) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedRows, setSelectedRows] = useState<any>([]);
   const [allSelected, setAllSelected] = useState<boolean>(false);
-  const { productsData } = useAppStore();
+  const { productsData, setOpenModal, openModal, setviewingProductId } = useAppStore();
   // console.log("DataTable ~ selectedRows:", selectedRows);
   const itemsPerPage = 10;
 
@@ -421,12 +421,12 @@ export const DataTable = ({ products }: DataTableProps) => {
   // Toggle select all
   const toggleSelectAll = () => {
     if (allSelected) {
-      setAllSelected(false);
+      setAllSelected(true);
       setSelectedRows([]);
     } else {
       if (products) {
         setSelectedRows([...productsData]);
-        setAllSelected(true);
+        setAllSelected(false);
       }
     }
   };
@@ -458,7 +458,11 @@ export const DataTable = ({ products }: DataTableProps) => {
         )
         .map((key) => key.charAt(0).toUpperCase() + key.slice(1))
     : [];
-
+  
+  const handleProduct = (id:string) => {
+    setOpenModal(!openModal);
+    setviewingProductId(id);
+  }
   return (
     <div className="bg-surface rounded-3xl">
       <div className=" felx justify-center items-center py-4 px-5 mt-4">
@@ -501,7 +505,8 @@ export const DataTable = ({ products }: DataTableProps) => {
               currentItems.map((item: ProductTypes) => (
                 <TableRow
                   key={item.id}
-                  className="hover:bg-primary-background  border-b-custom-font"
+                  className="hover:bg-primary-background  border-b-secondary-black cursor-pointer"
+                  onClick={()=>handleProduct(item.id)}
                 >
                   <TableCell>
                     <Input

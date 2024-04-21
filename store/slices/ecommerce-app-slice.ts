@@ -7,26 +7,13 @@ export interface EcommerceAppSliceTypes {
   setCollapsSidbar: (data: boolean) => void;
   productsData: ProductTypes[] | [];
   setProductsData: (data: ProductTypes[]) => void;
-  // openModal?: boolean;
-  // setOpenModal: (data: boolean) => void;
-  // productCarouselImage?: string | null;
-  // setProductCarouselImage: (data: string | null) => void;
-  // searchTerm? :string;
-  // setSearchTerm: (data: string) => void;
-  // products: ProductTypes[];
-  // setProducts:(data:ProductTypes[]) => void;
-  // filterProduct: ProductTypes[];
-  // setFilterProduct: (data: ProductTypes[]) => void;
-  // compareProduct: ProductTypes[];
-  // setCompareProduct: (data: ProductTypes[]) => void;
-  // addToCartProduct: ProductTypes[] ;
-  // setAddToCartProduct: (data: ProductTypes[]) => void;
-  // compareLimitExceeded?: boolean;
-  // setCompareLimitExceeded: (data: boolean) => void;
-  // userDetails?: User | null;
-  // setUserDetails: (data: User) => void;
-  // userAddress?: Address | null;
-  // setUserAddress: (data: Address) => void;
+  toggleSheet?: boolean;
+  setToggleSheet: (data: boolean) => void;
+  openModal: boolean;
+  setOpenModal: (data: boolean) => void;
+  viewingProductId: string;
+  setviewingProductId: (data: string) => void;
+  
 }
 const createEcommerceAppSlice: StateCreator<EcommerceAppSliceTypes> = (set, get) => ({
   collapsSidbar: false,
@@ -36,43 +23,19 @@ const createEcommerceAppSlice: StateCreator<EcommerceAppSliceTypes> = (set, get)
   productsData: [],
   setProductsData: (data: ProductTypes[]) => {
     set({ productsData: data });
-  }
-  // productCarouselImage: null,
-  // setProductCarouselImage: (image: string | null) => {
-  //   set({ productCarouselImage: image });
-  // },
-  // searchTerm:'',
-  // setSearchTerm: (term: string) => {
-  //   set({ searchTerm: term });
-  // },
-  // products:[],
-  // setProducts: (products: ProductTypes[]) => {
-  //   set({ products: products });
-  // },
-  // filterProduct:[],
-  // setFilterProduct: (products: ProductTypes[]) => {
-  //   set({ filterProduct: products });
-  // },
-  // compareProduct:[],
-  // setCompareProduct: (products: ProductTypes[]) => {
-  //   set({ compareProduct: products });
-  // },
-  // compareLimitExceeded: false,
-  // setCompareLimitExceeded: (open: boolean) => {
-  //   set({ compareLimitExceeded: open });
-  // },
-  // addToCartProduct:[],
-  // setAddToCartProduct: (products: ProductTypes[]) => {
-  //   set({ addToCartProduct: products });
-  // },
-  // userDetails: null,
-  // setUserDetails: (user: User) => {
-  //   set({ userDetails: user });
-  // },
-  // userAddress: null,
-  // setUserAddress: (address: Address) => {
-  //   set({ userAddress: address });
-  // },
+  },
+  toggleSheet: false,
+  setToggleSheet: (open: boolean) => {
+    set({ toggleSheet: open });
+  },
+  openModal: false,
+  setOpenModal: (open: boolean) => {
+    set({ openModal: open });
+  },
+  viewingProductId:'',
+  setviewingProductId: (data: string) => {
+    set({ viewingProductId: data });
+  },
 });
 
 export { createEcommerceAppSlice };
