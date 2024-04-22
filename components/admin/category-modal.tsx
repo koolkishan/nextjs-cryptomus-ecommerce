@@ -37,43 +37,45 @@ export const CategoryModal = ({ category, setsetCategoryModal, categoryModal }: 
     }
 
     return (
-        <Dialog open={categoryModal} onOpenChange={setsetCategoryModal}>
-            <DialogContent className="bg-surface border border-secondary-black">
-                <DialogHeader>
-                    <DialogTitle className="text-xl text-primary-text">Edit Category</DialogTitle>
-                    <DialogDescription className="text-white">
-                        <div className="mt-3">
-                            <p className="text-custom-font">Category Name</p>
-                            <Input
-                                type="text"
-                                className="mb-5 mt-2 bg-transparent border-secondary-black focus:outline-none placeholder:text-custom-font"
-                                value={newCategoryName}
-                                onChange={handleChange}
-                            />
-                        </div>
-                        <div className="my-4"><FormError message={error} /></div>
-                        <div className="my-4"><FormSuccess message={success} /></div>
-                        <div>
-                            <Button
-                                size={"sm"}
-                                onClick={handleSave}
-                                className="w-1/4 bg-secondary-blue border-none hover:bg-secondary-blue rounded-xl mr-4"
-                            >
-                                Save
-                            </Button>
-                            <Button
-                                size={"sm"}
-                                onClick={() => setsetCategoryModal(false)}
-                                className="w-1/4 bg-transparent border border-secondary-black hover:bg-transparent rounded-xl"
-                            >
-                                Cancel
-                            </Button>
-                        </div>
+        <div className="z-50">
+            <Dialog open={categoryModal} onOpenChange={setsetCategoryModal}>
+                <DialogContent className="bg-surface border border-secondary-black">
+                    <DialogHeader>
+                        <DialogTitle className="text-xl text-primary-text">Edit Category</DialogTitle>
+                        <DialogDescription className="text-white">
+                            <div className="mt-3">
+                                <p className="text-custom-font">Category Name</p>
+                                <Input
+                                    type="text"
+                                    className="mb-5 mt-2 bg-transparent border-secondary-black focus:outline-none placeholder:text-custom-font"
+                                    value={newCategoryName}
+                                    onChange={handleChange}
+                                />
+                            </div>
+                            <div className="my-4"><FormError message={error} /></div>
+                            <div className="my-4"><FormSuccess message={success} /></div>
+                            <div>
+                                <Button
+                                    size={"sm"}
+                                    onClick={handleSave}
+                                    className="w-1/4 bg-secondary-blue border-none hover:bg-secondary-blue rounded-xl mr-4"
+                                >
+                                    Save
+                                </Button>
+                                <Button
+                                    size={"sm"}
+                                    onClick={() => setsetCategoryModal(false)}
+                                    className="w-1/4 bg-transparent border border-secondary-black hover:bg-transparent rounded-xl"
+                                >
+                                    Cancel
+                                </Button>
+                            </div>
 
-                    </DialogDescription>
-                </DialogHeader>
-            </DialogContent>
-        </Dialog>
+                        </DialogDescription>
+                    </DialogHeader>
+                </DialogContent>
+            </Dialog>
+        </div>
     );
 }
 

@@ -12,11 +12,21 @@ const config = {
   ],
   prefix: "",
   theme: {
+    // container: {
+    //   center: true,
+    //   padding: "2rem",
+    //   screens: {
+    //     "2xl": "1400px",
+    //   },
+    // },
     container: {
       center: true,
-      padding: "2rem",
-      screens: {
-        "2xl": "1400px",
+      padding: {
+        DEFAULT: "1rem",
+        // sm: "2rem",
+        lg: "1rem",
+        xl: "2rem",
+        // "2xl": "6rem",
       },
     },
     extend: {
@@ -25,8 +35,8 @@ const config = {
         surface: "var(--surface)",
         "primary-background": "var(--primary-background)",
         "custom-font": "var( --custom-font)",
-
-        "primary-gray":"var(--primary-gray)",
+        "secondary-white": "var(--secondary-white)",
+        "primary-gray": "var(--primary-gray)",
         "secondary-gray": "var(--secondary-gray)",
         "secondary-black": "var(--secondary-black)",
         "secondary-blue": "var(--secondary-blue)",

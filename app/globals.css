@@ -6,16 +6,18 @@
   :root {
     --primary-background: #1d1e24;
     --primary-text: #fff;
+    --secondary-white: #F9F9F9;
     --surface: #23262b;
     --custom-font: #7c7c7c;
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
+    
 
     --primary-gray: #93959C;
     --secondary-gray: #b5b7bf;
     --secondary-black: #33363d;
     --secondary-blue: #0090ff;
-
+    
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
 

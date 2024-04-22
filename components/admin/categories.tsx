@@ -18,7 +18,7 @@ const Categories = () => {
   return (
     <div className="text-primary-text w-full">
       <div className="text-2xl w-full flex justify-center items-center font-medium mt-4">
-        <p className="flex-1">Categolries</p>
+        <p className="flex-1">Categories</p>
         <AddCategorySideBar />
       </div>
       <div className="">

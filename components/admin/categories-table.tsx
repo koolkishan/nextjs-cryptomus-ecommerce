@@ -37,7 +37,7 @@ const CategoriesTable = ({ categories }: CategoriesTableProps) => {
   const [categoriesWithProductCount, setCategoriesWithProductCount] = useState<CategoryWithProductCount[] | []>([]);
   const [searchCategories, setSearchCategories] = useState<CategoryTypes[] | []>([]);
   const [searchTerms, setSearchTerms] = useState<string>("");
-  const { setOpenModal, openModal, categoriesData, setCategoriesData } = useAppStore();
+  const { setOpenModal, openModal, categoriesData, setCategoriesData, setToggleSheet, setEditCategory } = useAppStore();
   const [categoryModal, setsetCategoryModal] = useState<boolean>(false)
 
   const debouncedSearchValue = useDebounce(searchTerms, 300);
@@ -63,7 +63,7 @@ const CategoriesTable = ({ categories }: CategoriesTableProps) => {
       setSearchCategories(filteredData);
     }
   }, [debouncedSearchValue, categoriesWithProductCount]);
- 
+
   const lastIndex = currentPage * itemsPerPage;
   const firstIndex = lastIndex - itemsPerPage;
   let currentItems;
@@ -85,7 +85,7 @@ const CategoriesTable = ({ categories }: CategoriesTableProps) => {
       setSearchCategories([]);
     }
   };
-  
+
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
   };
@@ -114,6 +114,11 @@ const CategoriesTable = ({ categories }: CategoriesTableProps) => {
     return selectedRows.some((row: CategoryTypes) => row.id === item.id);
   };
 
+  const handleSearchCategory = (editCategory:CategoryTypes) => {
+    console.log('handleSearchCategory ~ editCategory:', editCategory)
+    setToggleSheet(true);
+    setEditCategory(editCategory)
+  }
   const tableHeaderKeys = categoriesData.length
     ? Object.keys(categoriesData[0])
       .filter(
@@ -125,9 +130,9 @@ const CategoriesTable = ({ categories }: CategoriesTableProps) => {
   const handleDelete = async (id: string) => {
     await deleteCategory(id);
     const response = await getCategories();
-    console.log('handleDelete ~ response:', response)
     if (response && response.length) {
       setCategoriesData(response);
+      // setsetCategoryModal(false);
     } else {
       setCategoriesData([]);
     }
@@ -157,7 +162,7 @@ const CategoriesTable = ({ categories }: CategoriesTableProps) => {
                 searchCategories.map((c: CategoryTypes, index: number) => {
                   return (
                     <div key={c.id} className={cn('px-3', index === searchCategories.length - 1 ? '' : 'border-b border-secondary-black')}>
-                      <p onClick={() => setsetCategoryModal(true)} className="px-2 py-3 my-2 hover:bg-primary-background rounded-2xl cursor-pointer">
+                      <p onClick={() => handleSearchCategory(c)} className="px-2 py-3 my-2 hover:bg-primary-background rounded-2xl cursor-pointer">
                         {c.categoryName}
                       </p>
                     </div>
@@ -196,9 +201,9 @@ const CategoriesTable = ({ categories }: CategoriesTableProps) => {
             {currentItems &&
               currentItems.map((item: CategoryTypes) => (
                 <>
-                  <CategoryModal category={item} setsetCategoryModal={setsetCategoryModal} categoryModal={categoryModal} />
+                  {/* <CategoryModal category={item} setsetCategoryModal={setsetCategoryModal} categoryModal={categoryModal} /> */}
                   <TableRow
-                    onClick={() => setsetCategoryModal(true)}
+                    // onClick={() => setsetCategoryModal(true)}
                     key={item.id}
                     className="hover:bg-primary-background  border-b-secondary-black cursor-pointer"
                   >

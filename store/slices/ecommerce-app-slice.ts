@@ -3,6 +3,7 @@
 import { CategoryTypes, ProductTypes } from "@/types";
 import { StateCreator } from "zustand";
 export interface EcommerceAppSliceTypes {
+  // admin
   collapsSidbar?:boolean;
   setCollapsSidbar: (data: boolean) => void;
   productsData: ProductTypes[] | [];
@@ -15,9 +16,15 @@ export interface EcommerceAppSliceTypes {
   setviewingProductId: (data: string) => void;
   categoriesData: CategoryTypes[] | [];
   setCategoriesData: (data: CategoryTypes[]) => void;
+  editCategory: CategoryTypes | null;
+  setEditCategory: (data: CategoryTypes) => void;
+  // user 
+  productCategory:string;
+  setProductCategory: (data: string) => void;
 
 }
 const createEcommerceAppSlice: StateCreator<EcommerceAppSliceTypes> = (set, get) => ({
+  // admin
   collapsSidbar: false,
   setCollapsSidbar: (open: boolean) => {
     set({ collapsSidbar: open });
@@ -42,6 +49,17 @@ const createEcommerceAppSlice: StateCreator<EcommerceAppSliceTypes> = (set, get)
   setCategoriesData: (data: CategoryTypes[]) => {
     set({ categoriesData: data });
   },
+  editCategory: null,
+  setEditCategory: (data: CategoryTypes ) => {
+    set({ editCategory: data });
+  },
+
+  // user
+  productCategory:'',
+  setProductCategory: (data: string) => {
+    set({ productCategory: data });
+  },
+  
 });
 
 export { createEcommerceAppSlice };
