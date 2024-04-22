@@ -37,7 +37,7 @@ const AddProductForm = () => {
   const [success, setSuccess] = useState<string | undefined>();
   const [uploadedImageUrl, setUploadedImageUrl] = useState<string[] | []>([]);
   const { setProductsData, setToggleSheet, setCategoriesData, categoriesData } =
-  useAppStore();
+    useAppStore();
   // console.log('AddProductForm ~ categoriesData:', categoriesData);
 
   useEffect(() => {
@@ -74,20 +74,27 @@ const AddProductForm = () => {
     setError("");
     setSuccess("");
     const category = categoriesData.find(category => category.categoryName === values.category);
-    if(category) {
+    if (category) {
       const { error, success } = await createProduct(values, uploadedImageUrl, category?.id);
       setError(error);
       setSuccess(success);
       setUploadedImageUrl([]);
     }
     const response = await getProducts();
-    if (response && response.length ) {
-      // @ts-ignore
+    if (response && response.length) {
       setProductsData(response);
+      const timerId = setTimeout(() => {
+        setError("");
+        setSuccess("");
+      }, 2000);
+
+      setTimeout(() => {
+        clearTimeout(timerId);
+      }, 2000);
     }
-     else {
+    else {
       setProductsData([]);
-     }
+    }
     form.reset();
     return;
   };
@@ -109,7 +116,7 @@ const AddProductForm = () => {
         <form onSubmit={form.handleSubmit(onSubmit)} className="h-full">
           <div className="flex h-screen flex-col">
             <div className="h-[80%] overflow-y-scroll scrollbar-hide">
-              <div className="my-6 text-primary-text">
+              <div className="w-[98%] ml-1 my-6 text-primary-text">
                 <FormField
                   control={form.control}
                   name="productName"
@@ -121,7 +128,7 @@ const AddProductForm = () => {
                       <FormControl>
                         <Input
                           disabled={isLoading}
-                          className="bg-transparent border-secondary-black focus:outline-none placeholder:text-custom-font"
+                          className=" bg-transparent border-secondary-black focus:outline-none placeholder:text-custom-font"
                           placeholder="Enter product name"
                           {...field}
                         />
@@ -131,7 +138,7 @@ const AddProductForm = () => {
                   )}
                 />
               </div>
-              <div className="my-6 text-primary-text">
+              <div className="w-[98%] ml-1 my-6 text-primary-text">
                 <FormField
                   control={form.control}
                   name="description"
@@ -143,7 +150,7 @@ const AddProductForm = () => {
                       <FormControl>
                         <Textarea
                           disabled={isLoading}
-                          className="bg-transparent border-secondary-black focus:outline-none placeholder:text-custom-font"
+                          className="  bg-transparent border-secondary-black focus:outline-none placeholder:text-custom-font"
                           placeholder="Type something"
                           {...field}
                         />
@@ -153,7 +160,7 @@ const AddProductForm = () => {
                   )}
                 />
               </div>
-              <div className="my-6 text-primary-text">
+              <div className="w-[98%] ml-1 my-6 text-primary-text">
                 <FormField
                   control={form.control}
                   name="category"
@@ -170,13 +177,13 @@ const AddProductForm = () => {
                           }}
                           defaultValue={field.value}
                         >
-                          <SelectTrigger className=" bg-transparent outline-none border-secondary-black">
+                          <SelectTrigger className="w-[98%] ml-1  bg-transparent outline-none border-secondary-black">
                             <SelectValue placeholder="" />
                           </SelectTrigger>
                           <SelectContent className=" text-primary-text hover:bg-surface  bg-primary-background outline-none border-secondary-black">
                             {categoriesData.map((category) => (
                               <SelectItem
-                                key={category.id} 
+                                key={category.id}
                                 className="hover:bg-surface"
                                 value={category.categoryName}
                               >
@@ -191,7 +198,7 @@ const AddProductForm = () => {
                   )}
                 />
               </div>
-              <div className="flex gap-4 my-6 text-primary-text">
+              <div className="w-[98%] ml-1 flex gap-4 my-6 text-primary-text">
                 <FormField
                   control={form.control}
                   name="price"
@@ -201,7 +208,7 @@ const AddProductForm = () => {
                       <FormControl>
                         <Input
                           disabled={isLoading}
-                          className="bg-transparent border-secondary-black focus:outline-none placeholder:text-custom-font"
+                          className="w-[98%] ml-1  bg-transparent border-secondary-black focus:outline-none placeholder:text-custom-font"
                           placeholder="Enter price"
                           {...field}
                           type="number"
@@ -223,7 +230,7 @@ const AddProductForm = () => {
                       <FormControl>
                         <Input
                           disabled={isLoading}
-                          className="bg-transparent border-secondary-black focus:outline-none placeholder:text-custom-font"
+                          className="w-[98%] ml-1  bg-transparent border-secondary-black focus:outline-none placeholder:text-custom-font"
                           placeholder="Enter discount"
                           {...field}
                           type="number"
@@ -245,7 +252,7 @@ const AddProductForm = () => {
                       <FormControl>
                         <Input
                           disabled={isLoading}
-                          className="bg-transparent border-secondary-black focus:outline-none placeholder:text-custom-font"
+                          className="  bg-transparent border-secondary-black focus:outline-none placeholder:text-custom-font"
                           placeholder="Enter quantity"
                           {...field}
                           type="number"
@@ -257,7 +264,7 @@ const AddProductForm = () => {
                   )}
                 />
               </div>
-              <div className="my-6 text-primary-text">
+              <div className="w-[98%] ml-1 my-6 text-primary-text">
                 <FormField
                   control={form.control}
                   name="tags"
@@ -267,7 +274,7 @@ const AddProductForm = () => {
                       <FormControl>
                         <Input
                           disabled={isLoading}
-                          className="bg-transparent border-secondary-black focus:outline-none placeholder:text-custom-font"
+                          className=" bg-transparent border-secondary-black focus:outline-none placeholder:text-custom-font"
                           placeholder="Enter comma seprated tags"
                           {...field}
                         />
@@ -280,14 +287,14 @@ const AddProductForm = () => {
               <div className="my-6 text-primary-text">
                 <p className="text-custom-font">Product Images</p>
                 <div className="border rounded-xl border-dashed border-custom-font my-2 h-[100px] flex flex-col justify-center items-center">
-                    <div
-                      className="flex flex-col justify-center items-center
+                  <div
+                    className="flex flex-col justify-center items-center
                             "
-                    >
-                      <CloudinaryUploadImages
-                        handleUploadSuccess={handleUploadSuccess}
-                      />
-                    </div>
+                  >
+                    <CloudinaryUploadImages
+                      handleUploadSuccess={handleUploadSuccess}
+                    />
+                  </div>
                 </div>
                 <div className="grid grid-cols-3 gap-3">
                   {uploadedImageUrl.length > 0 &&

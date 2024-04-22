@@ -27,6 +27,7 @@ import ProductModal from "./product-modal";
 import { getProduct } from "@/data/product";
 import { getProducts } from "@/actions/get-products";
 import { deleteProduct } from "@/actions/delete-product";
+import useDebounce from "@/hooks/useDebounce";
 
 interface DataTableProps {
   products: boolean;
@@ -34,10 +35,13 @@ interface DataTableProps {
 export const DataTable = ({ products, }: DataTableProps) => {
   const [isMounted, setIsMounted] = useState<boolean>(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [selectedRows, setSelectedRows] = useState<any>([]);
+  const [selectedRows, setSelectedRows] = useState<ProductTypes[] | []>([]);
   const [allSelected, setAllSelected] = useState<boolean>(false);
   const [productModal, setProductModal] = useState<boolean>(false);
   const [currentItems, setCurrentItems] = useState<ProductTypes[] | []>([]);
+  const [searchTerms, setSearchTerms] = useState<string>("");
+  const [searchProducts, setSearchProducts] = useState<ProductTypes[] | []>([]);
+
   const {
     productsData,
     setOpenModal,
@@ -47,7 +51,21 @@ export const DataTable = ({ products, }: DataTableProps) => {
     setProductsData,
 
   } = useAppStore();
+
   const itemsPerPage = 10;
+  const debouncedSearchValue = useDebounce(searchTerms, 300);
+
+  useEffect(() => {
+    if (debouncedSearchValue && debouncedSearchValue.length > 0) {
+      const filteredData = productsData.filter(
+        (item: ProductTypes) =>
+          item.productName
+            .toLowerCase()
+            .includes(debouncedSearchValue.toLowerCase())
+      );
+      setSearchProducts(filteredData);
+    }
+  }, [debouncedSearchValue, productsData]);
 
   useEffect(() => {
     setIsMounted(true);
@@ -69,6 +87,17 @@ export const DataTable = ({ products, }: DataTableProps) => {
     setCurrentPage(page);
   };
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const searchTerm = e.target.value;
+    if (searchTerm) {
+      setSearchTerms(searchTerm);
+    }
+    if (!searchTerm) {
+      setSearchTerms("");
+      setSearchProducts([]);
+    }
+  };
+
   if (!isMounted) {
     return;
   }
@@ -84,16 +113,17 @@ export const DataTable = ({ products, }: DataTableProps) => {
     }
   };
 
-  const toggleRowSelection = (item: any) => {
-    if (selectedRows.some((row: any) => row.id === item.id)) {
-      setSelectedRows(selectedRows.filter((row: any) => row.id !== item.id));
+  const toggleRowSelection = (item: ProductTypes) => {
+    if (selectedRows.some((row: ProductTypes) => row.id === item.id)) {
+      setSelectedRows(selectedRows.filter((row: ProductTypes) => row.id !== item.id));
     } else {
       setSelectedRows([...selectedRows, item]);
     }
   };
 
-  const isRowSelected = (item: any) => {
-    return selectedRows.some((row: any) => row.id === item.id);
+  const isRowSelected = (item: ProductTypes) => {
+    console.log('isRowSelected ~ item:', item);
+    return selectedRows.some((row: ProductTypes) => row.id === item.id);
   };
 
   const tableHeaderKeys = productsData.length
@@ -123,7 +153,6 @@ export const DataTable = ({ products, }: DataTableProps) => {
     await deleteProduct(id);
     const response = await getProducts();
     if (response && response.length > 0) {
-      // @ts-ignore
       setProductsData(response);
     }
     else {
@@ -139,12 +168,28 @@ export const DataTable = ({ products, }: DataTableProps) => {
           <span className="absolute inset-y-0 left-0 flex items-center pl-2">
             <IoIosSearch size={22} className="text-secondary-gray " />
           </span>
-          <Input
-            className="placeholder:text-secondary-gray bg-transparent w-full border border-secondary-black focus:border-none rounded-md py-2 pl-9 pr-3 shadow-sm sm:text-sm"
-            placeholder="Search Products..."
-            type="text"
-            name="search"
-          />
+          <div className="relative">
+            <Input
+              className="placeholder:text-secondary-gray bg-transparent w-full border border-secondary-black focus:border-none rounded-md py-2 pl-9 pr-3 shadow-sm sm:text-sm"
+              placeholder="Search Products..."
+              type="text"
+              name="search"
+              onChange={handleChange}
+            />
+            <div className="absolute z-50 top-full left-0 w-full my-1 bg-surface rounded-b-xl rounded-md shadow-2xl">
+              {searchProducts &&
+                searchProducts.length > 0 &&
+                searchProducts.map((c: ProductTypes, index: number) => {
+                  return (
+                    <div key={c.id} className={cn('px-3', index === searchProducts.length - 1 ? '' : 'border-b border-secondary-black')}>
+                      <p onClick={() => setProductModal(true)} className="px-2 py-3 my-2 hover:bg-primary-background rounded-2xl cursor-pointer">
+                        {c.productName}
+                      </p>
+                    </div>
+                  );
+                })}
+            </div>
+          </div>
         </label>
       </div>
       <div className="">
@@ -175,62 +220,66 @@ export const DataTable = ({ products, }: DataTableProps) => {
           <TableBody>
             {currentItems &&
               currentItems.map((item: ProductTypes) => (
-                <TableRow
-                  key={item.id}
-                  className="hover:bg-primary-background  border-b-secondary-black cursor-pointer"
-                  onClick={() => handleProduct(item.id)}
-                >
-                  <TableCell>
-                    <Input
-                      type="checkbox"
-                      className="h-5 w-5 rounded border-red-500 checked:bg-red-500 checked:border-transparent"
-                      checked={isRowSelected(item)}
-                      onChange={() => toggleRowSelection(item)}
-                    />
-                  </TableCell>
-                  <TableCell className="line-clamp-1">
-                    {item.productName}
-                  </TableCell>
-                  <TableCell className="text-custom-font font-medium">
-                    ${item.price}
-                  </TableCell>
-                  <TableCell>{item.discount}%</TableCell>
-                  <TableCell className="text-custom-font font-medium">
-                    {
-                      categoriesData.find(
-                        (category) => category.id === item.categoryId
-                      )?.categoryName
-                    }
-                  </TableCell>
-                  <TableCell>{item.quantity}</TableCell>
-                  <TableCell>
-                    <div className="flex justify-between items-center">
-                      <div
-                        className={cn(
-                          " w-[50%] text-center py-[2px]",
-                          item.quantity > 0
-                            ? "rounded-md bg-emerald-500/15  text-sm text-emerald-500"
-                            : " rounded-md bg-destructive/15 text-sm text-destructive"
-                        )}
-                      >
-                        {item.quantity > 0 ? "Yes" : "No"}
+                <>
+                  <ProductModal product={item} setProductModal={setProductModal} productModal={productModal} />
+
+                  <TableRow
+                    key={item.id}
+                    className="hover:bg-primary-background  border-b-secondary-black cursor-pointer"
+                    onClick={() => handleProduct(item.id)}
+                  >
+                    <TableCell>
+                      <Input
+                        type="checkbox"
+                        className="h-5 w-5 rounded border-red-500 checked:bg-red-500 checked:border-transparent"
+                        checked={isRowSelected(item)}
+                        onChange={() => toggleRowSelection(item)}
+                      />
+                    </TableCell>
+                    <TableCell className="line-clamp-1">
+                      {item.productName}
+                    </TableCell>
+                    <TableCell className="text-custom-font font-medium">
+                      ${item.price}
+                    </TableCell>
+                    <TableCell>{item.discount}%</TableCell>
+                    <TableCell className="text-custom-font font-medium">
+                      {
+                        categoriesData.find(
+                          (category) => category.id === item.categoryId
+                        )?.categoryName
+                      }
+                    </TableCell>
+                    <TableCell>{item.quantity}</TableCell>
+                    <TableCell>
+                      <div className="flex justify-between items-center">
+                        <div
+                          className={cn(
+                            " w-[50%] text-center py-[2px]",
+                            item.quantity > 0
+                              ? "rounded-md bg-emerald-500/15  text-sm text-emerald-500"
+                              : " rounded-md bg-destructive/15 text-sm text-destructive"
+                          )}
+                        >
+                          {item.quantity > 0 ? "Yes" : "No"}
+                        </div>
+                        <div>
+                          <HoverCard >
+                            <HoverCardTrigger><PiDotsThreeOutlineVerticalFill /></HoverCardTrigger>
+                            <HoverCardContent className="w-32 bg-surface border border-secondary-black mr-4  ">
+                              <div className="text-custom-font ">
+                                <p onClick={() => setProductModal(true)} className="border-b border-secondary-black p-2 hover:bg-primary-background rounded-xl text-center">Edit</p>
+                                <p onClick={() => handleDelete(item.id)} className="p-2 hover:bg-primary-background rounded-xl text-center">Delete</p>
+                              </div>
+                              {/* onClick={() => handleDelete(item.id)} */}
+                              <ProductModal product={item} setProductModal={setProductModal} productModal={productModal} />
+                            </HoverCardContent>
+                          </HoverCard>
+                        </div>
                       </div>
-                      <div>
-                        <HoverCard >
-                          <HoverCardTrigger><PiDotsThreeOutlineVerticalFill /></HoverCardTrigger>
-                          <HoverCardContent className="w-32 bg-surface border border-secondary-black mr-4  ">
-                            <div className="text-custom-font ">
-                              <p onClick={() => setProductModal(true)} className="border-b border-secondary-black p-2 hover:bg-primary-background rounded-xl text-center">Edit</p>
-                              <p onClick={() => handleDelete(item.id)} className="p-2 hover:bg-primary-background rounded-xl text-center">Delete</p>
-                            </div>
-                            {/* onClick={() => handleDelete(item.id)} */}
-                            <ProductModal product={item} setProductModal={setProductModal} productModal={productModal} />
-                          </HoverCardContent>
-                        </HoverCard>
-                      </div>
-                    </div>
-                  </TableCell>
-                </TableRow>
+                    </TableCell>
+                  </TableRow>
+                </>
               ))}
           </TableBody>
         </Table>

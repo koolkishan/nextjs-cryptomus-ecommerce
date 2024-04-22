@@ -37,18 +37,27 @@ export const createProductInDb = async ({
 
 export const getProduct = async () => {
   return await db.products.findMany();
-
 };
 
-export const getProductFromId = async (id:string) => {
+export const getProductFromId = async (id: string) => {
   return await db.products.findFirst({
     where: {
       id,
     },
   });
-}
+};
 
-export const updateProductIdDb = async (id:string, productName:string, categoryId:string, description:string, tags:string[], price:number, discount:number, quantity:number) => {
+export const updateProductIdDb = async (
+  id: string,
+  productName: string,
+  categoryId: string,
+  description: string,
+  images: string[],
+  tags: string[],
+  price: number,
+  discount: number,
+  quantity: number
+) => {
   await db.products.update({
     where: {
       id,
@@ -58,12 +67,13 @@ export const updateProductIdDb = async (id:string, productName:string, categoryI
       categoryId,
       description,
       tags,
+      images,
       price,
       discount,
       quantity,
     },
   });
-}
+};
 
 export const deleteProdcutFromDb = async (id: string) => {
   console.log("deleteCategoryFromDb ~ id:", id);

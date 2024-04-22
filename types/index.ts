@@ -8,8 +8,8 @@ export interface ProductTypes {
     tags?: (string)[] | null;
     categoryId: string;
     quantity: number;
-    createdAt: string;
-    updatedAt: string;
+    createdAt?: Date;
+    updatedAt?: Date;
   }
 
 export interface CategoryTypes {

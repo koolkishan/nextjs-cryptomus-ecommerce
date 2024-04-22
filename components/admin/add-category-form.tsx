@@ -43,7 +43,6 @@ const AddCategoryForm = () => {
     setSuccess(success);
     const response = await getCategories();
     if (response && response.length > 0) {
-      // @ts-ignore
       setCategoriesData(response);
       const timerId = setTimeout(() => {
         setError("");

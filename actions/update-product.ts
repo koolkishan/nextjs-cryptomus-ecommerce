@@ -8,6 +8,7 @@ export const updateProduct = async (
   description: string,
   tag: string,
   price: number,
+  images:string[],
   discount: number,
   quantity: number
 ) => {
@@ -23,6 +24,7 @@ export const updateProduct = async (
       productName,
       categoryId,
       description,
+      images,
       tagsInArr,
       priceInNum,
       discountInNum,

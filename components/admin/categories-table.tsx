@@ -32,7 +32,7 @@ interface CategoriesTableProps {
 const CategoriesTable = ({ categories }: CategoriesTableProps) => {
   const [isMounted, setIsMounted] = useState<boolean>(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [selectedRows, setSelectedRows] = useState<any>([]);
+  const [selectedRows, setSelectedRows] = useState<CategoryTypes[] | []>([]);
   const [allSelected, setAllSelected] = useState<boolean>(false);
   const [categoriesWithProductCount, setCategoriesWithProductCount] = useState<CategoryWithProductCount[] | []>([]);
   const [searchCategories, setSearchCategories] = useState<CategoryTypes[] | []>([]);
@@ -102,16 +102,16 @@ const CategoriesTable = ({ categories }: CategoriesTableProps) => {
     }
   };
 
-  const toggleRowSelection = (item: any) => {
-    if (selectedRows.some((row: any) => row.id === item.id)) {
-      setSelectedRows(selectedRows.filter((row: any) => row.id !== item.id));
+  const toggleRowSelection = (item: CategoryTypes) => {
+    if (selectedRows.some((row: CategoryTypes) => row.id === item.id)) {
+      setSelectedRows(selectedRows.filter((row: CategoryTypes) => row.id !== item.id));
     } else {
       setSelectedRows([...selectedRows, item]);
     }
   };
 
-  const isRowSelected = (item: any) => {
-    return selectedRows.some((row: any) => row.id === item.id);
+  const isRowSelected = (item: CategoryTypes) => {
+    return selectedRows.some((row: CategoryTypes) => row.id === item.id);
   };
 
   const tableHeaderKeys = categoriesData.length
