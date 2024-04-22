@@ -1,4 +1,4 @@
-// This is your Prisma schema file,
+        // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
@@ -46,7 +46,8 @@ model Products {
   description String
   images      String[]
   tags        String[]
-  category    String
+  category    Categories @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  categoryId  String
   quantity    Int
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
@@ -55,4 +56,5 @@ model Products {
 model Categories {
   id           String @id @default(cuid())
   categoryName String @unique
+  products     Products[] // One-to-many relationship with Products
 }

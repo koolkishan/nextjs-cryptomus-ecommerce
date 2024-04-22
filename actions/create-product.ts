@@ -6,14 +6,18 @@ import { z } from "zod";
 
 export const createProduct = async (
   value: z.infer<typeof ProductSchema>,
-  imagesUrl: string[]
+  imagesUrl: string[],
+  categoryId: string
 ) => {
   const validation = ProductSchema.safeParse(value);
+  console.log("validation:", validation);
+  console.log(imagesUrl);
+  console.log(categoryId);
 
   if (!validation.success) {
     return { error: "Invalid Fields!" };
   }
-  const { productName, description, category, price, tags, discount, qty } =
+  const { productName, description, price, tags, discount, qty } =
     validation.data;
   const priceInNum = +price;
   const discountInNum = discount ? +discount : 0;
@@ -21,30 +25,19 @@ export const createProduct = async (
   const qtyInNum = +qty;
 
   try {
-    // const userExistOrNot = await findUserById(userId);
-    // if (!userExistOrNot) {
-    //   return { error: "User Not Found!" };
-    // }
-    // const userAddress = await findAddressByUserId(userId);
-    // if (!userAddress) {
-    //   await addAddress(validatedData, userId);
-    //   return { success: "Address Added Successfully!" };
-    // } else {
-    //   await updateAddressById(userAddress.id, validatedData, userId);
-    //   return { success: "Address Updated Successfully!" };
-    // }
     const createdProduct = await createProductInDb({
       productName,
       description,
-      category,
+      categoryId,
       price: priceInNum,
       tags: tagsInArr,
       images: imagesUrl,
       discount: discountInNum,
-      quantity: qtyInNum
-
+      quantity: qtyInNum,
     });
-    return {success: "Product successfully created"}
+    console.log(createProduct);
+
+    return { success: "Product successfully created" };
   } catch (err: unknown) {
     if (err instanceof Error) {
       return {

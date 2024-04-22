@@ -21,3 +21,9 @@ export const ProductSchema = z.object({
     message: "Quantity required",
   }),
 });
+
+export const CategorySchema = z.object({
+  categoryName: z.string().min(1, {
+    message: "Category name required",
+  })
+})

@@ -56,9 +56,9 @@ const Side = () => {
           link: "/admin/category/all-category",
         },
         {
-          label: "Customers",
+          label: "Categories",
           icon: <GoDotFill />,
-          link: "/admin/category/reports",
+          link: "/admin/categories",
         },
       ],
     },
