@@ -1,6 +1,6 @@
 // import { ProductTypes } from "@/types";
 // import { Address, User } from "@prisma/client";
-import { ProductTypes } from "@/types";
+import { CategoryTypes, ProductTypes } from "@/types";
 import { StateCreator } from "zustand";
 export interface EcommerceAppSliceTypes {
   collapsSidbar?:boolean;
@@ -13,6 +13,8 @@ export interface EcommerceAppSliceTypes {
   setOpenModal: (data: boolean) => void;
   viewingProductId: string;
   setviewingProductId: (data: string) => void;
+  categoriesData: CategoryTypes[] | [];
+  setCategoriesData: (data: CategoryTypes[]) => void;
 
 }
 const createEcommerceAppSlice: StateCreator<EcommerceAppSliceTypes> = (set, get) => ({
@@ -35,6 +37,10 @@ const createEcommerceAppSlice: StateCreator<EcommerceAppSliceTypes> = (set, get)
   viewingProductId:'',
   setviewingProductId: (data: string) => {
     set({ viewingProductId: data });
+  },
+  categoriesData: [],
+  setCategoriesData: (data: CategoryTypes[]) => {
+    set({ categoriesData: data });
   },
 });
 

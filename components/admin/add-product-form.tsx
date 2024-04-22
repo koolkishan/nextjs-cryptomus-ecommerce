@@ -25,17 +25,31 @@ import { Textarea } from "../ui/textarea";
 import CloudinaryUploadImages from "./cloudinary-upload-images";
 import Image from "next/image";
 import { RxCrossCircled } from "react-icons/rx";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import { createProduct } from "@/actions/create-product";
-import { getProductByLimit } from "@/actions/get-products-by-limit";
 import { useAppStore } from "@/store";
+import { getCategories } from "@/actions/get-all-categories";
+import { getProducts } from "@/actions/get-products";
 
 const AddProductForm = () => {
   const [error, setError] = useState<string | undefined>();
   const [success, setSuccess] = useState<string | undefined>();
   const [uploadedImageUrl, setUploadedImageUrl] = useState<string[] | []>([]);
-  const { setProductsData, setToggleSheet } = useAppStore();
+  const { setProductsData, setToggleSheet, setCategoriesData, categoriesData } =
+  useAppStore();
+  // console.log('AddProductForm ~ categoriesData:', categoriesData);
+
+  useEffect(() => {
+    async function fetchCategories() {
+      const response = await getCategories();
+      if (response && response.length > 0) {
+        setCategoriesData(response);
+      }
+    }
+    fetchCategories();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const form = useForm({
     resolver: zodResolver(ProductSchema),
@@ -59,15 +73,21 @@ const AddProductForm = () => {
   const onSubmit = async (values: z.infer<typeof ProductSchema>) => {
     setError("");
     setSuccess("");
-    const { error, success } = await createProduct(values, uploadedImageUrl);
-    setError(error);
-    setSuccess(success);
-    setUploadedImageUrl([]);
-    const response = await getProductByLimit(20);
-    if (response && response.length > 0) {
+    const category = categoriesData.find(category => category.categoryName === values.category);
+    if(category) {
+      const { error, success } = await createProduct(values, uploadedImageUrl, category?.id);
+      setError(error);
+      setSuccess(success);
+      setUploadedImageUrl([]);
+    }
+    const response = await getProducts();
+    if (response && response.length ) {
       // @ts-ignore
       setProductsData(response);
     }
+     else {
+      setProductsData([]);
+     }
     form.reset();
     return;
   };
@@ -154,30 +174,15 @@ const AddProductForm = () => {
                             <SelectValue placeholder="" />
                           </SelectTrigger>
                           <SelectContent className=" text-primary-text hover:bg-surface  bg-primary-background outline-none border-secondary-black">
-                            <SelectItem
-                              className="hover:bg-surface"
-                              value="Electronics"
-                            >
-                              Electronics
-                            </SelectItem>
-                            <SelectItem
-                              className=""
-                              value="Clothing & Accessories"
-                            >
-                              Clothing & Accessories
-                            </SelectItem>
-                            <SelectItem className="" value="Toys & Games">
-                              Toys & Games
-                            </SelectItem>
-                            <SelectItem className="" value="Jewelry & Watches">
-                              Jewelry & Watches
-                            </SelectItem>
-                            <SelectItem
-                              className=""
-                              value="Musical Instruments"
-                            >
-                              Musical Instruments
-                            </SelectItem>
+                            {categoriesData.map((category) => (
+                              <SelectItem
+                                key={category.id} 
+                                className="hover:bg-surface"
+                                value={category.categoryName}
+                              >
+                                {category.categoryName}
+                              </SelectItem>
+                            ))}
                           </SelectContent>
                         </Select>
                       </FormControl>
@@ -275,7 +280,6 @@ const AddProductForm = () => {
               <div className="my-6 text-primary-text">
                 <p className="text-custom-font">Product Images</p>
                 <div className="border rounded-xl border-dashed border-custom-font my-2 h-[100px] flex flex-col justify-center items-center">
-                  <div>
                     <div
                       className="flex flex-col justify-center items-center
                             "
@@ -284,7 +288,6 @@ const AddProductForm = () => {
                         handleUploadSuccess={handleUploadSuccess}
                       />
                     </div>
-                  </div>
                 </div>
                 <div className="grid grid-cols-3 gap-3">
                   {uploadedImageUrl.length > 0 &&

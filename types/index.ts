@@ -6,9 +6,22 @@ export interface ProductTypes {
     description: string;
     images?: (string)[] | null;
     tags?: (string)[] | null;
-    category: string;
+    categoryId: string;
     quantity: number;
     createdAt: string;
     updatedAt: string;
   }
+
+export interface CategoryTypes {
+  id:string;
+  categoryName: string;
+}
   
+export interface CategoryWithProductCount {
+  id: string;
+  categoryName: string;
+  products?: (ProductsEntity)[] | null;
+}
+export interface ProductsEntity {
+  id: string;
+}

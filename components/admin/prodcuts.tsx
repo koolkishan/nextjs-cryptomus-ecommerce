@@ -4,12 +4,23 @@ import { Button } from "../ui/button";
 import { AddProductSideBar } from "./add-product-sidebar";
 import ProductsTable from "./products-table";
 import { FiPlus } from "react-icons/fi";
+import { useAppStore } from "@/store";
+import { getCategories } from "@/actions/get-all-categories";
 
 const Products = () => {
   const [isMounted, setIsMounted] = useState<boolean>(false);
+  const {setCategoriesData} = useAppStore()
 
   useEffect(() => {
     setIsMounted(true);
+    async function fetchCategories() {
+      const response = await getCategories();
+      if (response && response.length > 0) {
+        setCategoriesData(response);
+      }
+    }
+    fetchCategories();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (!isMounted) {
