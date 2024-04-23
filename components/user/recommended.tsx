@@ -1,9 +1,9 @@
-"use client";
 import { useAppStore } from "@/store";
 import HorizontalProductList from "./horizontal-product-list";
 import { ProductTypes } from "@/types";
 import { useEffect, useState } from "react";
 import { getProductFromCategoryId } from "@/actions/get-products-from-category-id";
+
 interface RecommendedProductsProps {
   productsForSameCategory?: boolean;
   categoryId?: string;
@@ -14,20 +14,22 @@ const RecommendedProducts = ({
   categoryId = "",
 }: RecommendedProductsProps) => {
   const { userProductsData } = useAppStore();
-  const [categoryProduct, setcategoryProduct] = useState<ProductTypes[] | []>(
-    []
-  );
-  console.log("categoryProduct:", categoryProduct);
+  const [categoryProduct, setCategoryProduct] = useState<ProductTypes[]>([]);
+
   useEffect(() => {
-    async function sameCategoryProducts() {
-      const respones = await getProductFromCategoryId(categoryId);
-      console.log("sameCategoryProducts ~ respones:", respones);
-      setcategoryProduct(respones);
+    async function fetchCategoryProducts() {
+      if (productsForSameCategory && categoryId) {
+        try {
+          const response = await getProductFromCategoryId(categoryId);
+          setCategoryProduct(response);
+        } catch (error) {
+          console.error("Error fetching category products:", error);
+        }
+      }
     }
-    if (productsForSameCategory) {
-      sameCategoryProducts();
-    }
-  }, [productsForSameCategory, categoryId, categoryProduct]);
+
+    fetchCategoryProducts();
+  }, [productsForSameCategory, categoryId]);
 
   let productsToDisplay: ProductTypes[] = [];
 
@@ -39,17 +41,14 @@ const RecommendedProducts = ({
       }
     });
     productsToDisplay = Object.values(productsByCategory);
-  } 
+  } else {
+    productsToDisplay = categoryProduct;
+  }
 
   return (
     <div className="px-6 lg:px-0 lg:container">
       <p className="text-2xl font-medium my-4">Recommended</p>
-      {/* <HorizontalProductList products={productsToDisplay.slice(0, 4)} /> */}
-      {productsForSameCategory ? (
-        <HorizontalProductList products={categoryProduct.slice(0, 4)} />
-      ) : (
-        <HorizontalProductList products={productsToDisplay.slice(0, 4)} />
-      )}
+      <HorizontalProductList products={productsToDisplay.slice(0, 4)} />
     </div>
   );
 };

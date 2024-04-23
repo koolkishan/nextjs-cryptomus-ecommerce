@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 
 const Categories = () => {
   const [allCategories, setAllCategories] = useState<CategoryTypes[] | []>([]);
-  console.log("Categories ~ allCategories:", allCategories);
 
   useEffect(() => {
     async function getAllCategory() {
@@ -18,7 +17,7 @@ const Categories = () => {
   return (
     <div>
       {allCategories && allCategories.length > 0 && (
-        <ul className="bg-blue-400/15 py-5 border border-blue-400/20 grid gap-8 grid-cols-3 md:grid-cols-6 text-center my-4">
+        <ul className="bg-secondary-white py-5  grid gap-8 grid-cols-3 md:grid-cols-6 text-center my-4">
           {allCategories.map((category, index) => (
             <li
               key={category.id}

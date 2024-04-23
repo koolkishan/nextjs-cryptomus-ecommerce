@@ -9,15 +9,17 @@ interface HorizontalProductListProps {
 }
 const HorizontalProductList = ({ products }: HorizontalProductListProps) => {
   const router = useRouter();
+  const handleProductClick = (productId: string) => {
+    router.push(`/products/${productId}`);
+  };
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 h-[50%] gap-6">
       {products.map((product: ProductTypes) => (
-        <div
-          key={product.id}
-          className="h-full my-2 cursor-pointer"
-          onClick={() => router.push(`/user/products/${product.id}`)}
-        >
-          <div className="flex flex-col h-full">
+        <div key={product.id} className="h-full my-2 cursor-pointer">
+          <div
+            className="flex flex-col h-full"
+            onClick={() => handleProductClick(product.id)}
+          >
             {product.images && product.images.length > 0 && (
               <div className="bg-secondary-white rounded-2xl shadow-[2px_2px_2px_2px_rgba(0,0,0,0.03)]  flex justify-center items-center py-4">
                 <Image
