@@ -6,7 +6,7 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  await loginIsRequiredServer();
+  // await loginIsRequiredServer();
   return (
     <html lang="en">
       <body className="w-full h-full">

@@ -1,32 +1,20 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 import { Input } from "@/components/ui/input";
-// import { HeaderSheet } from "@/components/header/header-sheet";
 import { FaUser } from "react-icons/fa";
 import { IoHeartSharp, IoLocationSharp, IoMenuOutline } from "react-icons/io5";
-// import { HoverList } from "@/components/hover-list";
-// import { Profile } from "@/components/profile";
 import { IoCart } from "react-icons/io5";
 import { useRouter } from "next/navigation";
 import { useAppStore } from "@/store";
 import { useEffect } from "react";
-// import cities from "cities.json";
 import Search from "./search";
-// import { getProducts } from "@/actions/one-entry-api-calls/one-entry";
-import { ProductTypes } from "@/types";
 import { useAuthUser } from "@/hooks/useAuthUser";
-import { HoverList } from "./hover-list";
-import Profile from "./profile";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { signOut } from "next-auth/react";
 
-// import { getAllProductFromCart } from "@/actions/cart";
-
 const Header = () => {
   const router = useRouter();
-  //   const { products, setProducts, addToCartProduct, setAddToCartProduct } =
-  //     useAppStore();
   const { setProductCategory, productCategory } = useAppStore();
   const user = useAuthUser();
 
@@ -82,8 +70,8 @@ const Header = () => {
   };
 
   const handleLogOut = () => {
-    signOut();
-    router.push("/");
+    // signOut();
+    router.push("/auth");
   };
 
   return (

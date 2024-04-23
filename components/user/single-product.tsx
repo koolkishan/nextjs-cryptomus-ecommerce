@@ -9,7 +9,7 @@ import { AlertTriangle } from "lucide-react";
 import RecommendedProducts from "./recommended";
 
 interface SingleProductProps {
-  product: ProductTypes | null;
+  product: ProductTypes | undefined;
 }
 
 const SingleProduct = ({ product }: SingleProductProps) => {
@@ -24,7 +24,7 @@ const SingleProduct = ({ product }: SingleProductProps) => {
     if (product && quantity > product.quantity) {
       setQuantity(product.quantity);
     }
-  }, [product]);
+  }, [product, quantity]);
 
   const decrementQuantity = () => {
     if (quantity > 0) {

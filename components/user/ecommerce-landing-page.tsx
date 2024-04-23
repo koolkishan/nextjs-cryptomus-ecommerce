@@ -3,7 +3,6 @@ import { createUserdb, getUserbyEmail } from "@/data/user";
 import { useAuthUser } from "@/hooks/useAuthUser";
 import Image from "next/image";
 import { useEffect } from "react";
-import HorizontalProductList from "./horizontal-product-list";
 import { getProducts } from "@/actions/get-products";
 import { useAppStore } from "@/store";
 import NewProduct from "./new-products";
@@ -23,7 +22,6 @@ const EcommerceLandingPage = () => {
         }
       }
     }
-
     createUser();
   }, [user]);
 
@@ -39,21 +37,6 @@ const EcommerceLandingPage = () => {
 
   return (
     <div className="lg:container flex px-6 lg:px-0">
-      {/* <div className="relative w-1/4 bg-red-300 h-[300px]"> */}
-      {/* <Image
-          src="/landing-page.jpg"
-          alt="landing page"
-          layout="fill"
-        /> */}
-      {/* <p>filter product logic</p> */}
-      {/* </div> */}
-      {/* <div className="relative w-3/4 bg-red-600 h-[300px]"> */}
-      {/* <Image
-          src="/landing-page.jpg"
-          alt="landing page"
-          layout="fill"
-        /> */}
-      {/* </div> */}
       {userProductsData.length > 0 && (
         <div>
           <div className="w-full">
