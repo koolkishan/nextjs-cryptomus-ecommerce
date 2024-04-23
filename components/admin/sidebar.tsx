@@ -93,13 +93,12 @@ const Side = () => {
 
   return (
     <div
-      className={`min-h-[100vh] overflow-hidden border-none ${
-        collapsSidbar ? "collapsed" : ""
-      }`}
+      className={` overflow-hidden border-none ${collapsSidbar ? "collapsed" : ""
+        }`}
     >
       <Sidebar
         collapsed={collapsSidbar}
-        className={cn("h-full overflow-hidden border-none")}
+        className={cn("overflow-hidden border-none h-screen ")}
         toggled={toggled}
         onBackdropClick={() => setToggled((prev) => !prev)}
         rootStyles={{
@@ -122,7 +121,7 @@ const Side = () => {
           <p className={cn(!collapsSidbar ? "text-start" : "hidden")}>Rocket</p>
         </div>
         <Menu
-          className="h-[100vh] max-h-[100vh] text-white overflow-hidden border-none"
+          className="text-white overflow-hidden border-none"
           menuItemStyles={{
             button: ({ level, active, disabled }) => {
               const backgroundColor = level === 0 ? "" : "#23262B";

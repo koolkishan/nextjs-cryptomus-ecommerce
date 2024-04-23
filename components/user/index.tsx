@@ -1,7 +1,4 @@
 import EcommerceLandingPage from "./ecommerce-landing-page";
 import Header from "./header";
-export {
-EcommerceLandingPage,
-Header
-
-}
+import SingleProduct from "./single-product";
+export { EcommerceLandingPage, Header, SingleProduct };

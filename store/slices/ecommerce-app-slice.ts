@@ -4,7 +4,7 @@ import { CategoryTypes, ProductTypes } from "@/types";
 import { StateCreator } from "zustand";
 export interface EcommerceAppSliceTypes {
   // admin
-  collapsSidbar?:boolean;
+  collapsSidbar?: boolean;
   setCollapsSidbar: (data: boolean) => void;
   productsData: ProductTypes[] | [];
   setProductsData: (data: ProductTypes[]) => void;
@@ -18,12 +18,17 @@ export interface EcommerceAppSliceTypes {
   setCategoriesData: (data: CategoryTypes[]) => void;
   editCategory: CategoryTypes | null;
   setEditCategory: (data: CategoryTypes) => void;
-  // user 
-  productCategory:string;
-  setProductCategory: (data: string) => void;
 
+  // user
+  productCategory: string;
+  setProductCategory: (data: string) => void;
+  userProductsData: ProductTypes[] | [];
+  setUserProductsData: (data: ProductTypes[]) => void;
 }
-const createEcommerceAppSlice: StateCreator<EcommerceAppSliceTypes> = (set, get) => ({
+const createEcommerceAppSlice: StateCreator<EcommerceAppSliceTypes> = (
+  set,
+  get
+) => ({
   // admin
   collapsSidbar: false,
   setCollapsSidbar: (open: boolean) => {
@@ -41,7 +46,7 @@ const createEcommerceAppSlice: StateCreator<EcommerceAppSliceTypes> = (set, get)
   setOpenModal: (open: boolean) => {
     set({ openModal: open });
   },
-  viewingProductId:'',
+  viewingProductId: "",
   setviewingProductId: (data: string) => {
     set({ viewingProductId: data });
   },
@@ -50,16 +55,19 @@ const createEcommerceAppSlice: StateCreator<EcommerceAppSliceTypes> = (set, get)
     set({ categoriesData: data });
   },
   editCategory: null,
-  setEditCategory: (data: CategoryTypes ) => {
+  setEditCategory: (data: CategoryTypes) => {
     set({ editCategory: data });
   },
 
   // user
-  productCategory:'',
+  productCategory: "",
   setProductCategory: (data: string) => {
     set({ productCategory: data });
   },
-  
+  userProductsData: [],
+  setUserProductsData: (data: ProductTypes[]) => {
+    set({ userProductsData: data });
+  },
 });
 
 export { createEcommerceAppSlice };

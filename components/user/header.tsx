@@ -3,7 +3,7 @@
 import { Input } from "@/components/ui/input";
 // import { HeaderSheet } from "@/components/header/header-sheet";
 import { FaUser } from "react-icons/fa";
-import { IoLocationSharp } from "react-icons/io5";
+import { IoHeartSharp, IoLocationSharp, IoMenuOutline } from "react-icons/io5";
 // import { HoverList } from "@/components/hover-list";
 // import { Profile } from "@/components/profile";
 import { IoCart } from "react-icons/io5";
@@ -79,16 +79,16 @@ const Header = () => {
   // get products for particular product.
   const handleCategory = (name: string) => {
     setProductCategory(name);
-  }
+  };
 
   const handleLogOut = () => {
     signOut();
     router.push("/");
-};
+  };
 
   return (
     <>
-      <div className="flex w-full items-center py-6  lg:container px-6 lg:px-0 text-primary-txt ">
+      <div className="flex w-full items-center py-6 mb-2 lg:container px-6 lg:px-0 text-primary-txt ">
         <div className="flex w-[80%] md:w-[60%] lg:w-[70%]">
           <div className="flex text-4xl md:mr-10 lg:mr-32 text-secondary-blue">
             {/* <Image src="/Rocket.png" alt="logo" width={40} height={40} /> */}
@@ -105,13 +105,13 @@ const Header = () => {
               <FaUser
                 size={18}
                 className=" md:mr-4 cursor-pointer text-primary-gray"
-              // onClick={handleClick}
+                // onClick={handleClick}
               />
               <p className="hidden md:block font-medium">Profile</p>
             </div>
             <div className="flex">
               {" "}
-              <IoCart
+              <IoHeartSharp
                 size={22}
                 className=" md:mr-4 cursor-pointer text-primary-gray"
                 onClick={handleClick}
@@ -132,18 +132,82 @@ const Header = () => {
       <div className="block text-primary-white relative md:hidden lg:container lg:px-0 px-6 mb-4">
         <Search />
       </div>
-      <div className="grid lg:container px-6 lg:px-0 bg-secondary-white grid-cols-3 md:grid-cols-6 content-center items-center text-primary-gray text-center">
-        <p className={cn("py-2 text-sm", productCategory == "Electronics" ? 'border-b border-secondary-blue' : '')} onClick={(() => handleCategory('Electronics'))}>Electronics</p>
-        <p className={cn("py-2 text-sm", productCategory == "Books & Media" ? 'border-b border-secondary-blue' : '')} onClick={(() => handleCategory('Books & Media'))}>Books & Media</p>
-        <p className={cn("py-2 text-sm", productCategory == "Jewelry & Watches" ? 'border-b border-secondary-blue' : '')} onClick={(() => handleCategory('Jewelry & Watches'))}>Jewelry & Watches</p>
-        <p className={cn("py-2 text-sm", productCategory == "Electronics Accessories" ? 'border-b border-secondary-blue' : '')} onClick={(() => handleCategory('Electronics Accessories'))}>Electronics Accessories</p>
-        <p className={cn("py-2 text-sm", productCategory == "Baby & Kids" ? 'border-b border-secondary-blue' : '')} onClick={(() => handleCategory('Baby & Kids'))}>Baby & Kids</p>
-        <p className={cn("py-2 text-sm", productCategory == "Clothes" ? 'border-b border-secondary-blue' : '')} onClick={(() => handleCategory('Clothes'))}>Clothes</p>
-      </div>
-
-
     </>
   );
 };
 
 export default Header;
+
+{
+  /* <div className="bg-secondary-white my-2">
+<div className="flex  gap-8 lg:container px-6 lg:px-0 content-center items-center  text-center">
+  
+  <p
+    className={cn(
+      "py-2 text-sm",
+      productCategory == "Electronics"
+        ? "border-b border-secondary-blue"
+        : ""
+    )}
+    onClick={() => handleCategory("Electronics")}
+  >
+    Electronics
+  </p>
+  <p
+    className={cn(
+      "py-2 text-sm",
+      productCategory == "Books & Media"
+        ? "border-b border-secondary-blue"
+        : ""
+    )}
+    onClick={() => handleCategory("Books & Media")}
+  >
+    Books & Media
+  </p>
+  <p
+    className={cn(
+      "py-2 text-sm",
+      productCategory == "Jewelry & Watches"
+        ? "border-b border-secondary-blue"
+        : ""
+    )}
+    onClick={() => handleCategory("Jewelry & Watches")}
+  >
+    Jewelry & Watches
+  </p>
+  <p
+    className={cn(
+      "py-2 text-sm",
+      productCategory == "Electronics Accessories"
+        ? "border-b border-secondary-blue"
+        : ""
+    )}
+    onClick={() => handleCategory("Electronics Accessories")}
+  >
+    Electronics Accessories
+  </p>
+  <p
+    className={cn(
+      "py-2 text-sm",
+      productCategory == "Baby & Kids"
+        ? "border-b border-secondary-blue"
+        : ""
+    )}
+    onClick={() => handleCategory("Baby & Kids")}
+  >
+    Baby & Kids
+  </p>
+  <p
+    className={cn(
+      "py-2 text-sm",
+      productCategory == "Clothes"
+        ? "border-b border-secondary-blue"
+        : ""
+    )}
+    onClick={() => handleCategory("Clothes")}
+  >
+    Clothes
+  </p>
+</div>
+</div> */
+}

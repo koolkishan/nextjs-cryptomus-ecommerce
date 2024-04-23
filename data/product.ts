@@ -88,3 +88,16 @@ export const deleteProdcutFromDb = async (id: string) => {
     throw error;
   }
 };
+
+export const getProductsFormCategoryId = async (categoryId: string) => {
+  try {
+    return await db.products.findMany({
+      where: {
+        categoryId,
+      },
+    });
+  } catch (error) {
+    console.error("Error getting products from category Id:", error);
+    throw error;
+  }
+};

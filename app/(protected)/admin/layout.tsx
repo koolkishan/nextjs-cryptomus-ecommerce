@@ -14,16 +14,16 @@ export default async function RootLayout({
   await loginIsRequiredServer();
   return (
     <html lang="en">
-      <body className="w-full h-full">
+      <body className="w-full">
         <div className="flex w-full bg-[#1D1E24]">
           <div className="">
             <Side />
           </div>
-          <div className="flex flex-col h-screen marker:border-none w-full">
+          <div className="flex flex-col marker:border-none w-full">
             <div className="w-full border-b py-1 border-secondary-black">
               <Header />
             </div>
-            <div className="flex-1 h-[calc(100vh-59px)]">{children}</div>
+            <div className="flex-1 ">{children}</div>
           </div>
         </div>
       </body>
