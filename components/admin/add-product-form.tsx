@@ -114,7 +114,7 @@ const AddProductForm = () => {
     <>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="h-full">
-          <div className="flex h-screen flex-col">
+          <div className="flex h-full flex-col">
             <div className="h-[80%] overflow-y-scroll scrollbar-hide">
               <div className="w-[98%] ml-1 my-6 text-primary-text">
                 <FormField
@@ -256,7 +256,7 @@ const AddProductForm = () => {
                           placeholder="Enter quantity"
                           {...field}
                           type="number"
-                          min={1}
+                          min={0}
                         />
                       </FormControl>
                       <FormMessage />

@@ -1,4 +1,4 @@
-import EcommerceLandingPage from "@/components/ecommerce-landing-page";
+import { EcommerceLandingPage } from "@/components/user";
 
 const UserPage = () => {
   return (

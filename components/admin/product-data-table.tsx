@@ -299,7 +299,7 @@ export const DataTable = ({ products, }: DataTableProps) => {
                 i <= currentPage + 2 && (
                   <Button
                     key={i}
-                    className={`px-4 mx-3 bg-secondary-blue h-9 rounded-xl hover:bg-secondary-blue`}
+                    className={cn('px-4 mx-3  h-9 rounded-xl hover:bg-secondary-blue', i + 1 === currentPage? 'bg-secondary-blue':'bg-transparent')}
                     onClick={() => handlePageChange(i + 1)}
                   >
                     {i + 1}
