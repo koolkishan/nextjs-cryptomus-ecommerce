@@ -1,11 +1,15 @@
+"use client";
 import { getAllCategories } from "@/data/category";
 import { cn } from "@/lib/utils";
+import { useAppStore } from "@/store";
 import { CategoryTypes } from "@/types";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const Categories = () => {
   const [allCategories, setAllCategories] = useState<CategoryTypes[] | []>([]);
-
+  // const { setSelectedCategory } = useAppStore();
+  const router = useRouter();
   useEffect(() => {
     async function getAllCategory() {
       const response = await getAllCategories();
@@ -21,7 +25,13 @@ const Categories = () => {
           {allCategories.map((category, index) => (
             <li
               key={category.id}
-              className={cn("hover:bg-blue-400/30 py-3 rounded-xl")}
+              className={cn(
+                "cursor-pointer hover:bg-blue-400/30 py-3 rounded-xl"
+              )}
+              onClick={() => {
+                // setSelectedCategory("");
+                router.push(`/category/${category.id}`);
+              }}
             >
               {category.categoryName}
             </li>

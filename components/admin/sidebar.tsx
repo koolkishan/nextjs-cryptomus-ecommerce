@@ -23,18 +23,6 @@ const Side = () => {
   const [toggled, setToggled] = useState(false);
   const { collapsSidbar, setCollapsSidbar } = useAppStore();
 
-  // const screenWidth = typeof window !== "undefined" ? window.innerWidth : 0;
-  // const isSmallScreen = screenWidth >= 768;
-  // console.log("Side ~ isSmallScreen:", isSmallScreen);
-
-  // useEffect(() => {
-  //   if (isSmallScreen) {
-  //     console.log("useEffect ~ isSmallScreen:", isSmallScreen);
-  //     setCollapsSidbar(true);
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [isSmallScreen]);
-
   useEffect(() => {
     setSelectedItem(pathname);
   }, [pathname]);

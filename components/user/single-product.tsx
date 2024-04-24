@@ -13,7 +13,6 @@ interface SingleProductProps {
 }
 
 const SingleProduct = ({ product }: SingleProductProps) => {
-  console.log("SingleProduct ~ product:", product);
   const [singleProductImages, setSingleProductImages] = useState<string>("");
   const [quantity, setQuantity] = useState<number>(1);
 

@@ -24,6 +24,12 @@ export interface EcommerceAppSliceTypes {
   setProductCategory: (data: string) => void;
   userProductsData: ProductTypes[] | [];
   setUserProductsData: (data: ProductTypes[]) => void;
+  allCategories: CategoryTypes[] | [];
+  setAllCategories: (data: CategoryTypes[]) => void;
+  categoryProducts: ProductTypes[] | [];
+  setCategoryProducts: (data: ProductTypes[]) => void;
+  filterProducts: ProductTypes[] | [];
+  setFilterProducts: (data: ProductTypes[]) => void;
 }
 const createEcommerceAppSlice: StateCreator<EcommerceAppSliceTypes> = (
   set,
@@ -68,6 +74,18 @@ const createEcommerceAppSlice: StateCreator<EcommerceAppSliceTypes> = (
   setUserProductsData: (data: ProductTypes[]) => {
     set({ userProductsData: data });
   },
+  allCategories: [],
+  setAllCategories: (data: CategoryTypes[]) => {
+    set({ allCategories: data });
+  },
+  categoryProducts: [],
+  setCategoryProducts: (data: ProductTypes[]) => {
+    set({ categoryProducts: data });
+  },
+  filterProducts: [],
+  setFilterProducts:(data: ProductTypes[]) => { 
+    set({ filterProducts: data });
+  }
 });
 
 export { createEcommerceAppSlice };

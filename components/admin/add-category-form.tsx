@@ -28,7 +28,6 @@ const AddCategoryForm = () => {
   const [success, setSuccess] = useState<string | undefined>();
   const { setCategoriesData, setToggleSheet, editCategory, setEditCategory } = useAppStore();
   const [newCategoryName, setNewCategoryName] = useState<string | undefined>(editCategory?.categoryName);
-  console.log('AddCategoryForm ~ editCategory:', editCategory)
 
   const form = useForm({
     resolver: zodResolver(CategorySchema),

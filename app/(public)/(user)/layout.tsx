@@ -10,11 +10,11 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className="w-full h-full">
-        <div className="flex flex-col h-screen marker:border-none w-full">
-          <div className="sticky top-0 bg-secondary-white w-full py-1 border-secondary-black">
+        <div className="flex flex-col marker:border-none w-full">
+          <div className="sticky z-10 flex top-0 bg-secondary-white w-full py-1 border-secondary-black">
             <Header />
           </div>
-          <div className="flex-1 h-[calc(100vh-59px)]">{children}</div>
+          <div className="flex-1  relative">{children}</div>
         </div>
       </body>
     </html>

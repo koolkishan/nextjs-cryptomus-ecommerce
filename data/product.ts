@@ -76,7 +76,6 @@ export const updateProductIdDb = async (
 };
 
 export const deleteProdcutFromDb = async (id: string) => {
-  console.log("deleteCategoryFromDb ~ id:", id);
   try {
     return await db.products.delete({
       where: {

@@ -12,7 +12,6 @@ interface SingleProductPageProps {
 
 const SingleProductPage = ({ params }: SingleProductPageProps) => {
   const [product, setProduct] = useState<Products>();
-  console.log("SingleProductPage ~ product:", product);
 
   useEffect(() => {
     (async function getProduct() {
