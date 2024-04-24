@@ -11,8 +11,8 @@ export function GoogleSignInButton() {
   const router = useRouter();
 
   const handleClick = () => {
-    signIn("google", { callbackUrl: "/user" });
-    router.push("/user");
+    signIn("google", { callbackUrl: "/" });
+    router.push("/");
   };
 
   return (

@@ -35,7 +35,7 @@ export default function Home() {
             Login To Your Account
           </h1>
           <GoogleSignInButton />
-          <GithubSignInButton />
+          {/* <GithubSignInButton /> */}
           <div className="grid grid-cols-3 text-[12px] ">
             <div className="border-b border-secondary-black"></div>
             <div className="">

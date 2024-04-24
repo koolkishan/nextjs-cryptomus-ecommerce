@@ -18,7 +18,9 @@ export interface EcommerceAppSliceTypes {
   setCategoriesData: (data: CategoryTypes[]) => void;
   editCategory: CategoryTypes | null;
   setEditCategory: (data: CategoryTypes) => void;
-
+  viewingProduct: ProductTypes | undefined;
+  setViewingProduct: (data: ProductTypes) => void;
+  
   // user
   productCategory: string;
   setProductCategory: (data: string) => void;
@@ -56,6 +58,10 @@ const createEcommerceAppSlice: StateCreator<EcommerceAppSliceTypes> = (
   setviewingProductId: (data: string) => {
     set({ viewingProductId: data });
   },
+  viewingProduct: undefined,
+  setViewingProduct: (data: ProductTypes) => {
+    set({ viewingProduct: data });
+  },
   categoriesData: [],
   setCategoriesData: (data: CategoryTypes[]) => {
     set({ categoriesData: data });
@@ -83,9 +89,9 @@ const createEcommerceAppSlice: StateCreator<EcommerceAppSliceTypes> = (
     set({ categoryProducts: data });
   },
   filterProducts: [],
-  setFilterProducts:(data: ProductTypes[]) => { 
+  setFilterProducts: (data: ProductTypes[]) => {
     set({ filterProducts: data });
-  }
+  },
 });
 
 export { createEcommerceAppSlice };

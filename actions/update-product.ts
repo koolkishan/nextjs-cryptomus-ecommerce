@@ -14,7 +14,7 @@ export const updateProduct = async (
 ) => {
   try {
     const product = await getProductFromId(id);
-    const tagsInArr = tag.split(",");
+    const tagsInArr = tag.toLowerCase().split(",");
     const priceInNum = +price;
     const discountInNum = discount ? +discount : 0;
     const qtyInNum = +quantity;
