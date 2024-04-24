@@ -38,7 +38,6 @@ const AddProductForm = () => {
   const [uploadedImageUrl, setUploadedImageUrl] = useState<string[] | []>([]);
   const { setProductsData, setToggleSheet, setCategoriesData, categoriesData } =
     useAppStore();
-  // console.log('AddProductForm ~ categoriesData:', categoriesData);
 
   useEffect(() => {
     async function fetchCategories() {

@@ -75,8 +75,8 @@ const Header = () => {
   };
 
   return (
-    <>
-      <div className="flex w-full items-center py-6 mb-2 lg:container px-6 lg:px-0 text-primary-txt ">
+    <div className="flex md:block w-full flex-col">
+      <div className="  flex w-full items-center py-6 mb-2 lg:container px-6 lg:px-0 text-primary-txt ">
         <div className="flex w-[80%] md:w-[60%] lg:w-[70%]">
           <div className="flex text-4xl md:mr-10 lg:mr-32 text-secondary-blue">
             {/* <Image src="/Rocket.png" alt="logo" width={40} height={40} /> */}
@@ -88,28 +88,31 @@ const Header = () => {
         </div>
         <div className="flex w-full md:w-[40%] lg:w-[30%]">
           <div className="flex justify-end gap-6 md:grid md:grid-cols-3 w-full items-center">
-            <div className="flex" onClick={handleLogOut}>
+            <div
+              className="flex items-center cursor-pointer"
+              onClick={handleLogOut}
+            >
               {" "}
               <FaUser
                 size={18}
-                className=" md:mr-4 cursor-pointer text-primary-gray"
+                className=" md:mr-4  text-primary-gray"
                 // onClick={handleClick}
               />
               <p className="hidden md:block font-medium">Profile</p>
             </div>
-            <div className="flex">
+            <div className="flex items-center cursor-pointer">
               {" "}
               <IoHeartSharp
                 size={22}
-                className=" md:mr-4 cursor-pointer text-primary-gray"
+                className=" md:mr-4  text-primary-gray"
                 onClick={handleClick}
               />
               <p className="hidden md:block font-medium">Wishlist</p>
             </div>
-            <div className="flex">
+            <div className="flex items-center cursor-pointer">
               <IoCart
                 size={22}
-                className=" md:mr-4 cursor-pointer text-primary-gray"
+                className=" md:mr-4  text-primary-gray"
                 onClick={handleClick}
               />
               <p className="hidden md:block font-medium">My cart</p>
@@ -120,7 +123,7 @@ const Header = () => {
       <div className="block text-primary-white relative md:hidden lg:container lg:px-0 px-6 mb-4">
         <Search />
       </div>
-    </>
+    </div>
   );
 };
 

@@ -2,7 +2,6 @@
 import { deleteProdcutFromDb, getProductFromId} from "@/data/product";
 
 export const deleteProduct = async (id:string) => {
-    console.log('deleteProduct ~ id:', id)
     try {
         const product = await getProductFromId(id);
         if (!product) return { error: "product not found" };

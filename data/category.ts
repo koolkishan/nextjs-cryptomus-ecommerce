@@ -71,18 +71,18 @@ export const deleteCategoryFromDb = async (id: string) => {
   }
 };
 
-// export const getProductsFormCategoryName = async (categoryName: string) => {
-//   try {
-//     return await db.categories.findMany({
-//       where: {
-//         categoryName,
-//       },
-//       include: {
-//         products: true,
-//       },
-//     });
-//   } catch (error) {
-//     console.error("Error getting products from category:", error);
-//     throw error;
-//   }
-// };
+export const getProductsFormCategoryName = async (categoryName: string) => {
+  try {
+    return await db.categories.findMany({
+      where: {
+        categoryName,
+      },
+      include: {
+        products: true,
+      },
+    });
+  } catch (error) {
+    console.error("Error getting products from category:", error);
+    throw error;
+  }
+};

@@ -10,9 +10,6 @@ export const createProduct = async (
   categoryId: string
 ) => {
   const validation = ProductSchema.safeParse(value);
-  console.log("validation:", validation);
-  console.log(imagesUrl);
-  console.log(categoryId);
 
   if (!validation.success) {
     return { error: "Invalid Fields!" };
@@ -35,7 +32,6 @@ export const createProduct = async (
       discount: discountInNum,
       quantity: qtyInNum,
     });
-    console.log(createProduct);
 
     return { success: "Product successfully created" };
   } catch (err: unknown) {

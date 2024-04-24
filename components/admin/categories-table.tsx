@@ -115,7 +115,6 @@ const CategoriesTable = ({ categories }: CategoriesTableProps) => {
   };
 
   const handleSearchCategory = (editCategory:CategoryTypes) => {
-    console.log('handleSearchCategory ~ editCategory:', editCategory)
     setToggleSheet(true);
     setEditCategory(editCategory)
   }

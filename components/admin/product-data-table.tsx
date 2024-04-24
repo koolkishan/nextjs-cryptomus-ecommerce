@@ -122,7 +122,6 @@ export const DataTable = ({ products, }: DataTableProps) => {
   };
 
   const isRowSelected = (item: ProductTypes) => {
-    console.log('isRowSelected ~ item:', item);
     return selectedRows.some((row: ProductTypes) => row.id === item.id);
   };
 

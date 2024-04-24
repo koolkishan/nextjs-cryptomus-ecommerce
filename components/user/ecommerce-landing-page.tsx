@@ -9,9 +9,11 @@ import NewProduct from "./new-products";
 import RecomendedProducts from "./recommended";
 import { Button } from "../ui/button";
 import Categories from "./categories";
+import { getCategories } from "@/actions/get-all-categories";
 const EcommerceLandingPage = () => {
   const user = useAuthUser();
-  const { userProductsData, setUserProductsData } = useAppStore();
+  const { userProductsData, setUserProductsData, setAllCategories } =
+    useAppStore();
 
   useEffect(() => {
     async function createUser() {
@@ -27,13 +29,17 @@ const EcommerceLandingPage = () => {
 
   useEffect(() => {
     async function getProductsData() {
-      const response = await getProducts();
-      if (response && response.length > 0) {
-        setUserProductsData(response);
+      const productResponse = await getProducts();
+      if (productResponse && productResponse.length > 0) {
+        setUserProductsData(productResponse);
+      }
+      const categoryResponse = await getCategories();
+      if (categoryResponse && categoryResponse.length > 0) {
+        setAllCategories(categoryResponse);
       }
     }
     getProductsData();
-  }, [setUserProductsData]);
+  }, [setUserProductsData, setAllCategories]);
 
   return (
     <div className="lg:container flex px-6 lg:px-0">
