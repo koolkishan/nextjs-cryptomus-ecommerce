@@ -72,7 +72,7 @@ const Search = () => {
     } else if (e.key === "Enter" && selectedIndex >= 0) {
       e.preventDefault();
       const selectedTag = tagsSuggetion[selectedIndex];
-      router.push(`/search?tag=${encodeURIComponent(selectedTag)}`);
+      router.push(`/search/${encodeURIComponent(selectedTag)}`);
     }
   };
 
@@ -106,7 +106,7 @@ const Search = () => {
               key={index}
               onClick={() => {
                 // Handle click on tag suggestion
-                router.push(`/search?tag=${encodeURIComponent(t)}`);
+                router.push(`/search/${encodeURIComponent(t)}`);
               }}
             >
               {t}
