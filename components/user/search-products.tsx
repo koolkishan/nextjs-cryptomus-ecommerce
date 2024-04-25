@@ -9,16 +9,16 @@ interface SearchProductsProps {
 const SearchProducts = ({ products }: SearchProductsProps) => {
   return (
     <div>
-      <div className="lg:container lg:px-0 px-6 flex-1 w-full overflow-auto">
-        <div className=" fixed bg-blue-100 w-full  p-4">
-          <div className="">
-            <p className="text-2xl lg:text-4xl font-medium">
+      <div className=" flex-1 w-full overflow-auto">
+        <div className="  lg:container lg:px-0 px-6">
+          <div className="fixed px-6 lg:container lg:px-0 bg-blue-100 w-full p-4">
+            <p className="text-2xl lg:text-4xl px-2 font-medium">
               {/* {category?.categoryName} */}
               Search Result
             </p>
           </div>
         </div>
-        <div className="grid grid-cols-4 pt-[92px]">
+        <div className="lg:container lg:px-0  px-6 grid grid-cols-4 pt-[92px]">
           <div className="col-span-1  h-full sticky ">
             <div className="fixed mt-4">
               <FilterProducts

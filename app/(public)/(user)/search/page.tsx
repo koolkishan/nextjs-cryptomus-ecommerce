@@ -5,26 +5,29 @@ import { Products } from "@prisma/client";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { searchProductsByTagAction } from "@/actions/search-product-by-tag-action";
+import { Suspense } from "react";
 
 const SearchPage = () => {
-  const [product, setProduct] = useState<Products[]|[]>([]);
+  const [product, setProduct] = useState<Products[] | []>([]);
   const searchParams = useSearchParams();
   const tag = searchParams.get("tag");
 
-    useEffect(() => {
-      (async function getProduct() {
-        if(tag) {
-          const response = await searchProductsByTagAction(tag);
-          if (response) {
-            setProduct(response);
-          }
+  useEffect(() => {
+    (async function getProduct() {
+      if (tag) {
+        const response = await searchProductsByTagAction(tag);
+        if (response) {
+          setProduct(response);
         }
-      })();
-    }, [tag]);
+      }
+    })();
+  }, [tag]);
   return (
     <div>
-      {/* <SingleProduct product={product} /> */}
-      <SearchProducts products={product}/>
+      <Suspense>
+        {/* <SingleProduct product={product} /> */}
+        <SearchProducts products={product} />
+      </Suspense>
     </div>
   );
 };
