@@ -9,13 +9,19 @@ import { useEffect } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { UserAndProfileTypes } from "@/types";
 import { IoLocationSharp } from "react-icons/io5";
+import { BsThreeDotsVertical } from "react-icons/bs";
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/ui/hover-card";
+import { PiDotsThreeOutlineVerticalFill } from "react-icons/pi";
 
 const UserProfile = () => {
   const user = useAuthUser();
   const router = useRouter();
   const { setUserAndProfile, userAndProfile } = useAppStore();
 
-  
   useEffect(() => {
     async function getUserProfile() {
       if (user?.email) {
@@ -28,7 +34,7 @@ const UserProfile = () => {
       }
     }
     getUserProfile();
-  }, [user]); // Include user in the dependency array to trigger the effect when user changes
+  }, [router, setUserAndProfile, user]);
 
   return (
     <div className="h-full rounded-xl px-6">
@@ -62,19 +68,38 @@ const UserProfile = () => {
                   <div className="h-14 w-14 flex items-center justify-center rounded-full bg-primary-text mr-2">
                     <IoLocationSharp size={24} className="text-yellow-400" />
                   </div>
-                  <p className="text-custom-font">
-                    city name, street name, building no, house no <br />
-                    <span className="text-sm">{`(primary address)`}</span>
-                  </p>
-                </div>
-                <div className="flex mt-5 py-2 bg-secondary-white rounded-xl items-center px-2">
-                  <div className="h-14 w-14 flex items-center justify-center rounded-full bg-primary-text mr-2">
-                    <IoLocationSharp size={24} className="text-yellow-400" />
+                  <div className="flex w-full justify-center items-center py-4  ">
+                    <p className="flex-1 text-custom-font">
+                      {userAndProfile.profile &&
+                        userAndProfile.profile[0] &&
+                        userAndProfile.profile[0].addresses &&
+                        userAndProfile.profile[0].addresses[0]}
+                      <br />
+                      <span className="text-sm">{`(primary address)`}</span>
+                    </p>
+                    <p>
+                      <HoverCard>
+                        <HoverCardTrigger>
+                          <PiDotsThreeOutlineVerticalFill
+                            size={24}
+                            className="text-secondary-gray bg-secondary-white"
+                          />
+                        </HoverCardTrigger>
+                        <HoverCardContent className="w-32 cursor-pointer">
+                          <div className="text-custom-font ">
+                            <p
+                              onClick={() =>
+                                router.push("/profile/profile-setting")
+                              }
+                              className="rounded-xl text-center bg-secondary-white py-2"
+                            >
+                              Edit
+                            </p>
+                          </div>
+                        </HoverCardContent>
+                      </HoverCard>
+                    </p>
                   </div>
-                  <p className="text-custom-font">
-                    city name, street name, building no, house no <br />
-                    <span className="text-sm">{`(office address)`}</span>
-                  </p>
                 </div>
               </div>
             </div>

@@ -12,12 +12,12 @@ export default async function RootLayout({
   // const session = await getServerSession(authConfig);
   return (
     <div className="marker:border-none w-full h-full">
-      <div className={cn("lg:container px-0 h-full lg:px-6 mt-4 w-ful grid grid-cols-5 gap-10")}>
-        <div
-          className={cn(
-            "bg-secondary-white rounded-xl"
-          )}
-        >
+      <div
+        className={cn(
+          "lg:container px-0 h-full lg:px-6 mt-4 w-ful grid grid-cols-5 gap-10"
+        )}
+      >
+        <div>
           <ProfileNavigation />
         </div>
         <div className="flex-1 col-span-4">{children}</div>
