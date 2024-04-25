@@ -12,7 +12,7 @@ export function GoogleSignInButton() {
 
   const handleClick = () => {
     signIn("google", { callbackUrl: "/" });
-    router.push("/");
+    // router.push("/");
   };
 
   return (
