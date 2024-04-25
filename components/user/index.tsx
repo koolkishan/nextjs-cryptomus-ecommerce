@@ -5,6 +5,7 @@ import SingleProduct from "./single-product";
 import SearchProducts from "./search-products";
 import UserProfile from "./user-profile";
 import ProfileNavigation from "./profile-navigation";
+import ProfileSetting from "./profile-setting";
 
 export {
   EcommerceLandingPage,
@@ -13,5 +14,6 @@ export {
   CategoryProducts,
   SearchProducts,
   UserProfile,
-  ProfileNavigation
+  ProfileNavigation,
+  ProfileSetting
 };

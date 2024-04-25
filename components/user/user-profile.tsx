@@ -28,7 +28,7 @@ const UserProfile = () => {
       }
     }
     getUserProfile();
-  }, [user]); // Include user in the dependency array to trigger the effect when user changes
+  }, [router, setUserAndProfile, user]);
 
   return (
     <div className="h-full rounded-xl px-6">

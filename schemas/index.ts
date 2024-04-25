@@ -25,5 +25,23 @@ export const ProductSchema = z.object({
 export const CategorySchema = z.object({
   categoryName: z.string().min(1, {
     message: "Category name required",
+  }),
+});
+
+export const UserProfileSchema = z.object({
+  firstName: z.string().min(1, {
+    message: "First name required",
+  }),
+  lastName: z.string().min(1, {
+    message: "Last name required",
+  }),
+  updatedEmail: z.string().min(1, {
+    message: "Email required",
+  }),
+  phone: z.string().min(10, {
+    message: "Mobile number required",
+  }),
+  address: z.string().min(1, {
+    message: "Address required",
   })
-})
+});

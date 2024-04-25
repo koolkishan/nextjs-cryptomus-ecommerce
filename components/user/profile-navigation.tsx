@@ -6,8 +6,10 @@ import { usePathname, useRouter } from "next/navigation";
 
 const ProfileNavigation = () => {
   const path = usePathname();
+  const router = useRouter();
   const handleLogOut = () => {
     signOut();
+    router.push("/");
   };
 
   return (
@@ -20,6 +22,7 @@ const ProfileNavigation = () => {
               ? "bg-blue-100 border rounded-lg text-blue-600    "
               : ""
           )}
+          onClick={() => router.push("/profile")}
         >
           Account main
         </p>
@@ -56,10 +59,11 @@ const ProfileNavigation = () => {
         <p
           className={cn(
             "py-2 px-2 m-4 hover:bg-blue-100 hver:border hover:rounded-lg hover:text-blue-600",
-            path === "/profile-setting"
+            path === "/profile/profile-setting"
               ? "bg-blue-100 border rounded-lg text-blue-600    "
               : ""
           )}
+          onClick={() => router.push("/profile/profile-setting")}
         >
           Profile setting
         </p>

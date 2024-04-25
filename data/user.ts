@@ -31,3 +31,27 @@ export const createUserdb = async (
     return createdUser;
   } catch {}
 };
+
+export const updateUser = async (
+  name: string,
+  id: string,
+  updateEmail:string,
+  image: string,
+) => {
+  try {
+    const updated = await db.user.update({
+      where:{
+        id
+      },
+      data: {
+        name,
+        email:updateEmail,
+        image,
+      },
+    });
+    return updated;
+  } catch(error) {
+    console.log('Failed to update', error);
+    
+  }
+};
