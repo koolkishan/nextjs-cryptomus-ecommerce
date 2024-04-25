@@ -10,17 +10,36 @@ import RecomendedProducts from "./recommended";
 import { Button } from "../ui/button";
 import Categories from "./categories";
 import { getCategories } from "@/actions/get-all-categories";
+// import { db } from "@/lib/db";
+import { createUserProfileAction } from "@/actions/create-user-profile-action";
+// import { getProfileById } from "@/data/profile";
+import { getProfileAction } from "@/actions/get-profile-action";
+// import { useRouter } from "next/navigation";
+
 const EcommerceLandingPage = () => {
   const user = useAuthUser();
   const { userProductsData, setUserProductsData, setAllCategories } =
     useAppStore();
-
+  
   useEffect(() => {
     async function createUser() {
       if (user?.email && user?.name && user?.image) {
         const dbUser = await getUserbyEmail(user.email);
+        console.log("createUser ~ dbUser:", dbUser);
         if (!dbUser) {
-          await createUserdb(user.name, user.email, user.image);
+          const createdUser = await createUserdb(
+            user.name,
+            user.email,
+            user.image
+          );
+          const getUser = await getUserbyEmail(user.email);
+          console.log("createUser ~ getUser:", getUser?.id);
+          if (getUser) {
+            const userProfile = await getProfileAction(getUser?.id);
+            if (!userProfile) {
+              const createProfile = await createUserProfileAction(getUser.id);
+            }
+          }
         }
       }
     }

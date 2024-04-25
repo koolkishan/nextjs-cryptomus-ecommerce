@@ -49,7 +49,7 @@ export const authConfig: NextAuthOptions = {
       clientSecret: process.env.GITHUB_CLIENT_SECRET as string,
     }),
   ],
-  
+
   callbacks: {
     async jwt({ token, account }) {
       if (account) {
@@ -58,7 +58,7 @@ export const authConfig: NextAuthOptions = {
       }
       return token;
     },
-   
+
     async signIn({ account, profile }) {
       if (account?.provider !== "credentials") return true;
       return true;
@@ -66,7 +66,6 @@ export const authConfig: NextAuthOptions = {
     async session({ token, user, session }) {
       return session;
     },
-    
   },
 };
 

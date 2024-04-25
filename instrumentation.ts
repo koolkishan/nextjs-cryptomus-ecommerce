@@ -6,7 +6,7 @@ export const register = async () => {
   // Check for admins
 
   const admin = await db.admin_user.count();
-  console.log("register ~ admin:", admin);
+  // console.log("register ~ admin:", admin);
   if (!admin) {
     const data = await db.admin_user.create({
       data: {

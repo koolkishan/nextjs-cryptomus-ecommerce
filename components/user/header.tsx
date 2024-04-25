@@ -65,13 +65,21 @@ const Header = () => {
   }, []);
 
   // get products for particular product.
-  const handleCategory = (name: string) => {
-    setProductCategory(name);
-  };
+  // const handleCategory = (name: string) => {
+  //   setProductCategory(name);
+  // };
 
-  const handleLogOut = () => {
-    // signOut();
-    router.push("/auth");
+  // const handleLogOut = () => {
+  //   // signOut();
+  //   router.push("/auth");
+  // };
+
+  const handleProfile = () => {
+    // if (user) {
+    router.push("/profile");
+    // } else {
+    // router.push("/");
+    // }
   };
 
   return (
@@ -90,7 +98,7 @@ const Header = () => {
           <div className="flex justify-end gap-6 md:grid md:grid-cols-3 w-full items-center">
             <div
               className="flex items-center cursor-pointer"
-              onClick={handleLogOut}
+              onClick={handleProfile}
             >
               {" "}
               <FaUser
