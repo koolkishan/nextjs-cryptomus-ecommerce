@@ -22,13 +22,15 @@ import useDebounce from "@/hooks/useDebounce";
 interface FilterProductsProps {
   categoryFilter: boolean;
   searchFilter: boolean;
-  categoryName: string | "";
+  categoryName?: string | "";
+  searchProducts?: ProductTypes[];
 }
 
 const FilterProducts = ({
   categoryName,
   categoryFilter,
   searchFilter,
+  searchProducts,
 }: FilterProductsProps) => {
   const {
     allCategories,
@@ -37,13 +39,14 @@ const FilterProducts = ({
     filterProducts,
     setFilterProducts,
   } = useAppStore();
-  console.log("filterProducts:>>>>", filterProducts);
+  console.log("allCategories:", allCategories);
   const [sortBy, setSortBy] = useState<string>("");
   const [minPrice, setMinPrice] = useState<number>(0);
   const [maxPrice, setMaxPrice] = useState<number>(0);
   const [priceRange, setPriceRange] = useState<number[]>([]);
-  
+  const [selectCategoryId, setSelectedCategoryId] = useState<string>("");
   const deBouncePriceRange = useDebounce(priceRange.join(","), 200);
+  // console.log('selectCategory:', selectCategory)
 
   useEffect(() => {
     let max = Number.MIN_VALUE;
@@ -57,12 +60,27 @@ const FilterProducts = ({
           min = product.price;
         }
       });
-
       setMaxPrice(max);
       setMinPrice(min);
     }
-  }, []);
+  }, [categoryFilter, categoryProducts, searchFilter]);
 
+  useEffect(() => {
+    let max = Number.MIN_VALUE;
+    let min = Number.MAX_VALUE;
+    if (searchFilter && searchProducts) {
+      searchProducts.forEach((product) => {
+        if (product.price > max) {
+          max = product.price;
+        }
+        if (product.price < min) {
+          min = product.price;
+        }
+      });
+      setMaxPrice(max);
+      setMinPrice(min);
+    }
+  }, [searchFilter, searchProducts]);
   const sortingOptions = [
     { label: "Lowest first", value: "lowToHigh" },
     { label: "Higest first", value: "highToLow" },
@@ -70,6 +88,12 @@ const FilterProducts = ({
 
   const handleCategoryChange = (categoryName: string) => {
     // setSelectedCategory(categoryName);
+    const selectedCategory = allCategories.find(
+      (category) => category.categoryName === categoryName
+    );
+    if (selectedCategory) {
+      setSelectedCategoryId(selectedCategory.id);
+    }
   };
 
   const handleSortChange = (value: string) => {
@@ -79,32 +103,122 @@ const FilterProducts = ({
   const handleChange = (e: any) => {
     setPriceRange([e[0], e[1]]);
   };
+
+  // const handleFilter = async () => {
+  //   if (deBouncePriceRange) {
+  //     const [debounceMinPrice, debounceMaxPrice] =
+  //       deBouncePriceRange.split(",");
+
+  //     let filteredProducts;
+  //     // = categoryProducts.filter((product) => {
+  //     //   const price = product.price;
+  //     //   return (
+  //     //     price >= parseInt(debounceMinPrice) &&
+  //     //     price <= parseInt(debounceMaxPrice)
+  //     //   );
+  //     // });
+  //     // setFilterProducts(filteredProducts);
+  //     if (categoryFilter) {
+  //       filteredProducts = categoryProducts.filter((product) => {
+  //         const price = product.price;
+  //         return (
+  //           price >= parseInt(debounceMinPrice) &&
+  //           price <= parseInt(debounceMaxPrice)
+  //         );
+  //       });
+  //       setFilterProducts(filteredProducts);
+  //     }
+  //     if (searchFilter && searchProducts) {
+  //       filteredProducts = searchProducts.filter((product) => {
+  //         const price = product.price;
+  //         return (
+  //           price >= parseInt(debounceMinPrice) &&
+  //           price <= parseInt(debounceMaxPrice)
+  //         );
+  //       });
+  //       setFilterProducts(filteredProducts);
+  //     }
+  //     if (sortBy === "highToLow" && filteredProducts) {
+  //       setFilterProducts(filteredProducts.sort((a, b) => b.price - a.price));
+  //     } else if (sortBy === "lowToHigh" && filteredProducts) {
+  //       setFilterProducts(filteredProducts.sort((a, b) => a.price - b.price));
+  //     }
+  //   }
+  //   if (sortBy === "highToLow") {
+  //     if (searchFilter && searchProducts) {
+  //       setFilterProducts(searchProducts.sort((a, b) => b.price - a.price));
+  //     } else {
+  //       setFilterProducts(categoryProducts.sort((a, b) => b.price - a.price));
+  //     }
+  //   }
+  //   if (sortBy === "lowToHigh") {
+  //     if (searchFilter && searchProducts) {
+  //       setFilterProducts(searchProducts.sort((a, b) => a.price - b.price));
+  //     } else {
+  //       setFilterProducts(categoryProducts.sort((a, b) => a.price - b.price));
+  //     }
+  //   }
+  // };
+
   const handleFilter = async () => {
+    let filteredProducts: ProductTypes[] | [] = [];
+
     if (deBouncePriceRange) {
       const [debounceMinPrice, debounceMaxPrice] =
         deBouncePriceRange.split(",");
 
-      let filteredProducts = categoryProducts.filter((product) => {
-        const price = product.price;
-        return (
-          price >= parseInt(debounceMinPrice) &&
-          price <= parseInt(debounceMaxPrice)
-        );
-      });
-      setFilterProducts(filteredProducts);
-      if (sortBy === "highToLow") {
-        setFilterProducts(filteredProducts.sort((a, b) => b.price - a.price));
-
-      } if (sortBy === "lowToHigh") { 
-        setFilterProducts(filteredProducts.sort((a, b) => a.price - b.price));
+      if (categoryFilter) {
+        filteredProducts = categoryProducts.filter((product) => {
+          const price = product.price;
+          return (
+            price >= parseInt(debounceMinPrice) &&
+            price <= parseInt(debounceMaxPrice)
+          );
+        });
       }
+      if (searchFilter && searchProducts) {
+        filteredProducts = searchProducts.filter((product) => {
+          const price = product.price;
+          return (
+            price >= parseInt(debounceMinPrice) &&
+            price <= parseInt(debounceMaxPrice)
+          );
+        });
+      }
+      // if (searchFilter && searchProducts) {
+      //   // Filter by category name if selected
+      //   if (selectCategoryId) {
+      //     filteredProducts = searchProducts.filter((product) => {
+      //       return (
+      //         product.categoryId === selectCategoryId &&
+      //         product.price >= parseInt(debounceMinPrice) &&
+      //         product.price <= parseInt(debounceMaxPrice)
+      //       );
+      //     });
+      //   } else {
+      //     // Filter only by price range if no category is selected
+      //     filteredProducts = searchProducts.filter((product) => {
+      //       return (
+      //         product.price >= parseInt(debounceMinPrice) &&
+      //         product.price <= parseInt(debounceMaxPrice)
+      //       );
+      //     });
+      //   }
+      // }
     }
+
+    if (sortBy === "highToLow") {
+      filteredProducts.sort((a, b) => b.price - a.price);
+    } else if (sortBy === "lowToHigh") {
+      filteredProducts.sort((a, b) => a.price - b.price);
+    }
+    setFilterProducts(filteredProducts);
   };
 
   return (
     <div className="bg-secondary-white rounded-2xl shadow-[2px_2px_2px_2px_rgba(0,0,0,0.03)]">
       <div className="grid grid-rows-4 gap-6 px-4 py-2">
-        {!categoryFilter && (
+        {/* {!categoryFilter && (
           <div className="">
             <Select
               onValueChange={handleCategoryChange}
@@ -129,7 +243,7 @@ const FilterProducts = ({
               </SelectContent>
             </Select>
           </div>
-        )}
+        )} */}
         <div className="">
           <Select onValueChange={handleSortChange} defaultValue="">
             <SelectTrigger className="w-[280px] ring-0 ring-offset-0 focus:ring-0">
@@ -153,7 +267,7 @@ const FilterProducts = ({
         </div>
       </div>
       <div
-        className={cn("px-6 ", categoryFilter ? "mt-[-180px]" : "mt-[-120px]")}
+        className={cn("px-6", categoryFilter ? "mt-[-180px]" : "mt-[-180px]")}
       >
         <p className="">Prices</p>
         <Slider

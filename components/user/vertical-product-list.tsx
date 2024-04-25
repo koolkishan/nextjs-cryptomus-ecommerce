@@ -17,9 +17,19 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import { ProductTypes } from "@/types";
+import { Products } from "@prisma/client";
 const ITEMS_PER_PAGE = 5;
 
-const VerticalProductList = () => {
+interface VerticalProductListProps {
+  searchProducts?: Products[];
+  categoryFilter: boolean;
+  searchFilter: boolean;
+}
+const VerticalProductList = ({
+  searchProducts,
+  categoryFilter,
+  searchFilter,
+}: VerticalProductListProps) => {
   const { categoryProducts, filterProducts } = useAppStore();
   const [currentPage, setCurrentPage] = useState(1);
   const [displayProductList, setDisplayProductList] = useState<
@@ -27,20 +37,34 @@ const VerticalProductList = () => {
   >([]);
 
   useEffect(() => {
-    if (filterProducts.length > 0) {
+    if (filterProducts.length > 0 && categoryFilter) {
       setDisplayProductList(filterProducts);
     } else {
       setDisplayProductList(categoryProducts);
     }
-  }, [categoryProducts, filterProducts]);
+  }, [categoryProducts, filterProducts, categoryFilter]);
 
-  const totalPages = Math.ceil(categoryProducts.length / ITEMS_PER_PAGE);
+  useEffect(() => {
+    if (filterProducts.length > 0 && searchFilter) {
+      setDisplayProductList(filterProducts);
+    } else {
+      if (searchProducts) {
+        setDisplayProductList(searchProducts);
+      }
+    }
+  }, [searchProducts, searchFilter, filterProducts]);
 
+  // Adjust the calculation of totalPages
+  const totalPages = Math.ceil(displayProductList.length / ITEMS_PER_PAGE);
+
+  // Adjust startIndex and endIndex calculation
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const endIndex = Math.min(
     startIndex + ITEMS_PER_PAGE,
-    categoryProducts.length
+    displayProductList.length
   );
+
+  // Ensure pagination logic operates on displayProductList
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);

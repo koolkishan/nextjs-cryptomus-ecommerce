@@ -7,6 +7,9 @@ export const getUserbyEmail = async (email: string) => {
       where: {
         email,
       },
+      include:{
+        profile: true,
+      }
     });
     return user;
   } catch (error) {}
@@ -25,5 +28,6 @@ export const createUserdb = async (
         image,
       },
     });
+    return createdUser;
   } catch {}
 };

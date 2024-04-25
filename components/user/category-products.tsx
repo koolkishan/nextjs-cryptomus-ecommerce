@@ -19,18 +19,14 @@ import VerticalProductList from "./vertical-product-list";
 import FilterProducts from "./filter-products";
 
 const CategoryProducts = ({ products }: CategoryProductsProps) => {
-  const {
-    allCategories,
-    setCategoryProducts,
-    setFilterProducts,
-  } = useAppStore();
+  const { allCategories, setCategoryProducts, setFilterProducts } =
+    useAppStore();
 
   const [isMounted, setIsMounted] = useState<boolean>(false);
 
   useEffect(() => {
     setFilterProducts([]);
     setCategoryProducts(products);
-    
   }, [products, setCategoryProducts]);
 
   useEffect(() => {
@@ -90,7 +86,7 @@ const CategoryProducts = ({ products }: CategoryProductsProps) => {
             </div>
           </div>
           <div className="w-full right-0 col-span-3 h-full">
-            <VerticalProductList />
+            <VerticalProductList categoryFilter={true} searchFilter={false} />
           </div>
         </div>
       </div>

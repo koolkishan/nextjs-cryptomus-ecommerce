@@ -100,3 +100,35 @@ export const getProductsFormCategoryId = async (categoryId: string) => {
     throw error;
   }
 };
+
+// where: {
+//   tags: {
+//     some: {
+//       contains: tag,
+//       mode: 'insensitive' // Perform case-insensitive search
+//     }
+//   }
+// }
+
+export async function searchProductsByTag(tag:string) {
+  const products = await db.products.findMany({
+    where: {
+      tags: {
+        hasSome: [tag],
+      }
+    }
+  });
+
+  return products;
+}
+
+export async function getAllTags() {
+  const tags = await db.products.findMany({
+    select: {
+      tags: true
+    }
+  });
+  const uniqueTags = Array.from(new Set(tags.flatMap(product => product.tags)));
+
+  return uniqueTags;
+}

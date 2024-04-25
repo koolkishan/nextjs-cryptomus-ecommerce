@@ -1,6 +1,7 @@
 // import { ProductTypes } from "@/types";
 // import { Address, User } from "@prisma/client";
-import { CategoryTypes, ProductTypes } from "@/types";
+import { CategoryTypes, ProductTypes, UserAndProfileTypes } from "@/types";
+import { User } from "@prisma/client";
 import { StateCreator } from "zustand";
 export interface EcommerceAppSliceTypes {
   // admin
@@ -18,7 +19,9 @@ export interface EcommerceAppSliceTypes {
   setCategoriesData: (data: CategoryTypes[]) => void;
   editCategory: CategoryTypes | null;
   setEditCategory: (data: CategoryTypes) => void;
-
+  viewingProduct: ProductTypes | undefined;
+  setViewingProduct: (data: ProductTypes) => void;
+  
   // user
   productCategory: string;
   setProductCategory: (data: string) => void;
@@ -30,6 +33,8 @@ export interface EcommerceAppSliceTypes {
   setCategoryProducts: (data: ProductTypes[]) => void;
   filterProducts: ProductTypes[] | [];
   setFilterProducts: (data: ProductTypes[]) => void;
+  userAndProfile : UserAndProfileTypes | undefined
+  setUserAndProfile: (data: UserAndProfileTypes) => void;
 }
 const createEcommerceAppSlice: StateCreator<EcommerceAppSliceTypes> = (
   set,
@@ -55,6 +60,10 @@ const createEcommerceAppSlice: StateCreator<EcommerceAppSliceTypes> = (
   viewingProductId: "",
   setviewingProductId: (data: string) => {
     set({ viewingProductId: data });
+  },
+  viewingProduct: undefined,
+  setViewingProduct: (data: ProductTypes) => {
+    set({ viewingProduct: data });
   },
   categoriesData: [],
   setCategoriesData: (data: CategoryTypes[]) => {
@@ -83,9 +92,13 @@ const createEcommerceAppSlice: StateCreator<EcommerceAppSliceTypes> = (
     set({ categoryProducts: data });
   },
   filterProducts: [],
-  setFilterProducts:(data: ProductTypes[]) => { 
+  setFilterProducts: (data: ProductTypes[]) => {
     set({ filterProducts: data });
-  }
+  },
+  userAndProfile : undefined,
+  setUserAndProfile: (data: UserAndProfileTypes) => {
+    set({ userAndProfile: data });
+  },
 });
 
 export { createEcommerceAppSlice };

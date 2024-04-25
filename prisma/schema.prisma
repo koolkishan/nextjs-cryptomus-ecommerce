@@ -1,4 +1,4 @@
-        // This is your Prisma schema file,
+// This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
@@ -14,11 +14,12 @@ datasource db {
 }
 
 model User {
-  id    String   @id @default(cuid())
-  name  String?
-  email String?  @unique
-  image String?
-  role  UserRole @default(USER)
+  id      String    @id @default(cuid())
+  name    String?
+  email   String?   @unique
+  image   String?
+  role    UserRole  @default(USER)
+  profile Profile[]
 
   @@map("users")
 }
@@ -39,7 +40,7 @@ enum UserRole {
 }
 
 model Products {
-  id          String   @id @default(cuid())
+  id          String     @id @default(cuid())
   productName String
   price       Float
   discount    Float
@@ -49,12 +50,20 @@ model Products {
   category    Categories @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   categoryId  String
   quantity    Int
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
 }
 
 model Categories {
-  id           String @id @default(cuid())
-  categoryName String @unique
+  id           String     @id @default(cuid())
+  categoryName String     @unique
   products     Products[] // One-to-many relationship with Products
+}
+
+model Profile {
+  id        String   @id @default(cuid())
+  userId    String   @unique
+  addresses String[]
+  mobileNo  String?
+  user      User     @relation(fields: [userId], references: [id])
 }

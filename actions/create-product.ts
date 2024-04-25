@@ -18,7 +18,7 @@ export const createProduct = async (
     validation.data;
   const priceInNum = +price;
   const discountInNum = discount ? +discount : 0;
-  const tagsInArr = tags.split(",");
+  const tagsInArr = tags.toLowerCase().split(",");
   const qtyInNum = +qty;
 
   try {

@@ -1,110 +1,121 @@
 "use client";
 import { Input } from "@/components/ui/input";
-// import { dealOfTheDay } from "@/data-access/products";
-import { ProductTypes } from "@/types";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAppStore } from "@/store";
 import { IoSearchOutline } from "react-icons/io5";
+import useDebounce from "@/hooks/useDebounce";
+import { getAllTagsAction } from "@/actions/get-all-tags-action";
 
 const Search = () => {
-  // const [searchItem, setsearchItem] = useState<ProductTypes[]>([]);
   const [selectedIndex, setSelectedIndex] = useState<number>(-1);
-  // const { setSearchTerm } = useAppStore();
-  const [searchTerm, setsearchTerm] = useState<string>('');
+  const [allTags, setAllTags] = useState<string[] | []>([]);
+  const [tagsSuggetion, setTagSuggetion] = useState<string[] | []>([]);
+  const [searchTerm, setsearchTerm] = useState<string>("");
+  const [showSearchContainer, setShowSearchContainer] = useState(true);
+  const debounceSearchTerm = useDebounce(searchTerm, 300);
   const router = useRouter();
+  const searchContainerRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const searchTerm = e.target.value.toLowerCase().trim();
-    // let searchedProducts: typeof dealOfTheDay = [];
-    // const seenProductIds: number[] = [];
-    // const seenProductTitles: string[] = [];
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        searchContainerRef.current &&
+        inputRef.current &&
+        !searchContainerRef.current.contains(event.target as Node) &&
+        !inputRef.current.contains(event.target as Node)
+      ) {
+        setShowSearchContainer(false);
+      }
+    };
 
-    if (searchTerm) {
-      setsearchTerm(searchTerm);
-      // searchedProducts = dealOfTheDay.filter((product) => {
-      //   const matchesSearchTerm = product.name
-      //     .toLowerCase()
-      //     .trim()
-      //     .includes(searchTerm);
-      //   if (
-      //     matchesSearchTerm &&
-      //     !seenProductIds.includes(product.id) &&
-      //     !seenProductTitles.includes(product.name.toLowerCase().trim())
-      //   ) {
-      //     seenProductIds.push(product.id);
-      //     seenProductTitles.push(product.name.toLowerCase().trim());
-      //     return true;
-      //   }
-      // return false;
-      // });
+    document.addEventListener("click", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, [searchContainerRef]);
+
+  useEffect(() => {
+    async function getAllTagsFromDb() {
+      const response = await getAllTagsAction();
+      if (response) {
+        setAllTags(response);
+      }
     }
-    // setsearchItem(searchedProducts);
-    setSelectedIndex(-1);
-  };
+    getAllTagsFromDb();
+  }, []);
+
+  useEffect(() => {
+    if (debounceSearchTerm) {
+      setTagSuggetion(
+        allTags.filter((t) =>
+          t.toLowerCase().includes(debounceSearchTerm.toLowerCase())
+        )
+      );
+    }
+    if (debounceSearchTerm?.length === 0) setTagSuggetion([]);
+  }, [debounceSearchTerm]);
+
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "ArrowDown") {
+      e.preventDefault();
       setSelectedIndex((prevIndex) =>
-        // prevIndex < searchItem.length - 1 ? prevIndex + 1 : prevIndex
-        prevIndex < 3 - 1 ? prevIndex + 1 : prevIndex
+        prevIndex < tagsSuggetion.length - 1 ? prevIndex + 1 : prevIndex
       );
     } else if (e.key === "ArrowUp") {
+      e.preventDefault();
       setSelectedIndex((prevIndex) =>
         prevIndex > 0 ? prevIndex - 1 : prevIndex
       );
+    } else if (e.key === "Enter" && selectedIndex >= 0) {
+      e.preventDefault();
+      const selectedTag = tagsSuggetion[selectedIndex];
+      router.push(`/search/${encodeURIComponent(selectedTag)}`);
     }
-    // else if (e.key === "Enter" && selectedIndex >= 0) {
-    //   // Handle Enter key if an item is selected
-    //   const selectedProduct = searchItem[selectedIndex];
-    // }
   };
 
   return (
-    <div className="relative ">
+    <div className="relative">
       <div className="flex items-center">
         <Input
+          ref={inputRef}
           onChange={(e) => setsearchTerm(e.target.value)}
           onKeyDown={handleKeyDown}
           className="w-full border-black/20 outline-none bg-transparent text-zinc-600  placeholder:text-primary-gray "
           placeholder="Search..."
           value={searchTerm}
+          onFocus={() => setShowSearchContainer(true)}
         />
-        {/* focus-visible:outline-blue-400 focus-visible:border-none */}
-        <IoSearchOutline size={40} className="text-primary-text bg-secondary-blue p-2 rounded-r-lg ml-[-3px] " />
+        <IoSearchOutline
+          size={40}
+          className="text-primary-text bg-secondary-blue p-2 rounded-r-lg ml-[-3px] cursor-pointer "
+        />
       </div>
-      <div className="absolute  w-full bg-primary-dark shadow-2xl rounded-lg ">
-        {/* {Array.from({ length: 5 }).map((_, index) => (
-          <p key={index}>{index + 10}</p>
-        ))} */}
-      </div>
+      {showSearchContainer ? (
+        <div
+          ref={searchContainerRef}
+          className="absolute max-h-80 overflow-auto w-full bg-secondary-white shadow-2xl rounded-b-xl"
+        >
+          {tagsSuggetion.map((t, index) => (
+            <p
+              className={`px-3 py-2 hover:bg-blue-100 ${
+                index === selectedIndex ? "bg-blue-100" : ""
+              }`}
+              key={index}
+              onClick={() => {
+                // Handle click on tag suggestion
+                router.push(`/search/${encodeURIComponent(t)}`);
+              }}
+            >
+              {t}
+            </p>
+          ))}
+        </div>
+      ) : null}
     </div>
   );
 };
 
 export default Search;
-
-// {/* {searchItem &&
-//           searchItem.map((product: ProductTypes, index: number) => {
-//             const isSelected = index === selectedIndex;
-//             return (
-//               <div
-//                 key={index}
-//                 className={`m-4 border-b border-gray-200/15 ${isSelected ? "border-b-gray-400" : ""}`}
-//                 onMouseEnter={() => setSelectedIndex(index)}
-//               >
-//                 <p
-//                   onClick={(e: any) => {
-//                     setSearchTerm(e.target.innerText);
-//                     router.push(
-//                       `/search/${e.target.innerText.split(" ").join("")}`
-//                     );
-//                     // setsearchTerm(null);
-//                     setsearchItem([]);
-//                   }}
-//                   className="truncate mb-4 cursor-pointer"
-//                 >
-//                   {product.title}
-//                 </p>
-//               </div>
-//             );
-//           })} */}

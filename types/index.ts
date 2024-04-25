@@ -25,3 +25,19 @@ export interface CategoryWithProductCount {
 export interface ProductsEntity {
   id: string;
 }
+
+
+export interface UserAndProfileTypes {
+  id: string;
+  name: string;
+  email: string;
+  image: string;
+  role: string;
+  profile?: (ProfileEntity)[] | null;
+}
+export interface ProfileEntity {
+  id: string;
+  userId: string;
+  addresses?: (null)[] | null;
+  mobileNo?: null;
+}

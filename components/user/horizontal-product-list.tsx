@@ -33,10 +33,24 @@ const HorizontalProductList = ({ products }: HorizontalProductListProps) => {
             )}
             <div className="px-2 mt-4">
               <div className="flex items-center justify-center">
-                <p className="flex-1 font-medium">${product.price}</p>
+                {/* <p className="flex-1 font-medium">${product.price}</p>   */}
+                <div className="flex items-center gap-2 flex-1 font-medium">
+                  <p>
+                    $
+                    {Math.round(
+                      product.price - (product?.price * product?.discount) / 100
+                    )}
+                  </p>
+                  <p className="text-custom-font line-through text-sm">
+                    ${product?.price}
+                  </p>
+                </div>
                 <p className="text-secondary-blue">
                   <IoHeartOutline size={22} />
                 </p>
+              </div>
+              <div className="mb-4 inline-block text-xs font-bold py-1  text-emerald-500">
+                <p>{product?.discount}% Off</p>
               </div>
               <div className="line-clamp-2 mt-2">
                 <p className="">{product.productName}</p>

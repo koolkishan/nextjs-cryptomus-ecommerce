@@ -14,7 +14,7 @@ export default async function RootLayout({
           <div className="sticky z-10 flex top-0 bg-secondary-white w-full py-1 border-secondary-black">
             <Header />
           </div>
-          <div className="flex-1  relative">{children}</div>
+          <div className="flex-1 h-full relative">{children}</div>
         </div>
       </body>
     </html>
