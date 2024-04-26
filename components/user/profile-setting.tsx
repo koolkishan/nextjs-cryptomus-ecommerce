@@ -53,10 +53,7 @@ const ProfileSetting = () => {
   });
 
   const onSubmit = async (values: z.infer<typeof UserProfileSchema>) => {
-    console.log("onSubmit ~ values:", values);
     if (userAndProfile?.profile) {
-      console.log(userAndProfile?.profile[0].id);
-      console.log(userAndProfile?.id)
       const { error, success } = await updateProfileAction(
         values,
         uploadedImageUrl,

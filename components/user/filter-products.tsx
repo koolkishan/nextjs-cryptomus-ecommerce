@@ -30,7 +30,7 @@ const FilterProducts = ({
   categoryName,
   categoryFilter,
   searchFilter,
-  searchProducts,
+  // searchProducts,
 }: FilterProductsProps) => {
   const {
     allCategories,
@@ -38,6 +38,7 @@ const FilterProducts = ({
     setCategoryProducts,
     filterProducts,
     setFilterProducts,
+    searchProducts
   } = useAppStore();
   console.log("allCategories:", allCategories);
   const [sortBy, setSortBy] = useState<string>("");

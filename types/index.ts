@@ -1,16 +1,41 @@
+// export interface ProductTypes {
+//     id: string;
+//     productName: string;
+//     price: number;
+//     discount: number;
+//     description: string;
+//     images?: (string)[] | null;
+//     tags?: (string)[] | null;
+//     categoryId: string;
+//     quantity: number;
+//     createdAt?: Date;
+//     updatedAt?: Date;
+//   }
+
 export interface ProductTypes {
+  id: string;
+  productName: string;
+  price: number;
+  discount: number;
+  description: string;
+  images: string[];
+  tags: string[];
+  categoryId: string;
+  quantity: number;
+  createdAt: Date;
+  updatedAt: Date;
+  category: {
     id: string;
-    productName: string;
-    price: number;
-    discount: number;
-    description: string;
-    images?: (string)[] | null;
-    tags?: (string)[] | null;
-    categoryId: string;
-    quantity: number;
-    createdAt?: Date;
-    updatedAt?: Date;
-  }
+    categoryName: string;
+  };
+  carts: any[]; // Assuming this will contain cart data, you can define a type for carts if needed
+  wishlist?: {
+    id: string;
+    userId: string;
+    createdAt: Date;
+  }[];
+};
+
 
 export interface CategoryTypes {
   id:string;

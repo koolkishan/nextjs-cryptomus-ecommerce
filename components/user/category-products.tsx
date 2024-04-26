@@ -4,7 +4,7 @@ import { useAppStore } from "@/store";
 import { Products } from "@prisma/client";
 
 interface CategoryProductsProps {
-  products: Products[];
+  products: ProductTypes[];
 }
 import {
   Breadcrumb,
@@ -17,6 +17,7 @@ import {
 import { useEffect, useState } from "react";
 import VerticalProductList from "./vertical-product-list";
 import FilterProducts from "./filter-products";
+import { ProductTypes } from "@/types";
 
 const CategoryProducts = ({ products }: CategoryProductsProps) => {
   const { allCategories, setCategoryProducts, setFilterProducts } =
@@ -27,7 +28,7 @@ const CategoryProducts = ({ products }: CategoryProductsProps) => {
   useEffect(() => {
     setFilterProducts([]);
     setCategoryProducts(products);
-  }, [products, setCategoryProducts]);
+  }, [products, setCategoryProducts, setFilterProducts]);
 
   useEffect(() => {
     setIsMounted(true);

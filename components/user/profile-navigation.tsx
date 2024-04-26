@@ -17,7 +17,7 @@ const ProfileNavigation = () => {
       <div>
         <p
           className={cn(
-            "py-2 px-2 mb-4 hover:bg-blue-100 hver:border hover:rounded-lg hover:text-blue-600",
+            "cursor-pointer py-2 px-2 mb-4 hover:bg-blue-100 hver:border hover:rounded-lg hover:text-blue-600",
             path === "/profile"
               ? "bg-blue-100 border rounded-lg text-blue-600    "
               : ""
@@ -28,7 +28,7 @@ const ProfileNavigation = () => {
         </p>
         <p
           className={cn(
-            "py-2 px-2 mb-4 hover:bg-blue-100 hver:border hover:rounded-lg hover:text-blue-600",
+            "cursor-pointer py-2 px-2 mb-4 hover:bg-blue-100 hver:border hover:rounded-lg hover:text-blue-600",
             path === "/Order"
               ? "bg-blue-100 border rounded-lg text-blue-600    "
               : ""
@@ -38,17 +38,18 @@ const ProfileNavigation = () => {
         </p>
         <p
           className={cn(
-            "py-2 px-2 mb-4 hover:bg-blue-100 hver:border hover:rounded-lg hover:text-blue-600",
+            "cursor-pointer py-2 px-2 mb-4 hover:bg-blue-100 hver:border hover:rounded-lg hover:text-blue-600",
             path === "/whishlist"
               ? "bg-blue-100 border rounded-lg text-blue-600    "
               : ""
           )}
+          onClick={() => router.push("/wishlist")}
         >
           My wishlist
         </p>
         <p
           className={cn(
-            "py-2 px-2 mb-4 hover:bg-blue-100 hver:border hover:rounded-lg hover:text-blue-600",
+            "cursor-pointer py-2 px-2 mb-4 hover:bg-blue-100 hver:border hover:rounded-lg hover:text-blue-600",
             path === "/transaction"
               ? "bg-blue-100 border rounded-lg text-blue-600    "
               : ""
@@ -58,7 +59,7 @@ const ProfileNavigation = () => {
         </p>
         <p
           className={cn(
-            "py-2 px-2 mb-4 hover:bg-blue-100 hver:border hover:rounded-lg hover:text-blue-600",
+            "cursor-pointer py-2 px-2 mb-4 hover:bg-blue-100 hver:border hover:rounded-lg hover:text-blue-600",
             path === "/profile/profile-setting"
               ? "bg-blue-100 border rounded-lg text-blue-600    "
               : ""
@@ -69,7 +70,7 @@ const ProfileNavigation = () => {
         </p>
         <p
           className={cn(
-            "py-2 px-2 mb-4 hover:bg-blue-100 hver:border hover:rounded-lg hover:text-blue-600"
+            "cursor-pointer py-2 px-2 mb-4 hover:bg-blue-100 hver:border hover:rounded-lg hover:text-blue-600"
             // path === "/logout"
             //   ? "bg-blue-100 border rounded-lg text-blue-600    "
             //   : ""

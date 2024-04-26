@@ -13,8 +13,6 @@ export const updateProfileAction = async (
   id:string
 ) => {
   try {
-    console.log(values);
-    console.log(image);
     // const validation = UserProfileSchema.safeParse(values);
     const { firstName, lastName, updatedEmail, phone, address } = values;
     const name = firstName + " " + lastName;

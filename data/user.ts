@@ -9,6 +9,7 @@ export const getUserbyEmail = async (email: string) => {
       },
       include:{
         profile: true,
+        wishlist:true
       }
     });
     return user;

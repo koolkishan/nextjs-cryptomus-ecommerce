@@ -5,6 +5,8 @@ import { Products } from "@prisma/client";
 import { useEffect, useState } from "react";
 import { searchProductsByTagAction } from "@/actions/search-product-by-tag-action";
 import { Suspense } from "react";
+import { ProductTypes } from "@/types";
+import { useAppStore } from "@/store";
 
 interface SearchPageProps {
   params: {
@@ -13,23 +15,24 @@ interface SearchPageProps {
 }
 
 const SearchPage = ({params}:SearchPageProps) => {
-  const [product, setProduct] = useState<Products[] | []>([]);
+  const [product, setProduct] = useState<ProductTypes[] | []>([]);
+  const {setSearchProducts, searchProducts} = useAppStore()
   const tag = decodeURIComponent(params.tag);
 
   useEffect(() => {
     (async function getProduct() {
       if (tag) {
-        const response = await searchProductsByTagAction(tag);
+        const response = await searchProductsByTagAction(tag) as ProductTypes[];
         if (response) {
-          setProduct(response);
+          setSearchProducts(response);
         }
       }
     })();
-  }, [tag]);
+  }, [setSearchProducts, tag]);
   return (
     <Suspense>
       <div>
-        <SearchProducts products={product} />
+        <SearchProducts  tag={tag}/>
       </div>
     </Suspense>
   );

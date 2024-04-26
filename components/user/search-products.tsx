@@ -2,11 +2,13 @@ import { Products } from "@prisma/client";
 import React from "react";
 import FilterProducts from "./filter-products";
 import VerticalProductList from "./vertical-product-list";
+import { ProductTypes } from "@/types";
 interface SearchProductsProps {
-  products: Products[];
+  // products: ProductTypes[];
+  tag: string;
 }
 
-const SearchProducts = ({ products }: SearchProductsProps) => {
+const SearchProducts = ({ tag }: SearchProductsProps) => {
   return (
     <div>
       <div className=" flex-1 w-full overflow-auto">
@@ -22,7 +24,7 @@ const SearchProducts = ({ products }: SearchProductsProps) => {
           <div className="col-span-1  h-full sticky ">
             <div className="fixed mt-4">
               <FilterProducts
-                searchProducts={products}
+                // searchProducts={products}
                 categoryFilter={false}
                 searchFilter={true}
               />
@@ -32,7 +34,8 @@ const SearchProducts = ({ products }: SearchProductsProps) => {
             <VerticalProductList
               categoryFilter={false}
               searchFilter={true}
-              searchProducts={products}
+              // searchProducts={products}
+              tag={tag}
             />
           </div>
         </div>
