@@ -16,6 +16,8 @@ import {
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
 import { PiDotsThreeOutlineVerticalFill } from "react-icons/pi";
+import { Button } from "../ui/button";
+import { GoPlus } from "react-icons/go";
 
 const UserProfile = () => {
   const user = useAuthUser();
@@ -53,56 +55,72 @@ const UserProfile = () => {
                 </div>
                 <div className="flex gap-4 font-light">
                   <p>Email: {userAndProfile.email}</p>
-                  <p>
-                    Phone:{" "}
-                    {userAndProfile.profile
-                      ? userAndProfile.profile[0]?.mobileNo
-                      : "Add phone in profile setting"}
-                  </p>
+                  {userAndProfile.profile &&
+                  userAndProfile.profile[0]?.mobileNo ? (
+                    <p>Phone: {userAndProfile.profile[0]?.mobileNo}</p>
+                  ) : (
+                    ""
+                  )}
                 </div>
               </div>
             </div>
-            <div className="">
-              <div className="grid grid-cols-2 gap-10">
-                <div className="flex mt-5 bg-secondary-white rounded-xl items-center px-2">
-                  <div className="h-14 w-14 flex items-center justify-center rounded-full bg-primary-text mr-2">
-                    <IoLocationSharp size={24} className="text-yellow-400" />
-                  </div>
-                  <div className="flex w-full justify-center items-center py-4  ">
-                    <p className="flex-1 text-custom-font">
-                      {userAndProfile.profile &&
-                        userAndProfile.profile[0] &&
-                        userAndProfile.profile[0].addresses &&
-                        userAndProfile.profile[0].addresses[0]}
-                      <br />
-                      <span className="text-sm">{`(primary address)`}</span>
-                    </p>
-                    <p>
-                      <HoverCard>
-                        <HoverCardTrigger>
-                          <PiDotsThreeOutlineVerticalFill
-                            size={24}
-                            className="text-secondary-gray bg-secondary-white"
-                          />
-                        </HoverCardTrigger>
-                        <HoverCardContent className="w-32 cursor-pointer">
-                          <div className="text-custom-font ">
-                            <p
-                              onClick={() =>
-                                router.push("/profile/profile-setting")
-                              }
-                              className="rounded-xl text-center bg-secondary-white py-2"
-                            >
-                              Edit
-                            </p>
-                          </div>
-                        </HoverCardContent>
-                      </HoverCard>
-                    </p>
+            {userAndProfile.profile &&
+            userAndProfile.profile[0]?.addresses &&
+            userAndProfile.profile[0]?.addresses.length > 0 ? (
+              <div className="">
+                <div className="grid grid-cols-2 gap-10">
+                  <div className="flex mt-5 bg-secondary-white rounded-xl items-center px-2">
+                    <div className="h-14 w-14 flex items-center justify-center rounded-full bg-primary-text mr-2">
+                      <IoLocationSharp size={24} className="text-yellow-400" />
+                    </div>
+                    <div className="flex w-full justify-center items-center py-4  ">
+                      <p className="flex-1 text-custom-font">
+                        {userAndProfile.profile &&
+                          userAndProfile.profile[0] &&
+                          userAndProfile.profile[0].addresses &&
+                          userAndProfile.profile[0].addresses[0]}
+                        <br />
+                        <span className="text-sm">{`(primary address)`}</span>
+                      </p>
+                      <p>
+                        <HoverCard>
+                          <HoverCardTrigger>
+                            <PiDotsThreeOutlineVerticalFill
+                              size={24}
+                              className="text-secondary-gray bg-secondary-white"
+                            />
+                          </HoverCardTrigger>
+                          <HoverCardContent className="w-32 cursor-pointer">
+                            <div className="text-custom-font ">
+                              <p
+                                onClick={() =>
+                                  router.push("/profile/profile-setting")
+                                }
+                                className="rounded-xl text-center bg-secondary-white py-2"
+                              >
+                                Edit
+                              </p>
+                            </div>
+                          </HoverCardContent>
+                        </HoverCard>
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
+            ) : (
+              <div>
+                <Button
+                  variant={"outline"}
+                  className="bg-secondary-blue hover:bg-secondary-blue hover:text-primary-text text-primary-text"
+                  onClick={() => {
+                    router.push("/profile/profile-setting");
+                  }}
+                >
+                  <GoPlus size={18} className="mr-2" /> Add Address
+                </Button>
+              </div>
+            )}
           </div>
         ) : (
           <div>Loading...</div>

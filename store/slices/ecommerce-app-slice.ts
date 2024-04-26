@@ -21,7 +21,8 @@ export interface EcommerceAppSliceTypes {
   setEditCategory: (data: CategoryTypes) => void;
   viewingProduct: ProductTypes | undefined;
   setViewingProduct: (data: ProductTypes) => void;
-  
+  searchProducts: ProductTypes[] | [];
+  setSearchProducts: (data: ProductTypes[]) => void;
   // user
   productCategory: string;
   setProductCategory: (data: string) => void;
@@ -33,8 +34,12 @@ export interface EcommerceAppSliceTypes {
   setCategoryProducts: (data: ProductTypes[]) => void;
   filterProducts: ProductTypes[] | [];
   setFilterProducts: (data: ProductTypes[]) => void;
-  userAndProfile : UserAndProfileTypes | undefined
+  userAndProfile: UserAndProfileTypes | undefined;
   setUserAndProfile: (data: UserAndProfileTypes) => void;
+  product : ProductTypes| undefined;
+  setProduct: (data: ProductTypes) => void;
+  sameCategoryProduct: ProductTypes[] | [];
+  setSameCategoryProduct: (data: ProductTypes[]) => void;
 }
 const createEcommerceAppSlice: StateCreator<EcommerceAppSliceTypes> = (
   set,
@@ -95,9 +100,21 @@ const createEcommerceAppSlice: StateCreator<EcommerceAppSliceTypes> = (
   setFilterProducts: (data: ProductTypes[]) => {
     set({ filterProducts: data });
   },
-  userAndProfile : undefined,
+  userAndProfile: undefined,
   setUserAndProfile: (data: UserAndProfileTypes) => {
     set({ userAndProfile: data });
+  },
+  searchProducts: [],
+  setSearchProducts: (data: ProductTypes[]) => {
+    set({ categoryProducts: data });
+  },
+  product: undefined,
+  setProduct: (data: ProductTypes) => {
+    set({ product: data });
+  },
+  sameCategoryProduct: [],
+  setSameCategoryProduct: (data: ProductTypes[]) => {
+    set({ sameCategoryProduct: data });
   },
 });
 

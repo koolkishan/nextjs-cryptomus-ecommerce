@@ -1,32 +1,43 @@
 "use client";
-import Image from "next/image"; // Make sure to import Image from 'next/image'
-import { LuHeart } from "react-icons/lu";
-import { ProductTypes } from "@/types";
-import { IoHeart, IoHeartOutline } from "react-icons/io5";
-import { useRouter } from "next/navigation";
+import { getProducts } from "@/actions/get-products";
+import { getProductFromCategoryId } from "@/actions/get-products-from-category-id";
+import { removeWishListAction } from "@/actions/remove-wishlist-action";
 import { useAuthUser } from "@/hooks/useAuthUser";
-import { wishListAction } from "@/actions/add-wishlist-action";
-import { getUserByEmailAction } from "@/actions/get-user-by-email-action";
-import { error } from "console";
 import { addProductToWishList } from "@/lib/utils";
 import { useAppStore } from "@/store";
-import { getProducts } from "@/actions/get-products";
-import { removeWishListAction } from "@/actions/remove-wishlist-action";
+import { ProductTypes } from "@/types";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-interface HorizontalProductListProps {
-  products?: ProductTypes[];
-  productsForSameCategory?: boolean;
+import { IoHeart, IoHeartOutline } from "react-icons/io5";
+
+interface SameCateGoryProductsProps {
+  categoryId: string;
 }
-const HorizontalProductList = ({
-  products,
-}: HorizontalProductListProps) => {
-  const { setUserProductsData} = useAppStore();
+const SameCateGoryProducts = ({ categoryId }: SameCateGoryProductsProps) => {
   const user = useAuthUser();
   const router = useRouter();
+  const { setUserProductsData } = useAppStore();
+  const [categoryProduct, setCategoryProduct] = useState<ProductTypes[]>([]);
+
+  useEffect(() => {
+    async function fetchCategoryProducts() {
+      if (categoryId) {
+        try {
+          const response = await getProductFromCategoryId(categoryId);
+          setCategoryProduct(response);
+        } catch (error) {
+          console.error("Error fetching category products:", error);
+        }
+      }
+    }
+
+    fetchCategoryProducts();
+  }, [categoryId, setCategoryProduct]);
+
   const handleProductClick = (productId: string) => {
     router.push(`/products/${productId}`);
   };
-
 
   const handleWishList = async (productId: string) => {
     if (user && user.email) {
@@ -36,6 +47,8 @@ const HorizontalProductList = ({
         if (productResponse && productResponse.length > 0) {
           setUserProductsData(productResponse);
         }
+        const response = await getProductFromCategoryId(categoryId);
+        setCategoryProduct(response);
       }
     } else {
       router.push("/auth");
@@ -50,15 +63,18 @@ const HorizontalProductList = ({
         if (productResponse && productResponse.length > 0) {
           setUserProductsData(productResponse);
         }
+        const response = await getProductFromCategoryId(categoryId);
+          setCategoryProduct(response);
       } else {
         router.push("/auth");
       }
     }
   };
+
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 h-[50%] gap-6">
-      {products &&
-        products.map((product: ProductTypes) => (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 h-[50%] gap-6 mt-20">
+      {categoryProduct &&
+        categoryProduct.slice(0, 4).map((product: ProductTypes) => (
           <div key={product.id} className="h-full my-2 cursor-pointer">
             <div className="flex flex-col h-full">
               {product.images && product.images.length > 0 && (
@@ -122,4 +138,5 @@ const HorizontalProductList = ({
     </div>
   );
 };
-export default HorizontalProductList;
+
+export default SameCateGoryProducts;

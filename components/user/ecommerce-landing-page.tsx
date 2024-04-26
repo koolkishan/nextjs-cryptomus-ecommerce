@@ -49,6 +49,7 @@ const EcommerceLandingPage = () => {
   useEffect(() => {
     async function getProductsData() {
       const productResponse = await getProducts();
+      console.log('getProductsData ~ productResponse:', productResponse)
       if (productResponse && productResponse.length > 0) {
         setUserProductsData(productResponse);
       }

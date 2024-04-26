@@ -6,6 +6,7 @@ import SearchProducts from "./search-products";
 import UserProfile from "./user-profile";
 import ProfileNavigation from "./profile-navigation";
 import ProfileSetting from "./profile-setting";
+import Wishlist from "./wishlist";
 
 export {
   EcommerceLandingPage,
@@ -15,5 +16,6 @@ export {
   SearchProducts,
   UserProfile,
   ProfileNavigation,
-  ProfileSetting
+  ProfileSetting,
+  Wishlist
 };

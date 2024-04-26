@@ -5,94 +5,94 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client-js"
+provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+provider = "postgresql"
+url = env("DATABASE_URL")
 }
 
 model User {
-  id       String    @id @default(cuid())
-  name     String?
-  email    String?   @unique
-  image    String?
-  role     UserRole  @default(USER)
-  profile  Profile[]
-  wishlist Wishlist?
-  cart     Cart?
+id String @id @default(cuid())
+name String?
+email String? @unique
+image String?
+role UserRole @default(USER)
+profile Profile[]
+wishlist Wishlist?
+cart Cart?
 
-  @@map("users")
+@@map("users")
 }
 
 model admin_user {
-  id        String   @id @default(cuid())
-  firstName String
-  lastName  String
-  email     String   @unique()
-  password  String
-  status    Boolean
-  roles     String[]
+id String @id @default(cuid())
+firstName String
+lastName String
+email String @unique()
+password String
+status Boolean
+roles String[]
 }
 
 enum UserRole {
-  ADMIN
-  USER
+ADMIN
+USER
 }
 
 model Products {
-  id          String        @id @default(cuid())
-  productName String
-  price       Float
-  discount    Float
-  description String
-  images      String[]
-  tags        String[]
-  category    Categories    @relation(fields: [categoryId], references: [id], onDelete: Cascade)
-  categoryId  String
-  quantity    Int
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
-  wishlist    Wishlist[] // One-to-many relationship with Wishlist
-  carts       CartProduct[] // One-to-many relationship with CartProduct
+id String @id @default(cuid())
+productName String
+price Float
+discount Float
+description String
+images String[]
+tags String[]
+category Categories @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+categoryId String
+quantity Int
+createdAt DateTime @default(now())
+updatedAt DateTime @updatedAt
+wishlist Wishlist[] // One-to-many relationship with Wishlist
+carts CartProduct[] // One-to-many relationship with CartProduct
 }
 
 model Categories {
-  id           String     @id @default(cuid())
-  categoryName String     @unique
-  products     Products[] // One-to-many relationship with Products
+id String @id @default(cuid())
+categoryName String @unique
+products Products[] // One-to-many relationship with Products
 }
 
 model Profile {
-  id        String   @id @default(cuid())
-  userId    String   @unique
-  addresses String[]
-  mobileNo  String?
-  user      User     @relation(fields: [userId], references: [id])
+id String @id @default(cuid())
+userId String @unique
+addresses String[]
+mobileNo String?
+user User @relation(fields: [userId], references: [id])
 }
 
 model Wishlist {
-  id        String     @id @default(cuid())
-  user      User       @relation(fields: [userId], references: [id])
-  userId    String     @unique
-  products  Products[] // Many-to-many relationship with Products
-  createdAt DateTime   @default(now())
+id String @id @default(cuid())
+user User @relation(fields: [userId], references: [id])
+userId String @unique
+products Products[] // Many-to-many relationship with Products
+createdAt DateTime @default(now())
 }
 
 model Cart {
-  id        String        @id @default(cuid())
-  user      User          @relation(fields: [userId], references: [id])
-  userId    String        @unique
-  products  CartProduct[]
-  createdAt DateTime      @default(now())
+id String @id @default(cuid())
+user User @relation(fields: [userId], references: [id])
+userId String @unique
+products CartProduct[]
+createdAt DateTime @default(now())
 }
 
 model CartProduct {
-  id        String   @id @default(cuid())
-  cart      Cart     @relation(fields: [cartId], references: [id])
-  cartId    String
-  product   Products @relation(fields: [productId], references: [id])
-  productId String
-  quantity  Int
+id String @id @default(cuid())
+cart Cart @relation(fields: [cartId], references: [id])
+cartId String
+product Products @relation(fields: [productId], references: [id])
+productId String
+quantity Int
 }

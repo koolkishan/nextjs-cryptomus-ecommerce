@@ -1,5 +1,6 @@
 import { CategoryProducts } from "@/components/user";
 import { getProductsFormCategoryId } from "@/data/product";
+import { ProductTypes } from "@/types";
 
 interface CategoyPageProps {
   params: {
@@ -8,7 +9,7 @@ interface CategoyPageProps {
 }
 
 const CategoryPage = async ({ params }: CategoyPageProps) => {
-  const products = await getProductsFormCategoryId(params.categoryId);
+  const products = await getProductsFormCategoryId(params.categoryId) as ProductTypes[];
   return (
     <div className="h-full">
       <CategoryProducts products={products} />

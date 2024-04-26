@@ -19,34 +19,10 @@ const Header = () => {
   const user = useAuthUser();
 
   const handleClick = async () => {
-    // if (user?.id) {
-    //   const cartProducts = await getAllProductFromCart({
-    //     userId: user?.id,
-    //   });
-    //   if (cartProducts) {
-    //     const cartFilterProducts = [];
-    //     for (let id of cartProducts.productId) {
-    //       const product = products.find((p) => +p.id === +id);
-    //       cartFilterProducts.push(product);
-    //     }
-    //     if (cartFilterProducts) {
-    //       const combinedCart = [...addToCartProduct, ...cartFilterProducts];
-    //       const uniqueProducts = new Set();
-    //       const uniqueUpdatedCart = combinedCart.filter((product) => {
-    //         if (!uniqueProducts.has(product?.id)) {
-    //           uniqueProducts.add(product?.id);
-    //           return true;
-    //         }
-    //         return false;
-    //       }) as ProductTypes[];
-    //       setAddToCartProduct(uniqueUpdatedCart);
-    //     }
-    //   }
-    // }
     if (user) {
-      //   router.push("/cart");
+      router.push("/wishlist");
     } else {
-      //   router.push("/login");
+      router.push("/auth");
     }
   };
 
@@ -86,7 +62,10 @@ const Header = () => {
     <div className="flex md:block w-full flex-col">
       <div className="  flex w-full items-center py-6 mb-2 lg:container px-6 lg:px-0 text-primary-txt ">
         <div className="flex w-[80%] md:w-[60%] lg:w-[70%]">
-          <div className="flex text-4xl md:mr-10 lg:mr-32 text-secondary-blue">
+          <div
+            className="flex text-4xl cursor-pointer md:mr-10 lg:mr-32 text-secondary-blue"
+            onClick={() => router.push("/")}
+          >
             {/* <Image src="/Rocket.png" alt="logo" width={40} height={40} /> */}
             <p className="ml-2">ABC</p>
           </div>
@@ -108,13 +87,12 @@ const Header = () => {
               />
               <p className="hidden md:block font-medium">Profile</p>
             </div>
-            <div className="flex items-center cursor-pointer">
+            <div
+              className="flex items-center cursor-pointer"
+              onClick={handleClick}
+            >
               {" "}
-              <IoHeartSharp
-                size={22}
-                className=" md:mr-4  text-primary-gray"
-                onClick={handleClick}
-              />
+              <IoHeartSharp size={22} className=" md:mr-4  text-primary-gray" />
               <p className="hidden md:block font-medium">Wishlist</p>
             </div>
             <div className="flex items-center cursor-pointer">

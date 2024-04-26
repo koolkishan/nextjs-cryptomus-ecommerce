@@ -12,25 +12,39 @@ import {
 import { useAppStore } from "@/store";
 import Image from "next/image";
 import { Button } from "../ui/button";
-import { IoHeartOutline } from "react-icons/io5";
+import { IoHeart, IoHeartOutline } from "react-icons/io5";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { cn } from "@/lib/utils";
+import { addProductToWishList, cn } from "@/lib/utils";
 import { ProductTypes } from "@/types";
 import { Products } from "@prisma/client";
+import { useAuthUser } from "@/hooks/useAuthUser";
+import { getProductsFormCategoryId } from "@/data/product";
+import { searchProductsByTagAction } from "@/actions/search-product-by-tag-action";
+import { removeWishListAction } from "@/actions/remove-wishlist-action";
 const ITEMS_PER_PAGE = 5;
 
 interface VerticalProductListProps {
-  searchProducts?: Products[];
+  searchProducts?: ProductTypes[];
   categoryFilter: boolean;
   searchFilter: boolean;
+  tag?: string;
 }
+// const products = await getProductsFormCategoryId(params.categoryId);
 const VerticalProductList = ({
-  searchProducts,
+  // searchProducts,
   categoryFilter,
   searchFilter,
+  tag,
 }: VerticalProductListProps) => {
-  const { categoryProducts, filterProducts } = useAppStore();
+  const user = useAuthUser();
+  const {
+    categoryProducts,
+    filterProducts,
+    setCategoryProducts,
+    setSearchProducts,
+    searchProducts,
+  } = useAppStore();
   const [currentPage, setCurrentPage] = useState(1);
   const [displayProductList, setDisplayProductList] = useState<
     ProductTypes[] | []
@@ -40,9 +54,11 @@ const VerticalProductList = ({
     if (filterProducts.length > 0 && categoryFilter) {
       setDisplayProductList(filterProducts);
     } else {
-      setDisplayProductList(categoryProducts);
+      if (categoryProducts.length) {
+        setDisplayProductList(categoryProducts);
+      }
     }
-  }, [categoryProducts, filterProducts, categoryFilter]);
+  }, [categoryProducts, filterProducts, categoryFilter, displayProductList]);
 
   useEffect(() => {
     if (filterProducts.length > 0 && searchFilter) {
@@ -54,17 +70,74 @@ const VerticalProductList = ({
     }
   }, [searchProducts, searchFilter, filterProducts]);
 
-  // Adjust the calculation of totalPages
-  const totalPages = Math.ceil(displayProductList.length / ITEMS_PER_PAGE);
+  const handleWishList = async (productId: string, categoryId: string) => {
+    if (user && user.email) {
+      if (categoryFilter) {
+        const response = await addProductToWishList(user.email, productId);
+        if (response?.success) {
+          const productResponse = (await getProductsFormCategoryId(
+            categoryId
+          )) as ProductTypes[];
+          if (productResponse && productResponse.length > 0) {
+            setCategoryProducts(productResponse);
+          }
+        }
+      } else {
+        const response = await addProductToWishList(user.email, productId);
+        if (response?.success) {
+          if (tag) {
+            const productResponse = (await searchProductsByTagAction(
+              tag
+            )) as ProductTypes[];
+            if (productResponse && productResponse.length > 0) {
+              setSearchProducts(productResponse);
+            }
+          }
+        }
+      }
+    } else {
+      router.push("/auth");
+    }
+  };
 
-  // Adjust startIndex and endIndex calculation
+  const handleRemoveWishList = async (
+    productId: string,
+    categoryId: string
+  ) => {
+    if (user && user.email) {
+      if (categoryFilter) {
+        const response = await removeWishListAction(user.email, productId);
+        if (response?.success) {
+          const productResponse = (await getProductsFormCategoryId(
+            categoryId
+          )) as ProductTypes[];
+          if (productResponse && productResponse.length > 0) {
+            setCategoryProducts(productResponse);
+          }
+        }
+      } else {
+        const response = await removeWishListAction(user.email, productId);
+        if (response?.success) {
+          if (tag) {
+            const productResponse = (await searchProductsByTagAction(
+              tag
+            )) as ProductTypes[];
+            if (productResponse && productResponse.length > 0) {
+              setSearchProducts(productResponse);
+            }
+          }
+        }
+      }
+    } else {
+      router.push("/auth");
+    }
+  };
+  const totalPages = Math.ceil(displayProductList.length / ITEMS_PER_PAGE);
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const endIndex = Math.min(
     startIndex + ITEMS_PER_PAGE,
     displayProductList.length
   );
-
-  // Ensure pagination logic operates on displayProductList
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
@@ -122,8 +195,28 @@ const VerticalProductList = ({
                 <Button className="px-6 bg-secondary-blue hover:bg-secondary-blue font-bold">
                   Buy now
                 </Button>
-                <p className="text-secondary-blue">
-                  <IoHeartOutline size={22} />
+
+                <p
+                  className="text-secondary-blue"
+                  // onClick={() => handleWishList(product.id, product.categoryId)}
+                >
+                  {product.wishlist && product.wishlist?.length > 0 && user ? (
+                    <IoHeart
+                      size={22}
+                      className="text-secondary-blue"
+                      onClick={() =>
+                        handleRemoveWishList(product.id, product.categoryId)
+                      }
+                    />
+                  ) : (
+                    <IoHeartOutline
+                      size={22}
+                      className="text-secondary-blue"
+                      onClick={() =>
+                        handleWishList(product.id, product.categoryId)
+                      }
+                    />
+                  )}
                 </p>
               </div>
             </div>

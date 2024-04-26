@@ -36,7 +36,13 @@ export const createProductInDb = async ({
 };
 
 export const getProduct = async () => {
-  return await db.products.findMany();
+  return await db.products.findMany({
+    include: {
+      category: true,
+      carts: true,
+      wishlist: true,
+    },
+  });
 };
 
 export const getProductFromId = async (id: string) => {
@@ -44,6 +50,11 @@ export const getProductFromId = async (id: string) => {
     where: {
       id,
     },
+    include:{
+      category: true,
+      carts: true,
+      wishlist: true,
+    }
   });
 };
 
@@ -94,6 +105,11 @@ export const getProductsFormCategoryId = async (categoryId: string) => {
       where: {
         categoryId,
       },
+      include: {
+        category: true,
+        carts: true,
+        wishlist: true,
+      },
     });
   } catch (error) {
     console.error("Error getting products from category Id:", error);
@@ -110,13 +126,18 @@ export const getProductsFormCategoryId = async (categoryId: string) => {
 //   }
 // }
 
-export async function searchProductsByTag(tag:string) {
+export async function searchProductsByTag(tag: string) {
   const products = await db.products.findMany({
     where: {
       tags: {
         hasSome: [tag],
-      }
-    }
+      },
+    },
+    include: {
+      category: true,
+      carts: true,
+      wishlist: true,
+    },
   });
 
   return products;
@@ -125,10 +146,12 @@ export async function searchProductsByTag(tag:string) {
 export async function getAllTags() {
   const tags = await db.products.findMany({
     select: {
-      tags: true
-    }
+      tags: true,
+    },
   });
-  const uniqueTags = Array.from(new Set(tags.flatMap(product => product.tags)));
+  const uniqueTags = Array.from(
+    new Set(tags.flatMap((product) => product.tags))
+  );
 
   return uniqueTags;
 }

@@ -1,21 +1,25 @@
 "use client";
-import { cn } from "@/lib/utils";
+import { addProductToWishList, cn } from "@/lib/utils";
 import { ProductTypes } from "@/types";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { Button } from "../ui/button";
-import { IoHeartOutline } from "react-icons/io5";
+import { IoHeart, IoHeartOutline } from "react-icons/io5";
 import { AlertTriangle } from "lucide-react";
 import RecommendedProducts from "./recommended";
+import { useRouter } from "next/navigation";
+import { useAuthUser } from "@/hooks/useAuthUser";
+import { getProductFromProductId } from "@/actions/get-product-from-id";
+import { useAppStore } from "@/store";
+import { removeWishListAction } from "@/actions/remove-wishlist-action";
+import SameCateGoryProducts from "./same-category-products";
 
-interface SingleProductProps {
-  product: ProductTypes | undefined;
-}
-
-const SingleProduct = ({ product }: SingleProductProps) => {
+const SingleProduct = () => {
+  const user = useAuthUser();
   const [singleProductImages, setSingleProductImages] = useState<string>("");
   const [quantity, setQuantity] = useState<number>(1);
-
+  const router = useRouter();
+  const { setProduct, product } = useAppStore();
   useEffect(() => {
     if (product && product.images) {
       setSingleProductImages(product?.images[0]);
@@ -34,6 +38,39 @@ const SingleProduct = ({ product }: SingleProductProps) => {
   const incrementQuantity = () => {
     if (product && product.quantity && quantity < product.quantity) {
       setQuantity(quantity + 1);
+    }
+  };
+
+  const handleWishList = async (productId: string) => {
+    if (user && user.email) {
+      const response = await addProductToWishList(user.email, productId);
+      console.log("handleWishList ~ response:", response);
+      if (response?.success) {
+        const response = (await getProductFromProductId(
+          productId
+        )) as ProductTypes;
+        if (response) {
+          setProduct(response);
+        }
+      }
+    } else {
+      router.push("/auth");
+    }
+  };
+
+  const handleRemoveWishList = async (productId: string) => {
+    if (user && user.email) {
+      const response = await removeWishListAction(user.email, productId);
+      if (response?.success) {
+        const response = (await getProductFromProductId(
+          productId
+        )) as ProductTypes;
+        if (response) {
+          setProduct(response);
+        }
+      } else {
+        router.push("/auth");
+      }
     }
   };
 
@@ -77,7 +114,7 @@ const SingleProduct = ({ product }: SingleProductProps) => {
             </div>
             <div className="font-bold text-xl mb-4 flex items-center gap-4">
               <p>${product?.price} </p>
-              <p className="font-medium text-sm center text-gray-500">
+              <p className="text-sm center font-bold py-1  text-emerald-500">
                 {product?.discount}% Off
               </p>
             </div>
@@ -133,9 +170,30 @@ const SingleProduct = ({ product }: SingleProductProps) => {
               >
                 Add to cart
               </Button>
-              <p className="text-secondary-blue">
+              {/* <p className="text-secondary-blue">
                 <IoHeartOutline size={22} />
-              </p>
+              </p> */}
+              {product &&
+              product.wishlist &&
+              product.wishlist?.length > 0 &&
+              product.id &&
+              user ? (
+                <IoHeart
+                  size={22}
+                  className="text-secondary-blue cursor-pointer"
+                  onClick={() => handleRemoveWishList(product.id)}
+                />
+              ) : (
+                <IoHeartOutline
+                  size={22}
+                  className="text-secondary-blue cursor-pointer"
+                  onClick={() => {
+                    if (product) {
+                      handleWishList(product.id);
+                    }
+                  }}
+                />
+              )}
             </div>
           </div>
         </div>
@@ -162,10 +220,13 @@ const SingleProduct = ({ product }: SingleProductProps) => {
         </div>
       </div>
       <div>
-        <RecommendedProducts
+        {/* <RecommendedProducts
           productsForSameCategory={true}
           categoryId={product?.categoryId}
-        />
+        /> */}
+        {product && product?.categoryId && (
+          <SameCateGoryProducts categoryId={product?.categoryId} />
+        )}
       </div>
     </div>
   );

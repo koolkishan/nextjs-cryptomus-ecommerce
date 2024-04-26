@@ -14,26 +14,25 @@ const RecommendedProducts = ({
   categoryId = "",
 }: RecommendedProductsProps) => {
   const { userProductsData } = useAppStore();
-  const [categoryProduct, setCategoryProduct] = useState<ProductTypes[]>([]);
+  // const [categoryProduct, setCategoryProduct] = useState<ProductTypes[]>([]);
 
-  useEffect(() => {
-    async function fetchCategoryProducts() {
-      if (productsForSameCategory && categoryId) {
-        try {
-          const response = await getProductFromCategoryId(categoryId);
-          setCategoryProduct(response);
-        } catch (error) {
-          console.error("Error fetching category products:", error);
-        }
-      }
-    }
+  // useEffect(() => {
+  //   async function fetchCategoryProducts() {
+  //     if (productsForSameCategory && categoryId) {
+  //       try {
+  //         const response = await getProductFromCategoryId(categoryId);
+  //         setCategoryProduct(response);
+  //       } catch (error) {
+  //         console.error("Error fetching category products:", error);
+  //       }
+  //     }
+  //   }
 
-    fetchCategoryProducts();
-  }, [productsForSameCategory, categoryId]);
+  //   fetchCategoryProducts();
+  // }, [categoryId]);
 
   let productsToDisplay: ProductTypes[] = [];
 
-  if (!productsForSameCategory) {
     const productsByCategory: { [key: string]: ProductTypes } = {};
     userProductsData.forEach((product: ProductTypes) => {
       if (!productsByCategory[product.categoryId]) {
@@ -41,9 +40,6 @@ const RecommendedProducts = ({
       }
     });
     productsToDisplay = Object.values(productsByCategory);
-  } else {
-    productsToDisplay = categoryProduct;
-  }
 
   return (
     <div className="px-6 lg:px-0 lg:container">
