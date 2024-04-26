@@ -6,18 +6,17 @@
   :root {
     --primary-background: #1d1e24;
     --primary-text: #fff;
-    --secondary-white: #F9F9F9;
+    --secondary-white: #f9f9f9;
     --surface: #23262b;
     --custom-font: #7c7c7c;
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
-    
 
-    --primary-gray: #93959C;
+    --primary-gray: #93959c;
     --secondary-gray: #b5b7bf;
     --secondary-black: #33363d;
     --secondary-blue: #0090ff;
-    
+
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
 
@@ -87,12 +86,34 @@
 }
 
 /* For Webkit-based browsers (Chrome, Safari and Opera) */
+/* Hide scrollbar */
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
 
 /* For IE, Edge and Firefox */
 .scrollbar-hide {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+/* Style scrollbar */
+::-webkit-scrollbar {
+  width: 6px; /* Width of the scrollbar */
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Color of the track */
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #93959c ; /* Color of the scroll handle */
+  border-radius: 3px; /* Rounded corners */
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #93959c; /* Color of the scroll handle on hover */
 }

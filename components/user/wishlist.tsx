@@ -14,7 +14,6 @@ const Wishlist = () => {
   const { userProductsData, setUserProductsData } = useAppStore();
   const router = useRouter();
   const user = useAuthUser();
-  console.log("Wishlist ~ user:", user);
   useEffect(() => {
     if (!user) {
       router.push("/auth");
@@ -33,7 +32,6 @@ const Wishlist = () => {
 
   const handleWishList = async (productId: string) => {
     if (user && user.email) {
-      console.log("handleWishList ~ productId:", productId);
       const response = await addProductToWishList(user.email, productId);
       if (response?.success) {
         const productResponse = await getProducts();

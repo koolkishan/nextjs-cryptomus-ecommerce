@@ -13,6 +13,7 @@ import { getProductFromProductId } from "@/actions/get-product-from-id";
 import { useAppStore } from "@/store";
 import { removeWishListAction } from "@/actions/remove-wishlist-action";
 import SameCateGoryProducts from "./same-category-products";
+import { addToCart } from "@/actions/add-cart-action";
 
 const SingleProduct = () => {
   const user = useAuthUser();
@@ -44,7 +45,6 @@ const SingleProduct = () => {
   const handleWishList = async (productId: string) => {
     if (user && user.email) {
       const response = await addProductToWishList(user.email, productId);
-      console.log("handleWishList ~ response:", response);
       if (response?.success) {
         const response = (await getProductFromProductId(
           productId
@@ -71,6 +71,15 @@ const SingleProduct = () => {
       } else {
         router.push("/auth");
       }
+    }
+  };
+
+  const handleCart = async (productId: string | undefined) => {
+    if (user && user.email && productId) {
+      console.log('handleCart ~ user.email, productId, quantity:', user.email, productId, quantity)
+      const response = await addToCart(user.email, productId, quantity);
+    } else {
+      router.push('/auth')
     }
   };
 
@@ -167,6 +176,7 @@ const SingleProduct = () => {
                     ? "bg-gray-300 hover:bg-gray-300 cursor-not-allowed"
                     : "bg-secondary-blue hover:bg-secondary-blue"
                 } font-bold`}
+                onClick={() => handleCart(product?.id)}
               >
                 Add to cart
               </Button>

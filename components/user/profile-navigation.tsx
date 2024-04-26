@@ -8,8 +8,7 @@ const ProfileNavigation = () => {
   const path = usePathname();
   const router = useRouter();
   const handleLogOut = () => {
-    signOut();
-    router.push("/");
+    signOut({ redirect: true, callbackUrl: "/" });
   };
 
   return (

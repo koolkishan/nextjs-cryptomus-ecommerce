@@ -40,14 +40,12 @@ const FilterProducts = ({
     setFilterProducts,
     searchProducts
   } = useAppStore();
-  console.log("allCategories:", allCategories);
   const [sortBy, setSortBy] = useState<string>("");
   const [minPrice, setMinPrice] = useState<number>(0);
   const [maxPrice, setMaxPrice] = useState<number>(0);
   const [priceRange, setPriceRange] = useState<number[]>([]);
   const [selectCategoryId, setSelectedCategoryId] = useState<string>("");
   const deBouncePriceRange = useDebounce(priceRange.join(","), 200);
-  // console.log('selectCategory:', selectCategory)
 
   useEffect(() => {
     let max = Number.MIN_VALUE;
