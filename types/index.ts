@@ -14,7 +14,7 @@ export interface ProductTypes {
     id: string;
     categoryName: string;
   };
-  carts?: any[]; // Assuming this will contain cart data, you can define a type for carts if needed
+  carts?: any[];
   wishlist?: {
     id: string;
     userId: string;
@@ -26,9 +26,9 @@ export interface CartTypes {
   id: string;
   userId: string;
   createdAt: Date;
-  products?: (CartProductTypes)[] | [];
+  products?: CartProductTypes[] | [];
 }
-export interface  CartProductTypes{
+export interface CartProductTypes {
   id: string;
   cartId: string;
   productId: string;
@@ -38,6 +38,23 @@ export interface  CartProductTypes{
 export interface CategoryTypes {
   id: string;
   categoryName: string;
+}
+
+export interface orderTypes {
+  id: string;
+  userId: string;
+  createdAt: Date;
+  totalPrice: number;
+  totalDiscount: number;
+  status: string;
+  products?: OrderProductsType[];
+}
+export interface OrderProductsType {
+  id: string;
+  orderId: string;
+  productId: string;
+  quantity: number;
+  product: ProductTypes;
 }
 
 export interface CategoryWithProductCount {
