@@ -16,8 +16,8 @@ interface OrderProps {
   orderId: string;
 }
 const Order = ({ orderId }: OrderProps) => {
-  const [orderDetails, setOrderDetails] = useState<any[] | []>([]);
-  const [loggedUser, setLoggedUser] = useState<any>();
+  const [orderDetails, setOrderDetails] = useState<orderTypes[] | []>([]);
+  const [loggedUser, setLoggedUser] = useState<UserAndProfileTypes>();
   console.log("Order ~ loggedUser:", loggedUser);
   const router = useRouter();
   console.log("Order ~ orderDetails:", orderDetails);
@@ -31,7 +31,7 @@ const Order = ({ orderId }: OrderProps) => {
         if (result) {
           setOrderDetails(result);
         }
-        const dbUser = await getUserByEmailAction(user.email);
+        const dbUser = await getUserByEmailAction(user.email) as any;
         if (dbUser && dbUser?.id) {
           await updateOrderStatus(orderId, "PROCESSING");
           await deleteUnprocessedOrders(dbUser?.id);
@@ -62,7 +62,7 @@ const Order = ({ orderId }: OrderProps) => {
               </div>
               <div className="grid grid-cols-2 my-4 ">
                 <div className="flex gap-2">
-                  <label>First Name:</label>
+                  <label>First name:</label>
                   <p>{loggedUser.name?.split(" ")[0]}</p>
                 </div>
                 <div className="flex gap-2">
@@ -76,7 +76,7 @@ const Order = ({ orderId }: OrderProps) => {
                   <p>{loggedUser.email}</p>
                 </div>
                 <div className="">
-                  {loggedUser.profile[0].mobileNo ? (
+                  {loggedUser.profile && loggedUser.profile[0] && loggedUser.profile[0].mobileNo ? (
                     <div className="flex gap-2">
                       <label>Phone:</label>
                       <p>{loggedUser.profile[0].mobileNo}</p>
@@ -97,7 +97,7 @@ const Order = ({ orderId }: OrderProps) => {
                   <p>Shipping Info</p>
                 </div>
                 <div className="">
-                  {loggedUser.profile[0].addresses.length ? (
+                  {loggedUser.profile && loggedUser.profile[0] && loggedUser.profile[0].addresses&&  loggedUser.profile[0].addresses.length ? (
                     <div className="flex gap-2">
                       <label>Address:</label>
                       <p>{loggedUser.profile[0].addresses}</p>
@@ -117,7 +117,7 @@ const Order = ({ orderId }: OrderProps) => {
               <div className="">
                 {orderDetails[0].products &&
                 orderDetails[0].products.length > 0 ? (
-                  orderDetails[0].products.map((p: any, index: number) => (
+                  orderDetails[0].products.map((p,) => (
                     <div key={p.id}>
                       <div className="mb-8 grid grid-cols-6 gap-4">
                         <div className="flex  col-span-3 gap-4 w-[90%]">
@@ -166,15 +166,6 @@ const Order = ({ orderId }: OrderProps) => {
                                 (p.product.price * p.product.discount) / 100
                             ).toLocaleString("us")}/per item`}
                           </p>
-                        </div>
-                        <div>
-                          <Button
-                            variant={"outline"}
-                            className="text-destructive hover:text-destructive hover:bg-destructive/5 border border-destructive/20"
-                            // onClick={() => handleClick(p.productId)}
-                          >
-                            Remove
-                          </Button>
                         </div>
                       </div>
                     </div>
