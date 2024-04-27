@@ -23,13 +23,11 @@ const UserProfile = () => {
   const user = useAuthUser();
   const router = useRouter();
   const { setUserAndProfile, userAndProfile } = useAppStore();
-  console.log("UserProfile ~ userAndProfile:", userAndProfile);
 
   useEffect(() => {
     async function getUserProfile() {
       if (user?.email) {
         const userDetails = (await getUserByEmailAction(user?.email)) as any;
-        console.log("getUserProfile ~ userDetails:", userDetails);
         if (userDetails) {
           setUserAndProfile(userDetails);
         }

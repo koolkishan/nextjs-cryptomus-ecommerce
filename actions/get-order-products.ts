@@ -3,7 +3,6 @@
 import { db } from "@/lib/db";
 
 export const getOrderProductAction = async (orderId: string) => {
-  console.log("getOrderProductAction ~ orderId:", orderId);
   try {
     const result = await db.order.findMany({
       where: {

@@ -3,6 +3,8 @@
 
 import { db } from "@/lib/db";
 import { getUserByEmailAction } from "./get-user-by-email-action";
+import md5 from "md5";
+import axios from "axios";
 
 // const prisma = new PrismaClient();
 
@@ -27,13 +29,40 @@ export async function createOrderAndOrderProducts(
               data: products,
             },
           },
-          status: "UNPROCESSED",
+          status: "Pending",
         },
         include: {
           products: true,
         },
       });
-      return order;
+      if (order) {
+
+        // cryptomus integration
+        console.log(order,"???>><<");
+        const endPoint = "https://api.cryptomus.com/v1/payment";
+        const apiKey = process.env.CRYPTOMUS_PAYMENT_API_KEY as string;
+        const amount = order.totalPrice - order.totalDiscount;
+        const data = {
+          currency: "USD",
+          amount: amount.toString() + ".00",
+          order_id: order.id.toString(),
+          lifetime:300,
+          url_callback:
+            "https://bf71-2409-4080-9d98-8ed9-57d4-1135-1f62-7852.ngrok-free.app/callback?id=" +
+            order.id,
+          url_return: `http://localhost:3000`,
+        };
+        const merchant = process.env.CRYPTOMUS_MERCHANT_ID as string;
+        const sign = md5(btoa(JSON.stringify(data)) + apiKey);
+        console.log({ data });
+        const response = await axios.post(endPoint, data, {
+          headers: {
+            merchant,
+            sign,
+          },
+        });
+        return response.data.result.url;
+      }
     }
     return null;
   } catch (error) {
@@ -42,12 +71,37 @@ export async function createOrderAndOrderProducts(
   }
 }
 
-// Example usage
-// createOrderAndOrderProducts(
-//   "user_id_here",
-//   [
-//     { productId: "product_id_1", quantity: 2 },
-//     { productId: "product_id_2", quantity: 1 },
-//   ],
-//   150
-// );
+// {
+//   "id": "clvi0a9ab000jgpy0opv0176g",
+//   "userId": "clvhp7aqa000oe5v1yzsycmov",
+//   "createdAt": "2024-04-27T11:16:08.195Z",
+//   "totalPrice": 70323,
+//   "totalDiscount": 12206,
+//   "status": "Pending",
+//   "products": [
+//       {
+//           "id": "clvi0a9ab000kgpy0se7ohyeh",
+//           "orderId": "clvi0a9ab000jgpy0opv0176g",
+//           "productId": "clvav9q8e000vogbdgwo0tf11",
+//           "quantity": 1
+//       },
+//       {
+//           "id": "clvi0a9ab000lgpy0u9xs61pj",
+//           "orderId": "clvi0a9ab000jgpy0opv0176g",
+//           "productId": "clvavcw2k000xogbdflgfyndx",
+//           "quantity": 1
+//       },
+//       {
+//           "id": "clvi0a9ab000mgpy0ql61hp9n",
+//           "orderId": "clvi0a9ab000jgpy0opv0176g",
+//           "productId": "clvax70hl001logbd8427ckie",
+//           "quantity": 1
+//       },
+//       {
+//           "id": "clvi0a9ab000ngpy0en3gsrid",
+//           "orderId": "clvi0a9ab000jgpy0opv0176g",
+//           "productId": "clvavtu8f0017ogbdqw1xprj1",
+//           "quantity": 1
+//       }
+//   ]
+// }

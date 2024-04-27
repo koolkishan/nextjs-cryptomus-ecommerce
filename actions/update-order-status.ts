@@ -2,7 +2,6 @@
 import { db } from "@/lib/db";
 
 export async function updateOrderStatus(orderId: string, newStatus: string) {
-  console.log("updateOrderStatus ~ orderId:", orderId);
   try {
     const updatedOrder = await db.order.update({
       where: {

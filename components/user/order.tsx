@@ -18,11 +18,8 @@ interface OrderProps {
 const Order = ({ orderId }: OrderProps) => {
   const [orderDetails, setOrderDetails] = useState<orderTypes[] | []>([]);
   const [loggedUser, setLoggedUser] = useState<UserAndProfileTypes>();
-  console.log("Order ~ loggedUser:", loggedUser);
   const router = useRouter();
-  console.log("Order ~ orderDetails:", orderDetails);
   const user = useAuthUser();
-  console.log("Order ~ user:", user);
 
   useEffect(() => {
     async function fetchOrderProduct() {
@@ -36,7 +33,6 @@ const Order = ({ orderId }: OrderProps) => {
           await updateOrderStatus(orderId, "PROCESSING");
           await deleteUnprocessedOrders(dbUser?.id);
           setLoggedUser(dbUser);
-          console.log("fetchOrderProduct ~ loggedUser:", dbUser);
         }
       }
     }

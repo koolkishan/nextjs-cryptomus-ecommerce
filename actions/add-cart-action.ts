@@ -27,7 +27,6 @@ export async function addToCart(email:string,  productId: string, quantity: numb
       }
     }
     }
-    console.log('Product added to cart successfully!');
     return {success: "Product added successfully"}
   } catch (error) {
     console.error('Error adding product to cart:', error);

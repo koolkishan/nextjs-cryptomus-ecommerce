@@ -66,21 +66,7 @@ const Cart = () => {
 
   const handleCheckOut = async () => {
     if (user && user?.email && cart && cart.products) {
-      const products = cart?.products.map((p) => {
-        return {
-          productId: p.product.id,
-          quantity: p.quantity,
-        };
-      });
-      const order = await createOrderAndOrderProducts(
-        user.email,
-        products,
-        totalPrice,
-        totalDiscount
-      );
-      if (order) {
-        router.push(`/order/${order.id}`);
-      }
+        router.push(`/checkout`);
     }
   };
 

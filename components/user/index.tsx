@@ -9,6 +9,7 @@ import ProfileSetting from "./profile-setting";
 import Wishlist from "./wishlist";
 import Cart from "./cart";
 import Order from "./order";
+import CheckOut from "@/app/(public)/(user)/checkout/page";
 export {
   EcommerceLandingPage,
   Header,
@@ -20,5 +21,6 @@ export {
   ProfileSetting,
   Wishlist,
   Cart,
-  Order
+  Order,
+  CheckOut
 };
