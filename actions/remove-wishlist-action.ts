@@ -6,8 +6,6 @@ export const removeWishListAction = async (
   userEmail: string,
   productId: string
 ) => {
-  console.log('productId:', productId)
-  console.log('userEmail:', userEmail)
   try {
     const dbUser = await getUserbyEmail(userEmail);
     if (dbUser && dbUser.wishlist) {

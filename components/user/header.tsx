@@ -6,7 +6,7 @@ import { IoHeartSharp, IoLocationSharp, IoMenuOutline } from "react-icons/io5";
 import { IoCart } from "react-icons/io5";
 import { useRouter } from "next/navigation";
 import { useAppStore } from "@/store";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Search from "./search";
 import { useAuthUser } from "@/hooks/useAuthUser";
 import Image from "next/image";
@@ -17,8 +17,12 @@ const Header = () => {
   const router = useRouter();
   const { setProductCategory, productCategory } = useAppStore();
   const user = useAuthUser();
+  const [isMounted, setIsMounted] = useState<boolean>(false);
 
-  const handleClick = async () => {
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+  const handleClick = () => {
     if (user) {
       router.push("/wishlist");
     } else {
@@ -26,6 +30,13 @@ const Header = () => {
     }
   };
 
+  const handleCart = () => {
+    if (user) {
+      router.push("/cart");
+    } else {
+      router.push("/auth");
+    }
+  };
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -51,23 +62,29 @@ const Header = () => {
   // };
 
   const handleProfile = () => {
-    // if (user) {
-    router.push("/profile");
-    // } else {
-    // router.push("/");
-    // }
+    if (user) {
+      router.push("/profile");
+    } else {
+      router.push("/auth");
+    }
   };
+
+  if (!isMounted) {
+    return null;
+  }
 
   return (
     <div className="flex md:block w-full flex-col">
       <div className="  flex w-full items-center py-6 mb-2 lg:container px-6 lg:px-0 text-primary-txt ">
         <div className="flex w-[80%] md:w-[60%] lg:w-[70%]">
           <div
-            className="flex text-4xl cursor-pointer md:mr-10 lg:mr-32 text-secondary-blue"
+            className="flex  cursor-pointer md:mr-10 lg:mr-32 text-secondary-blue"
             onClick={() => router.push("/")}
           >
-            {/* <Image src="/Rocket.png" alt="logo" width={40} height={40} /> */}
-            <p className="ml-2">ABC</p>
+            <p className="ml-2 flex flex-col items-center justify-center">
+              <p className="text-3xl font-bold">CRYPTO</p>
+              <p className="text-2xl font-bold">STORE</p>
+            </p>
           </div>
           <div className="hidden md:block w-1/2">
             <Search />
@@ -95,12 +112,11 @@ const Header = () => {
               <IoHeartSharp size={22} className=" md:mr-4  text-primary-gray" />
               <p className="hidden md:block font-medium">Wishlist</p>
             </div>
-            <div className="flex items-center cursor-pointer">
-              <IoCart
-                size={22}
-                className=" md:mr-4  text-primary-gray"
-                onClick={handleClick}
-              />
+            <div
+              className="flex items-center cursor-pointer"
+              onClick={handleCart}
+            >
+              <IoCart size={22} className=" md:mr-4  text-primary-gray" />
               <p className="hidden md:block font-medium">My cart</p>
             </div>
           </div>
@@ -114,77 +130,3 @@ const Header = () => {
 };
 
 export default Header;
-
-{
-  /* <div className="bg-secondary-white my-2">
-<div className="flex  gap-8 lg:container px-6 lg:px-0 content-center items-center  text-center">
-  
-  <p
-    className={cn(
-      "py-2 text-sm",
-      productCategory == "Electronics"
-        ? "border-b border-secondary-blue"
-        : ""
-    )}
-    onClick={() => handleCategory("Electronics")}
-  >
-    Electronics
-  </p>
-  <p
-    className={cn(
-      "py-2 text-sm",
-      productCategory == "Books & Media"
-        ? "border-b border-secondary-blue"
-        : ""
-    )}
-    onClick={() => handleCategory("Books & Media")}
-  >
-    Books & Media
-  </p>
-  <p
-    className={cn(
-      "py-2 text-sm",
-      productCategory == "Jewelry & Watches"
-        ? "border-b border-secondary-blue"
-        : ""
-    )}
-    onClick={() => handleCategory("Jewelry & Watches")}
-  >
-    Jewelry & Watches
-  </p>
-  <p
-    className={cn(
-      "py-2 text-sm",
-      productCategory == "Electronics Accessories"
-        ? "border-b border-secondary-blue"
-        : ""
-    )}
-    onClick={() => handleCategory("Electronics Accessories")}
-  >
-    Electronics Accessories
-  </p>
-  <p
-    className={cn(
-      "py-2 text-sm",
-      productCategory == "Baby & Kids"
-        ? "border-b border-secondary-blue"
-        : ""
-    )}
-    onClick={() => handleCategory("Baby & Kids")}
-  >
-    Baby & Kids
-  </p>
-  <p
-    className={cn(
-      "py-2 text-sm",
-      productCategory == "Clothes"
-        ? "border-b border-secondary-blue"
-        : ""
-    )}
-    onClick={() => handleCategory("Clothes")}
-  >
-    Clothes
-  </p>
-</div>
-</div> */
-}

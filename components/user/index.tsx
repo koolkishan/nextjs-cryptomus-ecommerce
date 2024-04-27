@@ -7,7 +7,8 @@ import UserProfile from "./user-profile";
 import ProfileNavigation from "./profile-navigation";
 import ProfileSetting from "./profile-setting";
 import Wishlist from "./wishlist";
-
+import Cart from "./cart";
+import Order from "./order";
 export {
   EcommerceLandingPage,
   Header,
@@ -17,5 +18,7 @@ export {
   UserProfile,
   ProfileNavigation,
   ProfileSetting,
-  Wishlist
+  Wishlist,
+  Cart,
+  Order
 };
