@@ -53,7 +53,3 @@ export const createCart = async (
     throw error;
   }
 };
-
-export const removeProductFromCart = () => {
-  
-}

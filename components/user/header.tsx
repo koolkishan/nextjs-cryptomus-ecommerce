@@ -6,7 +6,7 @@ import { IoHeartSharp, IoLocationSharp, IoMenuOutline } from "react-icons/io5";
 import { IoCart } from "react-icons/io5";
 import { useRouter } from "next/navigation";
 import { useAppStore } from "@/store";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Search from "./search";
 import { useAuthUser } from "@/hooks/useAuthUser";
 import Image from "next/image";
@@ -17,7 +17,11 @@ const Header = () => {
   const router = useRouter();
   const { setProductCategory, productCategory } = useAppStore();
   const user = useAuthUser();
+  const [isMounted, setIsMounted] = useState<boolean>(false);
 
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
   const handleClick = () => {
     if (user) {
       router.push("/wishlist");
@@ -65,6 +69,10 @@ const Header = () => {
     }
   };
 
+  if (!isMounted) {
+    return null;
+  }
+
   return (
     <div className="flex md:block w-full flex-col">
       <div className="  flex w-full items-center py-6 mb-2 lg:container px-6 lg:px-0 text-primary-txt ">
@@ -74,8 +82,8 @@ const Header = () => {
             onClick={() => router.push("/")}
           >
             <p className="ml-2 flex flex-col items-center justify-center">
-              {/* <p className="text-3xl font-bold">CRYPTO</p>
-              <p className="text-2xl font-bold">STORE</p> */}
+              <p className="text-3xl font-bold">CRYPTO</p>
+              <p className="text-2xl font-bold">STORE</p>
             </p>
           </div>
           <div className="hidden md:block w-1/2">

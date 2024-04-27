@@ -11,10 +11,13 @@ const Cart = () => {
   const user = useAuthUser();
   const [cart, setCart] = useState<CartTypes>();
   const [totalPrice, setTotalPrice] = useState<number>(0);
-  console.log("Cart ~ totalPrice:", totalPrice);
   const [totalDiscount, setTotalDiscount] = useState<number>(0);
-  console.log("Cart ~ totalDiscount:", totalDiscount);
-  console.log("Cart ~ cart:", cart);
+  const [isMounted, setIsMounted] = useState<boolean>(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
   useEffect(() => {
     async function getUserCart() {
       if (user && user.email) {
@@ -43,15 +46,19 @@ const Cart = () => {
     }
   }, [cart]);
 
-  const handleClick = async (productId:string) => {
-    if(user && user.email) {
+  if (!isMounted) {
+    return null;
+  }
+
+  const handleClick = async (productId: string) => {
+    if (user && user.email) {
       const response = await removeProductFromCart(user.email, productId);
       const result = await getCartAction(user.email);
-        if (result) {
-          setCart(result);
-        }
+      if (result) {
+        setCart(result);
+      }
     }
-  }
+  };
   return (
     <div>
       <div className=" flex-1 w-full">
@@ -62,7 +69,7 @@ const Cart = () => {
         </div>
       </div>
       <div className="lg:container lg:px-0 grid grid-cols-4 gap-5 pt-[92px]">
-        <div className="col-span-3 h-[calc(100vh-200px)] overflow-y-auto scrollbar-hide">
+        <div className="col-span-3 h-[calc(100vh-225px)] overflow-y-auto scrollbar-hide">
           {cart && cart.products && cart.products.length > 0 ? (
             cart.products.map((p, index) => (
               <div key={p.id}>
@@ -116,8 +123,7 @@ const Cart = () => {
                     <Button
                       variant={"outline"}
                       className="text-destructive hover:text-destructive hover:bg-destructive/5 border border-destructive/20"
-                onClick={()=>handleClick(p.productId)}
-                      
+                      onClick={() => handleClick(p.productId)}
                     >
                       Remove
                     </Button>
@@ -129,43 +135,44 @@ const Cart = () => {
             <div>no cart items</div>
           )}
         </div>
-        <div className="col-span-1 w-full">
-          <div className="bg-secondary-white p-6 rounded-xl ">
-            <div className="flex my-2">
-              <p className="flex-1">Total Price: </p>
-              <p>${totalPrice.toLocaleString("us")}</p>
-            </div>
-            <div className="flex my-2">
-              <p className="flex-1">Discount: </p>
-              <p className="text-destructive">
-                -${totalDiscount.toLocaleString("us")}
-              </p>
-            </div>
-            <div className="border border-b-zinc-400/20"></div>
-            <div className="flex my-2">
-              <p className="flex-1">Total:</p>
-              <p className="text-xl font-bold">
-                ${(totalPrice - totalDiscount).toLocaleString("us")}
-              </p>
-            </div>
-            <div className="flex flex-col gap-y-4">
-              <div>
-                <Button className="w-full bg-secondary-blue hover:bg-secondary-blue"
-                >
-                  Checkout
-                </Button>
+        {cart && cart.products && cart.products.length > 0 && (
+          <div className="col-span-1 w-full">
+            <div className="bg-secondary-white p-6 rounded-xl ">
+              <div className="flex my-2">
+                <p className="flex-1">Total Price: </p>
+                <p>${totalPrice.toLocaleString("us")}</p>
               </div>
-              <div>
-                <Button
-                  variant={"outline"}
-                  className="w-full text-secondary-blue hover:text-secondary-blue"
-                >
-                  Back to shop
-                </Button>
+              <div className="flex my-2">
+                <p className="flex-1">Discount: </p>
+                <p className="text-destructive">
+                  -${totalDiscount.toLocaleString("us")}
+                </p>
+              </div>
+              <div className="border border-b-zinc-400/20"></div>
+              <div className="flex my-2">
+                <p className="flex-1">Total:</p>
+                <p className="text-xl font-bold">
+                  ${(totalPrice - totalDiscount).toLocaleString("us")}
+                </p>
+              </div>
+              <div className="flex flex-col gap-y-4">
+                <div>
+                  <Button className="w-full bg-secondary-blue hover:bg-secondary-blue">
+                    Checkout
+                  </Button>
+                </div>
+                <div>
+                  <Button
+                    variant={"outline"}
+                    className="w-full text-secondary-blue hover:text-secondary-blue"
+                  >
+                    Back to shop
+                  </Button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );
