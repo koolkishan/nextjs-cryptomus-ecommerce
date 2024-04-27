@@ -8,6 +8,7 @@ import ProfileNavigation from "./profile-navigation";
 import ProfileSetting from "./profile-setting";
 import Wishlist from "./wishlist";
 import Cart from "./cart";
+import Order from "./order";
 export {
   EcommerceLandingPage,
   Header,
@@ -18,6 +19,6 @@ export {
   ProfileNavigation,
   ProfileSetting,
   Wishlist,
-  Cart
-
+  Cart,
+  Order
 };

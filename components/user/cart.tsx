@@ -6,13 +6,17 @@ import Image from "next/legacy/image";
 import React, { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import { removeProductFromCart } from "@/actions/remove-cart-action";
+import { useRouter } from "next/navigation";
+import { createOrderAndOrderProducts } from "@/actions/create-order";
 
 const Cart = () => {
   const user = useAuthUser();
   const [cart, setCart] = useState<CartTypes>();
+  console.log("Cart ~ cart:", cart);
   const [totalPrice, setTotalPrice] = useState<number>(0);
   const [totalDiscount, setTotalDiscount] = useState<number>(0);
   const [isMounted, setIsMounted] = useState<boolean>(false);
+  const router = useRouter();
 
   useEffect(() => {
     setIsMounted(true);
@@ -59,6 +63,28 @@ const Cart = () => {
       }
     }
   };
+
+  const handleCheckOut = async () => {
+    if (user && user?.email && cart && cart.products) {
+      const products = cart?.products.map((p) => {
+        return {
+          productId: p.product.id,
+          quantity: p.quantity,
+        };
+      });
+      const order = await createOrderAndOrderProducts(
+        user.email,
+        products,
+        totalPrice,
+        totalDiscount
+      );
+      console.log(order);
+      if(order) {
+        router.push(`/order/${order.id}`);
+      }
+    }
+  };
+
   return (
     <div>
       <div className=" flex-1 w-full">
@@ -157,7 +183,10 @@ const Cart = () => {
               </div>
               <div className="flex flex-col gap-y-4">
                 <div>
-                  <Button className="w-full bg-secondary-blue hover:bg-secondary-blue">
+                  <Button
+                    className="w-full bg-secondary-blue hover:bg-secondary-blue"
+                    onClick={handleCheckOut}
+                  >
                     Checkout
                   </Button>
                 </div>
