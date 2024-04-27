@@ -58,10 +58,10 @@ const ProfileSetting = () => {
         values,
         uploadedImageUrl,
         userAndProfile?.profile[0].id,
-        userAndProfile?.id,
+        userAndProfile?.id
       );
     }
-    
+
     router.push("/");
     form.reset();
   };
@@ -76,7 +76,7 @@ const ProfileSetting = () => {
   return (
     <div className="h-full rounded-xl px-6">
       {user ? (
-        userAndProfile && userAndProfile.image ? (
+        userAndProfile ? (
           <div className="h-full">
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="h-full">
@@ -184,7 +184,9 @@ const ProfileSetting = () => {
                         src={
                           uploadedImageUrl.length
                             ? uploadedImageUrl
-                            : userAndProfile.image
+                            : userAndProfile.image.length > 0
+                            ? userAndProfile.image
+                            : "https://github.com/shadcn.png"
                         }
                       />
                     </Avatar>

@@ -78,8 +78,7 @@ const Cart = () => {
         totalPrice,
         totalDiscount
       );
-      console.log(order);
-      if(order) {
+      if (order) {
         router.push(`/order/${order.id}`);
       }
     }

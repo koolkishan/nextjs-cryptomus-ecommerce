@@ -27,7 +27,7 @@ export async function createOrderAndOrderProducts(
               data: products,
             },
           },
-          status: "PENDING",
+          status: "UNPROCESSED",
         },
         include: {
           products: true,

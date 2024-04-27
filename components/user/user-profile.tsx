@@ -23,11 +23,13 @@ const UserProfile = () => {
   const user = useAuthUser();
   const router = useRouter();
   const { setUserAndProfile, userAndProfile } = useAppStore();
+  console.log("UserProfile ~ userAndProfile:", userAndProfile);
 
   useEffect(() => {
     async function getUserProfile() {
       if (user?.email) {
         const userDetails = (await getUserByEmailAction(user?.email)) as any;
+        console.log("getUserProfile ~ userDetails:", userDetails);
         if (userDetails) {
           setUserAndProfile(userDetails);
         }
@@ -41,12 +43,18 @@ const UserProfile = () => {
   return (
     <div className="h-full rounded-xl px-6">
       {user ? (
-        userAndProfile && userAndProfile.image ? (
+        userAndProfile ? (
           <div className="h-full">
             <div className="flex gap-4 h-32 items-center">
               <div className="h-20 flex items-center">
                 <Avatar className="h-16 w-16">
-                  <AvatarImage src={userAndProfile.image} />
+                  <AvatarImage
+                    src={
+                      userAndProfile.image
+                        ? userAndProfile.image
+                        : "https://github.com/shadcn.png"
+                    }
+                  />
                 </Avatar>
               </div>
               <div className="flex h-20 flex-col justify-center py-6">

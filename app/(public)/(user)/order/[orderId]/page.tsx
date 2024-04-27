@@ -2,12 +2,12 @@ import {  Order } from "@/components/user";
 
 interface OrderProps {
     params: {
-      OrderId: string;
+      orderId: string;
     };
   }
   
 const Orderpage = ({params}:OrderProps) => {
-  const orderId = params.OrderId;
+  const orderId = params.orderId;
     return ( 
         <div>
             <Order orderId={orderId}/>

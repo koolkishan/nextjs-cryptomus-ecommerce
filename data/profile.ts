@@ -20,13 +20,20 @@ export const getProfileById = async (userId: string) => {
         userId,
         user: {},
       },
+      include: {
+        user: true,
+      },
     });
   } catch (error) {
     console.log("Error while fetching profile");
   }
 };
 
-export const updateProfile = async (addresses: string[], mobileNo:string, id:string) => {
+export const updateProfile = async (
+  addresses: string[],
+  mobileNo: string,
+  id: string
+) => {
   try {
     return await db.profile.update({
       where: {
