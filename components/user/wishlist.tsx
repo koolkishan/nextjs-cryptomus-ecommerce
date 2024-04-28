@@ -96,7 +96,7 @@ const Wishlist = () => {
   };
 
   return (
-    <div className="lg:container lg:px-6 px-0">
+    <div className="lg:container lg:px-6 px-0 min-h-[calc(100vh-210px)]">
       {userProductsData &&
         userProductsData.length > 0 &&
         userProductsData.map((product) =>

@@ -171,7 +171,7 @@ const VerticalProductList = ({
     }
   };
   return (
-    <div className="">
+    <div className="min-h-[calc(100vh-223px)]">
       {displayProductList &&
         displayProductList.length > 0 &&
         displayProductList.slice(startIndex, endIndex).map((product) => (

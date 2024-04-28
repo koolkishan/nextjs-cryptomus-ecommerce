@@ -9,10 +9,6 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  // await loginIsRequiredServer();
-  const path = usePathname();
-  console.log("path:", path);
-
   return (
     <html lang="en">
       <body className="w-full h-full">
@@ -21,11 +17,9 @@ export default function RootLayout({
             <Header />
           </div>
           <div className="flex-1 h-full relative">{children}</div>
-          <div
-            
-          >
-            <Footer />
-          </div>
+        </div>
+        <div className="z-10 bottom-0">
+          <Footer />
         </div>
       </body>
     </html>

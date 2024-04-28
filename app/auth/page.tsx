@@ -25,28 +25,21 @@ export default function Home() {
   }
 
   return (
-    <div className="flex w-full h-screen justify-center items-center bg-primary-background">
-      <div className="hidden lg:visible lg:w-1/2 lg:flex lg:justify-end">
-        <Image src="/Login.png" width={580} height={590} alt="login image" loading={'lazy'} />
-      </div>
-      <div className="h-[90%] md:w-1/2 md:mx-32 flex justify-center items-center  bg-surface rounded-2xl">
-        <div className="w-[200px ] px-10 lg:px-0 lg:w-[400px]">
-          <h1 className="text-center text-3xl text-white my-10 font-medium">
-            Login To Your Account
-          </h1>
-          <GoogleSignInButton />
-          {/* <GithubSignInButton /> */}
-          <div className="grid grid-cols-3 text-[12px] ">
-            <div className="border-b border-secondary-black"></div>
-            <div className="">
-              <p className="text-center mt-7 mb-[-8px] text-custom-font">
-                OR LOGIN WITH EMAIL
-              </p>
-            </div>
-            <div className="border-b border-secondary-black"></div>
-          </div>
-
+    <div className="h-screen ">
+      <div className="h-screen flex justify-center items-center">
+        <div className="w-1/5 bg-white p-8 rounded-lg  border-2 shadow-[2px_2px_2px_2px_rgba(0,0,0,0.03)]">
+          <h1 className="w-full text-2xl font-medium mb-4">Sign in</h1>
           <CredentialsForm />
+          <div className="relative w-full mt-4 mb-6 grid grid-cols-3 text-[12px] ">
+            <div className="border-b border-zinc-400/20"></div>
+            <p className="inline-block text-center mb-[-8px] text-zinc-400">
+              OR
+            </p>
+            <div className="border-b border-zinc-400/20"></div>
+          </div>
+          <div className="w-full">
+            <GoogleSignInButton />
+          </div>
         </div>
       </div>
     </div>
