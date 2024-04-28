@@ -307,6 +307,7 @@ const AddProductForm = () => {
                               key={index}
                               width={90}
                               height={90}
+                              loading="lazy"
                             />
                             <div
                               className="absolute top-0 right-2"

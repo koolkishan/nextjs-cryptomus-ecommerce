@@ -10,6 +10,8 @@ import Wishlist from "./wishlist";
 import Cart from "./cart";
 import Order from "./order";
 import CheckOut from "@/app/(public)/(user)/checkout/page";
+import Footer from "./footer";
+
 export {
   EcommerceLandingPage,
   Header,
@@ -22,5 +24,6 @@ export {
   Wishlist,
   Cart,
   Order,
-  CheckOut
+  CheckOut,
+  Footer
 };

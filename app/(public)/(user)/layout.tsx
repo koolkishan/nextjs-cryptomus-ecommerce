@@ -1,4 +1,4 @@
-import { Header } from "@/components/user";
+import { Footer, Header } from "@/components/user";
 import { loginIsRequiredServer } from "@/lib/auth";
 
 export default async function RootLayout({
@@ -15,6 +15,9 @@ export default async function RootLayout({
             <Header />
           </div>
           <div className="flex-1 h-full relative">{children}</div>
+          <div>
+            <Footer />
+          </div>
         </div>
       </body>
     </html>

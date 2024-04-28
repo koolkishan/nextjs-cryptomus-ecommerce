@@ -22,7 +22,13 @@ export function GoogleSignInButton() {
     >
       <div className="flex w-full items-center justify-center">
         <div>
-          <Image src={googleLogo} alt="Google Logo" width={20} height={20} />
+          <Image
+            src={googleLogo}
+            alt="Google Logo"
+            width={20}
+            height={20}
+            loading="lazy"
+          />
         </div>
         <div className="flex-1 text-secondary-gray">
           <span className="ml-4">Login With Google</span>

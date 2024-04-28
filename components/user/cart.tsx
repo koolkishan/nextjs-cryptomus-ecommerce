@@ -66,21 +66,14 @@ const Cart = () => {
 
   const handleCheckOut = async () => {
     if (user && user?.email && cart && cart.products) {
-        router.push(`/checkout`);
+      router.push(`/checkout`);
     }
   };
 
   return (
     <div>
-      <div className=" flex-1 w-full">
-        <div className="fixed  bg-blue-100 w-full py-4">
-          <div className="lg:container lg:px-6 px-0">
-            <p className="text-2xl lg:text-4xl font-medium">Shopping Cart</p>
-          </div>
-        </div>
-      </div>
-      <div className="lg:container lg:px-0 grid grid-cols-4 gap-5 pt-[92px]">
-        <div className="col-span-3 h-[calc(100vh-225px)] overflow-y-auto scrollbar-hide">
+      <div className="lg:container lg:px-0 grid grid-cols-4 gap-5 pt-5">
+        <div className="col-span-3 h-[calc(100vh-230px)] overflow-y-auto scrollbar-hide">
           {cart && cart.products && cart.products.length > 0 ? (
             cart.products.map((p, index) => (
               <div key={p.id}>

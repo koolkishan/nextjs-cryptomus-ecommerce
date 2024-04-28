@@ -9,6 +9,9 @@ import { IoHeart, IoHeartOutline } from "react-icons/io5";
 import { useAuthUser } from "@/hooks/useAuthUser";
 import { addProductToWishList } from "@/lib/utils";
 import { removeWishListAction } from "@/actions/remove-wishlist-action";
+import { ProductTypes } from "@/types";
+import { createOrderAndOrderProducts } from "@/actions/create-order";
+import { addToCart } from "@/actions/add-cart-action";
 
 const Wishlist = () => {
   const { userProductsData, setUserProductsData } = useAppStore();
@@ -58,6 +61,40 @@ const Wishlist = () => {
     }
   };
 
+  const handleBuy = async (product: ProductTypes) => {
+    if (product && user && user.email && product?.price) {
+      const products = [
+        {
+          productId: product.id,
+          quantity: 1,
+        },
+      ];
+      const totalPrice =
+        product?.price - (product?.price * product.discount) / 100;
+      const totalDiscount = (product?.price * product.discount) / 100;
+      const paymentUrl = await createOrderAndOrderProducts(
+        user.email,
+        products,
+        totalPrice,
+        totalDiscount
+      );
+      if (!paymentUrl) {
+        return;
+      }
+      if (paymentUrl && window && window.location) {
+        window.location.href = paymentUrl;
+      }
+    }
+  };
+
+  const handleCart = async (productId: string | undefined) => {
+    if (user && user.email && productId) {
+      const response = await addToCart(user.email, productId, 1);
+    } else {
+      router.push("/auth");
+    }
+  };
+
   return (
     <div className="lg:container lg:px-6 px-0">
       {userProductsData &&
@@ -70,13 +107,16 @@ const Wishlist = () => {
             >
               <div key={product.id} className="m-4 ">
                 {product && product.images && (
-                  <Image
-                    src={product?.images[0]}
-                    alt={product.productName}
-                    width={150}
-                    height={150}
-                    onClick={() => router.push(`/products/${product.id}`)}
-                  />
+                  <div className="relative h-[200px]">
+                    <Image
+                      src={product?.images[0]}
+                      alt={product.productName}
+                      objectFit="contain"
+                      layout="fill"
+                      loading="lazy"
+                      onClick={() => router.push(`/products/${product.id}`)}
+                    />
+                  </div>
                 )}
               </div>
               <div
@@ -107,10 +147,16 @@ const Wishlist = () => {
                   <p>{product?.discount}% Off</p>
                 </div>
                 <div className="flex gap-2 items-center ">
-                  <Button className="px-5 bg-yellow-400 hover:bg-yellow-400/90 font-bold">
+                  <Button
+                    className="px-5 bg-yellow-400 hover:bg-yellow-400/90 font-bold"
+                    onClick={() => handleBuy(product)}
+                  >
                     Buy now
                   </Button>
-                  <Button className="px-4 bg-secondary-blue hover:bg-secondary-blue font-bold">
+                  <Button
+                    className="px-4 bg-secondary-blue hover:bg-secondary-blue font-bold"
+                    onClick={() => handleCart(product.id)}
+                  >
                     Add to cart
                   </Button>
                   <p className="text-secondary-blue">

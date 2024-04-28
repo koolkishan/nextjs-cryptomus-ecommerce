@@ -27,25 +27,6 @@ const CheckOut = () => {
   const user = useAuthUser();
   const router = useRouter();
 
-  //   useEffect(() => {
-  //     async function fetchOrderProduct() {
-  //       if (user && user.email) {
-  //         const result = await getOrderProductAction(orderId);
-  //         if (result) {
-  //           setOrderDetails(result);
-  //         }
-  //         const dbUser = await getUserByEmailAction(user.email) as any;
-  //         if (dbUser && dbUser?.id) {
-  //           await updateOrderStatus(orderId, "PROCESSING");
-  //           await deleteUnprocessedOrders(dbUser?.id);
-  //           setLoggedUser(dbUser);
-  //           console.log("fetchOrderProduct ~ loggedUser:", dbUser);
-  //         }
-  //       }
-  //     }
-  //     fetchOrderProduct();
-  //   }, [orderId, user]);
-
   useEffect(() => {
     async function getUserCart() {
       if (user && user.email) {
@@ -97,7 +78,6 @@ const CheckOut = () => {
         totalPrice,
         totalDiscount
       );
-      console.log(paymentUrl,":::::");
       if (!paymentUrl) {
         return;
       }

@@ -1,12 +1,9 @@
-// import { PrismaClient } from '@prisma/client';
 "use server";
 
 import { db } from "@/lib/db";
 import { getUserByEmailAction } from "./get-user-by-email-action";
 import md5 from "md5";
 import axios from "axios";
-
-// const prisma = new PrismaClient();
 
 export async function createOrderAndOrderProducts(
   email: string,
@@ -15,7 +12,6 @@ export async function createOrderAndOrderProducts(
   totalDiscount: number
 ) {
   try {
-    // Create the order
     const existingUser = await getUserByEmailAction(email);
 
     if (existingUser) {
@@ -36,9 +32,7 @@ export async function createOrderAndOrderProducts(
         },
       });
       if (order) {
-
-        // cryptomus integration
-        console.log(order,"???>><<");
+        console.log(order, "???>><<");
         const endPoint = "https://api.cryptomus.com/v1/payment";
         const apiKey = process.env.CRYPTOMUS_PAYMENT_API_KEY as string;
         const amount = order.totalPrice - order.totalDiscount;
@@ -46,9 +40,9 @@ export async function createOrderAndOrderProducts(
           currency: "USD",
           amount: amount.toString() + ".00",
           order_id: order.id.toString(),
-          lifetime:300,
+          lifetime: 300,
           url_callback:
-            "https://bf71-2409-4080-9d98-8ed9-57d4-1135-1f62-7852.ngrok-free.app/callback?id=" +
+            "https://d2ba-2409-4080-9d98-8ed9-1661-4da5-b733-5594.ngrok-free.app/callback?id=" +
             order.id,
           url_return: `http://localhost:3000`,
         };
