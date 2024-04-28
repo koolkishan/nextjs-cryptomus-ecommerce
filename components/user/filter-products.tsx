@@ -215,7 +215,7 @@ const FilterProducts = ({
   };
 
   return (
-    <div className="bg-secondary-white rounded-2xl shadow-[2px_2px_2px_2px_rgba(0,0,0,0.03)]">
+    <div className="bg-secondary-white rounded-2xl shadow-[2px_2px_2px_2px_rgba(0,0,0,0.03)] mt-4">
       <div className="grid grid-rows-4 gap-6 px-4 py-2">
         {/* {!categoryFilter && (
           <div className="">

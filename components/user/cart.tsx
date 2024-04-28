@@ -73,7 +73,7 @@ const Cart = () => {
   return (
     <div>
       <div className="lg:container lg:px-0 grid grid-cols-4 gap-5 pt-5">
-        <div className="col-span-3 h-[calc(100vh-230px)] overflow-y-auto scrollbar-hide">
+        <div className="col-span-3 min-h-[calc(100vh-230px)] overflow-y-auto scrollbar-hide">
           {cart && cart.products && cart.products.length > 0 ? (
             cart.products.map((p, index) => (
               <div key={p.id}>

@@ -5,6 +5,7 @@ import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import googleLogo from "@/public/google.png";
 import { BsTwitterX } from "react-icons/bs";
+import { Button } from "../ui/button";
 // import githubLogo from "@/public/github.png";
 
 export function GoogleSignInButton() {
@@ -12,13 +13,12 @@ export function GoogleSignInButton() {
 
   const handleClick = () => {
     signIn("google", { callbackUrl: "/" });
-    // router.push("/");
   };
 
   return (
-    <button
+    <Button
       onClick={handleClick}
-      className="w-full flex items-center font-base justify-center h-12 px-6 mt-4 text-[15px] transition-colors duration-300 bg-transparent border border-secondary-black rounded-xl focus:shadow-outline"
+      className="w-full flex items-center font-base justify-center h-12 px-6 mt-4 text-[15px] transition-colors duration-300 bg-transparent hover:bg-transparent border border-zinc-400/20 rounded-xl focus:shadow-outline"
     >
       <div className="flex w-full items-center justify-center">
         <div>
@@ -30,11 +30,11 @@ export function GoogleSignInButton() {
             loading="lazy"
           />
         </div>
-        <div className="flex-1 text-secondary-gray">
-          <span className="ml-4">Login With Google</span>
+        <div className="flex-1 w-full text-secondary-gray">
+          <span className="ml-4 text-black/70">Continue With Google</span>
         </div>
       </div>
-    </button>
+    </Button>
   );
 }
 

@@ -6,6 +6,7 @@ import { useAuthUser } from "@/hooks/useAuthUser";
 import { getUserByEmailAction } from "@/actions/get-user-by-email-action";
 import Image from "next/image";
 import { useAppStore } from "@/store";
+import { useRouter } from "next/navigation";
 
 interface OrderProps {
   order: orderTypes;
@@ -13,6 +14,7 @@ interface OrderProps {
 
 const Order = ({ order }: OrderProps) => {
   const user = useAuthUser();
+  const router = useRouter();
   const { setUserAndProfile, userAndProfile } = useAppStore();
 
   useEffect(() => {
@@ -139,17 +141,20 @@ const Order = ({ order }: OrderProps) => {
             </div>
             <div>
               <p className="font-medium text-black my-4">Products</p>
-              <div className="grid grid-cols-5">
+              <div className="grid grid-cols-5 ">
                 {order.products.map((product) => (
                   <div
                     key={product.id}
-                    className="flex gap-4  border border-zinc-400/20 rounded-xl ]"
+                    className="flex gap-4  border border-zinc-400/20 rounded-xl cursor-pointer"
+                    onClick={() =>
+                      router.push(`/products/${product.product.id}`)
+                    }
                   >
                     <div className=" relative w-[200px]   h-[100px] rounded-md col-span-1  ">
                       <Image
                         src={product.product.images[0]}
                         alt={product.product.productName}
-                        className="bg-secondary-white rounded-md py-2"
+                        className="bg-secondary-white rounded-md py-2 ml-2"
                         layout="fill"
                         loading="lazy"
                         objectFit="contain"
