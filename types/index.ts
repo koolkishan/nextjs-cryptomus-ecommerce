@@ -46,8 +46,9 @@ export interface orderTypes {
   createdAt: Date;
   totalPrice: number;
   totalDiscount: number;
-  status: string;
-  products?: OrderProductsType[];
+  orderStatus: string;
+  paymentStatus: string;
+  products: OrderProductsType[];
 }
 export interface OrderProductsType {
   id: string;

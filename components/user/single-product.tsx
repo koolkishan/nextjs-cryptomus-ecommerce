@@ -14,6 +14,7 @@ import { useAppStore } from "@/store";
 import { removeWishListAction } from "@/actions/remove-wishlist-action";
 import SameCateGoryProducts from "./same-category-products";
 import { addToCart } from "@/actions/add-cart-action";
+import { createOrderAndOrderProducts } from "@/actions/create-order";
 
 const SingleProduct = () => {
   const user = useAuthUser();
@@ -76,10 +77,40 @@ const SingleProduct = () => {
 
   const handleCart = async (productId: string | undefined) => {
     if (user && user.email && productId) {
-      console.log('handleCart ~ user.email, productId, quantity:', user.email, productId, quantity)
+      console.log(
+        "handleCart ~ user.email, productId, quantity:",
+        user.email,
+        productId,
+        quantity
+      );
       const response = await addToCart(user.email, productId, quantity);
     } else {
-      router.push('/auth')
+      router.push("/auth");
+    }
+  };
+
+  const handleBuy = async (productId: string | undefined, quantity: number) => {
+    if (productId && user && user.email && product?.price) {
+      const products = [
+        {
+          productId,
+          quantity,
+        },
+      ];
+      const totalPrice = (product?.price - (product?.price * product.discount)/100);
+      const totalDiscount = (product?.price * product.discount)/100;
+      const paymentUrl = await createOrderAndOrderProducts(
+        user.email,
+        products,
+        totalPrice,
+        totalDiscount
+      );
+      if (!paymentUrl) {
+        return;
+      }
+      if (paymentUrl && window && window.location) {
+        window.location.href = paymentUrl;
+      }
     }
   };
 
@@ -93,6 +124,8 @@ const SingleProduct = () => {
             className="mb-5 h-[200px] md:h-[300px] w-[70%] lg:h-[400px] bg-secondary-white rounded-2xl shadow-[2px_2px_2px_2px_rgba(0,0,0,0.03)]"
             width={300}
             height={300}
+            loading="lazy"
+
           />
         </div>
         <div className="visible lg:hidden flex gap-5 justify-center mb-4">
@@ -112,6 +145,8 @@ const SingleProduct = () => {
                 alt="sub image"
                 width={60}
                 height={60}
+              loading="lazy"
+
               />
             </div>
           ))}
@@ -167,6 +202,7 @@ const SingleProduct = () => {
                     ? "bg-gray-300 hover:bg-gray-300 cursor-not-allowed"
                     : "bg-yellow-400 hover:bg-yellow-400/90"
                 } font-bold`}
+                onClick={() => handleBuy(product?.id, quantity)}
               >
                 Buy now
               </Button>
@@ -224,6 +260,8 @@ const SingleProduct = () => {
                 alt="sub image"
                 width={60}
                 height={60}
+              loading="lazy"
+
               />
             </div>
           ))}

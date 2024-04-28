@@ -1,10 +1,9 @@
-// import { PrismaClient } from '@prisma/client';
 "use server";
 
 import { db } from "@/lib/db";
 import { getUserByEmailAction } from "./get-user-by-email-action";
-
-// const prisma = new PrismaClient();
+import md5 from "md5";
+import axios from "axios";
 
 export async function createOrderAndOrderProducts(
   email: string,
@@ -13,7 +12,6 @@ export async function createOrderAndOrderProducts(
   totalDiscount: number
 ) {
   try {
-    // Create the order
     const existingUser = await getUserByEmailAction(email);
 
     if (existingUser) {
@@ -27,13 +25,39 @@ export async function createOrderAndOrderProducts(
               data: products,
             },
           },
-          status: "UNPROCESSED",
+          orderStatus: "Pending",
+          paymentStatus: "Pending",
         },
         include: {
           products: true,
         },
       });
-      return order;
+      if (order) {
+        console.log(order, "???>><<");
+        const endPoint = "https://api.cryptomus.com/v1/payment";
+        const apiKey = process.env.CRYPTOMUS_PAYMENT_API_KEY as string;
+        const amount = order.totalPrice - order.totalDiscount;
+        const data = {
+          currency: "USD",
+          amount: amount.toString() + ".00",
+          order_id: order.id.toString(),
+          lifetime: 300,
+          url_callback:
+            "https://d2ba-2409-4080-9d98-8ed9-1661-4da5-b733-5594.ngrok-free.app/callback?id=" +
+            order.id,
+          url_return: `http://localhost:3000`,
+        };
+        const merchant = process.env.CRYPTOMUS_MERCHANT_ID as string;
+        const sign = md5(btoa(JSON.stringify(data)) + apiKey);
+        console.log({ data });
+        const response = await axios.post(endPoint, data, {
+          headers: {
+            merchant,
+            sign,
+          },
+        });
+        return response.data.result.url;
+      }
     }
     return null;
   } catch (error) {
@@ -41,13 +65,3 @@ export async function createOrderAndOrderProducts(
     throw error;
   }
 }
-
-// Example usage
-// createOrderAndOrderProducts(
-//   "user_id_here",
-//   [
-//     { productId: "product_id_1", quantity: 2 },
-//     { productId: "product_id_2", quantity: 1 },
-//   ],
-//   150
-// );

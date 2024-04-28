@@ -71,6 +71,7 @@ const EcommerceLandingPage = () => {
               className="w-full h-[350px] cursor-pointer"
               width={500}
               height={150}
+              loading="lazy"
             />
           </div>
           <Categories />

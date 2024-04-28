@@ -8,7 +8,11 @@ import ProfileNavigation from "./profile-navigation";
 import ProfileSetting from "./profile-setting";
 import Wishlist from "./wishlist";
 import Cart from "./cart";
-import Order from "./order";
+// import Order from "./order";
+import CheckOut from "@/app/(public)/(user)/checkout/page";
+import Footer from "./footer";
+import OrderHistory from "./order-history";
+
 export {
   EcommerceLandingPage,
   Header,
@@ -20,5 +24,8 @@ export {
   ProfileSetting,
   Wishlist,
   Cart,
-  Order
+  // Order,
+  OrderHistory,
+  CheckOut,
+  Footer
 };

@@ -21,6 +21,7 @@ const DashBoard = () => {
               alt="in dollar"
               width={100}
               height={100}
+              loading="lazy"
             />
           </div>
         </div>
@@ -36,6 +37,7 @@ const DashBoard = () => {
               alt="in dollar"
               width={100}
               height={100}
+              loading="lazy"
             />
           </div>
         </div>
@@ -51,6 +53,8 @@ const DashBoard = () => {
               alt="in dollar"
               width={100}
               height={100}
+              loading="lazy"
+
             />
           </div>
         </div>

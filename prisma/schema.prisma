@@ -107,7 +107,8 @@ model Order {
     createdAt     DateTime       @default(now())
     totalPrice    Float
     totalDiscount Float
-    status        String
+    orderStatus   String
+    paymentStatus String
 }
 
 model OrderProduct {

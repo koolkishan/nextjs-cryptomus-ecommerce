@@ -26,7 +26,7 @@ const Categories = () => {
             <li
               key={category.id}
               className={cn(
-                "cursor-pointer hover:bg-blue-400/30 py-3 rounded-xl"
+                "text-sm md:text-base cursor-pointer hover:bg-blue-400/30 py-3 rounded-xl"
               )}
               onClick={() => {
                 // setSelectedCategory("");

@@ -1,6 +1,6 @@
 "use client";
 import { register } from "@/instrumentation";
-import { useEffect, useState } from "react";
+import { lazy, useEffect, useState } from "react";
 import Image from "next/image";
 import {
   CredentialsSignInButton,
@@ -27,7 +27,7 @@ export default function Home() {
   return (
     <div className="flex w-full h-screen justify-center items-center bg-primary-background">
       <div className="hidden lg:visible lg:w-1/2 lg:flex lg:justify-end">
-        <Image src="/Login.png" width={580} height={590} alt="login image" />
+        <Image src="/Login.png" width={580} height={590} alt="login image" loading={'lazy'} />
       </div>
       <div className="h-[90%] md:w-1/2 md:mx-32 flex justify-center items-center  bg-surface rounded-2xl">
         <div className="w-[200px ] px-10 lg:px-0 lg:w-[400px]">

@@ -105,6 +105,8 @@ const Side = () => {
             alt="logo png"
             width={20}
             height={20}
+            loading="lazy"
+
           />
           <p className={cn(!collapsSidbar ? "text-start" : "hidden")}>Rocket</p>
         </div>

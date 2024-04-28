@@ -3,7 +3,6 @@ import { db } from "@/lib/db";
 import { getUserByEmailAction } from "./get-user-by-email-action";
 
 export async function removeProductFromCart(email: string, productId: string) {
-  console.log("removeProductFromCart ~ productId:", productId);
   try {
     const dbUser = await getUserByEmailAction(email);
     const userCart = await db.cart.findUnique({
@@ -14,7 +13,6 @@ export async function removeProductFromCart(email: string, productId: string) {
         products: true,
       },
     });
-    console.log("removeProductFromCart ~ userCart:", userCart);
 
     if (dbUser) {
       if (!userCart) {
@@ -35,7 +33,6 @@ export async function removeProductFromCart(email: string, productId: string) {
         },
       });
     }
-    console.log("Product deleted successfully");
     return {success: 'Product successfully removed'}
   } catch (error) {
     console.error("Error removing product from cart:", error);

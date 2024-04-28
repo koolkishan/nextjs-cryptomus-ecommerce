@@ -70,6 +70,8 @@ const HorizontalProductList = ({
                     alt="alt image"
                     width={150}
                     height={150}
+              loading="lazy"
+
                   />
                 </div>
               )}

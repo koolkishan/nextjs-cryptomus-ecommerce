@@ -82,11 +82,11 @@ const Header = () => {
             onClick={() => router.push("/")}
           >
             <p className="ml-2 flex flex-col items-center justify-center">
-              <p className="text-3xl font-bold">CRYPTO</p>
-              <p className="text-2xl font-bold">STORE</p>
+              <p className="text-2xl md:text-3xl font-bold">CRYPTO</p>
+              <p className="text-xl md:text-2xl font-bold">STORE</p>
             </p>
           </div>
-          <div className="hidden md:block w-1/2">
+          <div className=" hidden md:flex md:flex-col md:justify-center w-1/2">
             <Search />
           </div>
         </div>
