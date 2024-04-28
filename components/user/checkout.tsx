@@ -1,6 +1,6 @@
 "use client";
 
-import { getOrderProductAction } from "@/actions/get-order-products";
+// import { getOrderProductAction } from "@/actions/get-order-products";
 import { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import { CartTypes, UserAndProfileTypes } from "@/types";
@@ -187,7 +187,7 @@ const CheckOut = () => {
             <Input
               type="text"
               value={address}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => setAddress(e.target.value)}
             />
           </div>
           <div className="my-5 flex items-center gap-2">
@@ -208,6 +208,7 @@ const CheckOut = () => {
             <Button
               variant={"outline"}
               className="text-secondary-blue  hover:text-secondary-blue"
+              onClick={()=>router.push('/')}
             >
               Return to shop
             </Button>

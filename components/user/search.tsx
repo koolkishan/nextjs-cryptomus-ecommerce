@@ -56,7 +56,7 @@ const Search = () => {
       );
     }
     if (debounceSearchTerm?.length === 0) setTagSuggetion([]);
-  }, [debounceSearchTerm]);
+  }, [allTags, debounceSearchTerm]);
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "ArrowDown") {

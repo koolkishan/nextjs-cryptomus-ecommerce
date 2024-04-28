@@ -8,7 +8,7 @@ export async function updateOrderStatus(orderId: string, newStatus: string) {
         id: orderId,
       },
       data: {
-        status: newStatus,
+        orderStatus: newStatus,
       },
     });
     return updatedOrder;

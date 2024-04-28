@@ -103,7 +103,7 @@ const Wishlist = () => {
           product.wishlist && product.wishlist?.length > 0 ? (
             <div
               key={product.id}
-              className="cursor-pointer grid grid-cols-5 bg-secondary-white m-4 rounded-2xl shadow-[2px_2px_2px_2px_rgba(0,0,0,0.03)]"
+              className="cursor-pointer grid grid-cols-4 bg-secondary-white m-4 rounded-2xl shadow-[2px_2px_2px_2px_rgba(0,0,0,0.03)]"
             >
               <div key={product.id} className="m-4 ">
                 {product && product.images && (
@@ -120,7 +120,7 @@ const Wishlist = () => {
                 )}
               </div>
               <div
-                className="col-span-3 my-4 mr-4"
+                className="col-span-2 my-4 mr-4"
                 onClick={() => router.push(`/products/${product.id}`)}
               >
                 <p className="mb-4 font-bold ">{product?.productName}</p>

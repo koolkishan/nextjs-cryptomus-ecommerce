@@ -172,6 +172,7 @@ const Cart = () => {
                   <Button
                     variant={"outline"}
                     className="w-full text-secondary-blue hover:text-secondary-blue"
+                    onClick={() => router.push("/")}
                   >
                     Back to shop
                   </Button>
