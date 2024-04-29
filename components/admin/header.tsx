@@ -7,14 +7,24 @@ import { useRouter } from "next/navigation";
 import { useAuthUser } from "@/hooks/useAuthUser";
 import { HiOutlineMenuAlt2 } from "react-icons/hi";
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
+import { useEffect, useState } from "react";
+import { getAdminDetails } from "@/data/admint";
+import { AdminTypes } from "@/types";
 
 const Header = () => {
   const { collapsSidbar, setCollapsSidbar } = useAppStore();
-  const router = useRouter();
+  const [adminDetails, setAdminDetails] = useState<AdminTypes>();
   const user = useAuthUser();
 
-  
-
+  useEffect(() => {
+    async function fetchAdminDetails() {
+      if (user && user.email) {
+        const response = await getAdminDetails(user.email);
+        if (response) setAdminDetails(response);
+      }
+    }
+    fetchAdminDetails();
+  }, [user]);
   return (
     <div className="flex">
       <div className="hidden md:flex-1 md:flex md:justify-start ">
@@ -37,7 +47,8 @@ const Header = () => {
             />
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
-          <p>Art Template</p>
+          <p>{adminDetails?.firstName + ' ' + adminDetails?.lastName}</p>
+
         </div>
       </div>
       {/* <Button className="bg-red-700 flex mr-10" onClick={handleLogOut}>

@@ -1,6 +1,11 @@
 // import { ProductTypes } from "@/types";
 // import { Address, User } from "@prisma/client";
-import { CategoryTypes, ProductTypes, UserAndProfileTypes } from "@/types";
+import {
+  CategoryTypes,
+  ProductTypes,
+  UserAndProfileTypes,
+  orderTypes,
+} from "@/types";
 import { User } from "@prisma/client";
 import { StateCreator } from "zustand";
 export interface EcommerceAppSliceTypes {
@@ -23,6 +28,13 @@ export interface EcommerceAppSliceTypes {
   setViewingProduct: (data: ProductTypes) => void;
   searchProducts: ProductTypes[] | [];
   setSearchProducts: (data: ProductTypes[]) => void;
+  viewingOrderId: string;
+  setViewingOrderId: (data: string) => void;
+  orders: orderTypes[] | [];
+  setOrders: (data: orderTypes[]) => void;
+  viewingCategoryId: string;
+  setViewingCategoryId: (data: string) => void;
+
   // user
   productCategory: string;
   setProductCategory: (data: string) => void;
@@ -36,7 +48,7 @@ export interface EcommerceAppSliceTypes {
   setFilterProducts: (data: ProductTypes[]) => void;
   userAndProfile: UserAndProfileTypes | undefined;
   setUserAndProfile: (data: UserAndProfileTypes) => void;
-  product : ProductTypes| undefined;
+  product: ProductTypes | undefined;
   setProduct: (data: ProductTypes) => void;
   sameCategoryProduct: ProductTypes[] | [];
   setSameCategoryProduct: (data: ProductTypes[]) => void;
@@ -77,6 +89,18 @@ const createEcommerceAppSlice: StateCreator<EcommerceAppSliceTypes> = (
   editCategory: null,
   setEditCategory: (data: CategoryTypes) => {
     set({ editCategory: data });
+  },
+  viewingOrderId: "",
+  setViewingOrderId: (data: string) => {
+    set({ viewingOrderId: data });
+  },
+  orders: [],
+  setOrders: (data: orderTypes[]) => {
+    set({ orders: data });
+  },
+  viewingCategoryId: "",
+  setViewingCategoryId: (data: string) => {
+    set({ viewingCategoryId: data });
   },
 
   // user

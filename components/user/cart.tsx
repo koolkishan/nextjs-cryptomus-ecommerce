@@ -12,7 +12,6 @@ import { createOrderAndOrderProducts } from "@/actions/create-order";
 const Cart = () => {
   const user = useAuthUser();
   const [cart, setCart] = useState<CartTypes>();
-  console.log("Cart ~ cart:", cart);
   const [totalPrice, setTotalPrice] = useState<number>(0);
   const [totalDiscount, setTotalDiscount] = useState<number>(0);
   const [isMounted, setIsMounted] = useState<boolean>(false);

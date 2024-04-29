@@ -15,7 +15,12 @@ import {
 } from "@/components/ui/hover-card";
 import { Input } from "../ui/input";
 import { IoIosSearch } from "react-icons/io";
-import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
+import {
+  MdKeyboardArrowLeft,
+  MdKeyboardArrowRight,
+  MdOutlineDelete,
+  MdOutlineEdit,
+} from "react-icons/md";
 import { Button } from "../ui/button";
 import { Ghost } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -27,6 +32,8 @@ import { getProduct } from "@/data/product";
 import { getProducts } from "@/actions/get-products";
 import { deleteProduct } from "@/actions/delete-product";
 import useDebounce from "@/hooks/useDebounce";
+import { FiEdit2 } from "react-icons/fi";
+import { RiDeleteBinLine } from "react-icons/ri";
 
 interface DataTableProps {
   products: boolean;
@@ -34,22 +41,13 @@ interface DataTableProps {
 export const DataTable = ({ products }: DataTableProps) => {
   const [isMounted, setIsMounted] = useState<boolean>(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [selectedRows, setSelectedRows] = useState<ProductTypes[] | []>([]);
-  const [allSelected, setAllSelected] = useState<boolean>(false);
   const [productModal, setProductModal] = useState<boolean>(false);
   const [currentItems, setCurrentItems] = useState<ProductTypes[] | []>([]);
   const [searchTerms, setSearchTerms] = useState<string>("");
   const [searchProducts, setSearchProducts] = useState<ProductTypes[] | []>([]);
 
-  const {
-    productsData,
-    setOpenModal,
-    openModal,
-    setviewingProductId,
-    viewingProductId,
-    categoriesData,
-    setProductsData,
-  } = useAppStore();
+  const { productsData, setviewingProductId, categoriesData, setProductsData } =
+    useAppStore();
 
   const itemsPerPage = 10;
   const debouncedSearchValue = useDebounce(searchTerms, 300);
@@ -97,54 +95,7 @@ export const DataTable = ({ products }: DataTableProps) => {
   if (!isMounted) {
     return;
   }
-  const toggleSelectAll = () => {
-    if (allSelected) {
-      setAllSelected(false);
-      setSelectedRows([]);
-    } else {
-      if (products) {
-        setSelectedRows([...productsData]);
-        setAllSelected(true);
-      }
-    }
-  };
 
-  const toggleRowSelection = (item: ProductTypes) => {
-    if (selectedRows.some((row: ProductTypes) => row.id === item.id)) {
-      setSelectedRows(
-        selectedRows.filter((row: ProductTypes) => row.id !== item.id)
-      );
-    } else {
-      setSelectedRows([...selectedRows, item]);
-    }
-  };
-
-  const isRowSelected = (item: ProductTypes) => {
-    return selectedRows.some((row: ProductTypes) => row.id === item.id);
-  };
-
-  const tableHeaderKeys = productsData.length
-    ? Object.keys(productsData[0])
-        .filter(
-          (key) =>
-            key !== "id" &&
-            key !== "createdAt" &&
-            key !== "updatedAt" &&
-            key !== "images" &&
-            key !== "description" &&
-            key !== "tags"
-        )
-        .map((key) =>
-          key === "categoryId"
-            ? "CategoryName"
-            : key.charAt(0).toUpperCase() + key.slice(1)
-        )
-    : [];
-
-  // const handleProduct = (id: string) => {
-  //   setOpenModal(!openModal);
-  //   setviewingProductId(id);
-  // };
 
   const handleDelete = async (id: string) => {
     await deleteProduct(id);
@@ -215,20 +166,15 @@ export const DataTable = ({ products }: DataTableProps) => {
             <TableRow className="hover:bg-surface border-b-secondary-black">
               {products && productsData.length ? (
                 <>
-                  <TableHead>
-                    <Input
-                      type="checkbox"
-                      className="h-5 w-5 rounded border-red-500 checked:bg-red-500 checked:border-transparent"
-                      checked={selectedRows.length === productsData.length}
-                      onChange={toggleSelectAll}
-                    />
-                  </TableHead>
-                  {tableHeaderKeys.map((key) => (
-                    <TableHead key={key} className="text-custom-font">
-                      {key}
-                    </TableHead>
-                  ))}
+                  <TableHead>No</TableHead>
+                  <TableHead>Product Name</TableHead>
+                  <TableHead>Price</TableHead>
+                  <TableHead>Discount</TableHead>
+                  <TableHead>Categor Name</TableHead>
+                  <TableHead>Quantity</TableHead>
                   <TableHead className="text-custom-font">Available</TableHead>
+                  <TableHead>Edit</TableHead>
+                  <TableHead>Delete</TableHead>
                 </>
               ) : null}
             </TableRow>
@@ -236,24 +182,14 @@ export const DataTable = ({ products }: DataTableProps) => {
 
           <TableBody>
             {currentItems &&
-              currentItems.map((item: ProductTypes) => (
+              currentItems.map((item: ProductTypes, index: number) => (
                 <>
                   <TableRow
                     key={item.id}
                     className="hover:bg-primary-background  border-b-secondary-black cursor-pointer"
-                    // onClick={() => handleProduct(item.id)}
                   >
-                    <TableCell>
-                      <Input
-                        type="checkbox"
-                        className="h-5 w-5 rounded border-red-500 checked:bg-red-500 checked:border-transparent"
-                        checked={isRowSelected(item)}
-                        onChange={() => toggleRowSelection(item)}
-                      />
-                    </TableCell>
-                    <TableCell className="line-clamp-1">
-                      {item.productName}
-                    </TableCell>
+                    <TableCell>{index + 1}</TableCell>
+                    <TableCell className="">{item.productName}</TableCell>
                     <TableCell className="text-custom-font font-medium">
                       ${item.price}
                     </TableCell>
@@ -278,30 +214,21 @@ export const DataTable = ({ products }: DataTableProps) => {
                         >
                           {item.quantity > 0 ? "Yes" : "No"}
                         </div>
-                        <div>
-                          <HoverCard>
-                            <HoverCardTrigger>
-                              <PiDotsThreeOutlineVerticalFill />
-                            </HoverCardTrigger>
-                            <HoverCardContent className="w-32 bg-surface border border-secondary-black mr-4  ">
-                              <div className="text-custom-font ">
-                                <p
-                                  onClick={() => handleProductEdit(item.id)}
-                                  className="border-b border-secondary-black p-2 hover:bg-primary-background rounded-xl text-center"
-                                >
-                                  Edit
-                                </p>
-                                <p
-                                  onClick={() => handleDelete(item.id)}
-                                  className="p-2 hover:bg-primary-background rounded-xl text-center"
-                                >
-                                  Delete
-                                </p>
-                              </div>
-                            </HoverCardContent>
-                          </HoverCard>
-                        </div>
                       </div>
+                    </TableCell>
+                    <TableCell>
+                      <MdOutlineEdit
+                        size={22}
+                        className="text-secondary-blue"
+                        onClick={() => handleProductEdit(item.id)}
+                      />
+                    </TableCell>
+                    <TableCell>
+                      <MdOutlineDelete
+                        size={22}
+                        className="text-red-400/80"
+                        onClick={() => handleDelete(item.id)}
+                      />
                     </TableCell>
                   </TableRow>
                 </>

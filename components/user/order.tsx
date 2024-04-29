@@ -82,7 +82,7 @@ const Order = ({ order }: OrderProps) => {
                     ""
                   )}
                   {order.paymentStatus ===
-                  ("Pending" ||
+                  ("pending" ||
                     "process" ||
                     "confirm_check" ||
                     "check" ||

@@ -16,7 +16,6 @@ import { createOrderAndOrderProducts } from "@/actions/create-order";
 const CheckOut = () => {
   const [userProfile, setUserProfile] = useState<UserAndProfileTypes>();
   const [cart, setCart] = useState<CartTypes>();
-  console.log("CheckOut ~ cart:", cart);
   const [firstName, setFirstName] = useState<string>("");
   const [lastName, setLastName] = useState<string>("");
   const [address, setAddress] = useState<string>("");
@@ -96,7 +95,7 @@ const CheckOut = () => {
         phone,
         address,
       };
-      if (userProfile?.profile) {
+      if (userProfile?.profile && userProfile.image) {
         updateProfileAction(
           values,
           userProfile?.image,
@@ -208,7 +207,7 @@ const CheckOut = () => {
             <Button
               variant={"outline"}
               className="text-secondary-blue  hover:text-secondary-blue"
-              onClick={()=>router.push('/')}
+              onClick={() => router.push("/")}
             >
               Return to shop
             </Button>

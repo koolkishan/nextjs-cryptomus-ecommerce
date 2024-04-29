@@ -49,6 +49,7 @@ export interface orderTypes {
   orderStatus: string;
   paymentStatus: string;
   products: OrderProductsType[];
+  user?: UserAndProfileTypes
 }
 export interface OrderProductsType {
   id: string;
@@ -68,15 +69,25 @@ export interface ProductsEntity {
 }
 export interface UserAndProfileTypes {
   id: string;
-  name: string;
-  email: string;
-  image: string;
+  name: string | null;
+  email: string | null;
+  image: string | null;
   role: string;
   profile?: ProfileEntity[] | null;
 }
 export interface ProfileEntity {
   id: string;
   userId: string;
-  addresses?: null[] | null;
-  mobileNo?: null;
+  addresses?: string[] | null;
+  mobileNo?: string | null;
+}
+
+export interface AdminTypes {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  status: boolean;
+  roles?: (string)[] | null;
 }
