@@ -1,7 +1,7 @@
 import { Footer, Header, ProfileNavigation } from "@/components/user";
-import { authConfig, loginIsRequiredServer } from "@/lib/auth";
+// import { authConfig, loginIsRequiredServer } from "@/lib/auth";
 import { cn } from "@/lib/utils";
-import { getServerSession } from "next-auth";
+// import { getServerSession } from "next-auth";
 
 export default async function RootLayout({
   children,

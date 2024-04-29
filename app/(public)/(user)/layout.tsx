@@ -1,6 +1,6 @@
 "use client";
 import { Footer, Header } from "@/components/user";
-import { loginIsRequiredServer } from "@/lib/auth";
+// import { loginIsRequiredServer } from "@/lib/auth";
 import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation";
 
