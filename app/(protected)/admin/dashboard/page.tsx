@@ -1,11 +1,11 @@
 import { DashBoard } from "@/components/admin";
 
 const DashBoardPage = () => {
-    return ( 
-        <div>
-            <DashBoard/>
-        </div>
-     );
-}
- 
+  return (
+    <div className="">
+      <DashBoard />
+    </div>
+  );
+};
+
 export default DashBoardPage;

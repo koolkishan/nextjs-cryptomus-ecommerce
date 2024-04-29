@@ -44,45 +44,6 @@ const Side = () => {
       icon: <GoDotFill />,
       link: "/admin/categories",
     },
-    // {
-    //   label: "Ecommerce",
-    //   icon: <FiShoppingCart />,
-    //   subMenuItems: [
-    //     {
-    //       label: "Products",
-    //       icon: <GoDotFill />,
-    //       link: "/admin/products",
-    //     },
-    //     {
-    //       label: "Orders",
-    //       icon: <GoDotFill />,
-    //       link: "/admin/category/all-category",
-    //     },
-
-    //   ],
-    // },
-    // {
-    //   label: "Product",
-    //   icon: <BsPhoneFill />,
-    //   subMenuItems: [
-    //     {
-    //       label: "Add Product",
-    //       icon: <MdAddBox />,
-    //       link: "/admin/products/add-product",
-    //     },
-    //     {
-    //       label: "All Products",
-    //       icon: <HiCollection />,
-    //       link: "/admin/products/all-products",
-    //     },
-    //     {
-    //       label: "Reports",
-    //       icon: <BsFillBarChartFill />,
-    //       link: "/admin/products/reports",
-    //     },
-    //   ],
-    // },
-    // { label: "Orders", icon: <FaShoppingCart />, link: "/admin/orders" },
   ];
 
   const handleItemClick = (link: string) => {
@@ -91,11 +52,7 @@ const Side = () => {
   };
 
   return (
-    <div
-      className={` overflow-hidden border-none ${
-        collapsSidbar ? "collapsed" : ""
-      }`}
-    >
+    <div className={` border-none ${collapsSidbar ? "collapsed" : ""}`}>
       <Sidebar
         collapsed={collapsSidbar}
         className={cn("overflow-hidden border-none h-screen ")}

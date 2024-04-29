@@ -94,7 +94,7 @@ export const OrderTable = ({ orders }: OrderTable) => {
     <div className="bg-surface rounded-3xl">
       <OrderModal setOrderModal={setOrderModal} orderModal={orderModal} />
 
-      <div className=" felx justify-center items-center py-4 px-5 mt-4">
+      <div className=" flex items-center py-4 px-5 mt-4">
         <label className="relative block">
           <span className="sr-only">Search</span>
           <span className="absolute inset-y-0 left-0 flex items-center pl-2">
