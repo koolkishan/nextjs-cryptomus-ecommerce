@@ -52,29 +52,6 @@ const AddCategorySideBar = () => {
               Add Category
             </SheetTitle>
             <SheetDescription className="text-primary-txt h-full">
-              {/* display all categories */}
-              <div className="border border-secondary-black rounded-xl">
-                <div className="text-primary-text flex justify-between border-b border-secondary-black  py-4 px-2 ">
-                  <p>Available Categories</p>
-                  <p>Total {categoriesData.length}</p>
-                </div>
-                {categoriesData &&
-                  categoriesData.length > 0 &&
-                  categoriesData.map((category, index) => (
-                    <div
-                      key={category.id}
-                      className={cn(
-                        "text-secondary-gray py-3  px-2 flex items-center hover:bg-primary-surface cursor-pointer",
-                        index === categoriesData.length - 1
-                          ? ""
-                          : "border-b border-secondary-black"
-                      )}
-                    >
-                      <p>{category.categoryName}</p>
-                    </div>
-                  ))}
-              </div>
-
               <div className="h-full">
                 {/* <AddProductForm /> */}
                 <AddCategoryForm />

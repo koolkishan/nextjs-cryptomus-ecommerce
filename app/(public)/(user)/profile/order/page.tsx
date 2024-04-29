@@ -12,7 +12,6 @@ const OrderPage = () => {
     async function getOrder() {
       if (user && user.email) {
         const response = await getOrderProductAction(user.email);
-        console.log("getOrder ~ response:", response);
         if (response && response.length>0) {
           setOrders(response);
         }

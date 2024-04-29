@@ -25,7 +25,7 @@ export async function createOrderAndOrderProducts(
               data: products,
             },
           },
-          orderStatus: "Pending",
+          orderStatus: "pending",
           paymentStatus: "Pending",
         },
         include: {

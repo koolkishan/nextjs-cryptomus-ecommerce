@@ -32,15 +32,10 @@ const CategoryProducts = ({ products }: CategoryProductsProps) => {
 
   useEffect(() => {
     setIsMounted(true);
-    // async function callOnce() {
-    //   await register();
-    // }
-    // callOnce();
     const category = allCategories.find((c) => c.id === products[0].categoryId);
     if (category) {
-      // setSelectedCategory(category.categoryName);
     }
-  }, []);
+  }, [allCategories, products]);
 
   if (!isMounted) {
     return null;

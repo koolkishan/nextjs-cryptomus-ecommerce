@@ -77,12 +77,6 @@ const SingleProduct = () => {
 
   const handleCart = async (productId: string | undefined) => {
     if (user && user.email && productId) {
-      console.log(
-        "handleCart ~ user.email, productId, quantity:",
-        user.email,
-        productId,
-        quantity
-      );
       const response = await addToCart(user.email, productId, quantity);
     } else {
       router.push("/auth");

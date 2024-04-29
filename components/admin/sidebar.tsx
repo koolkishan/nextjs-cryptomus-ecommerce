@@ -30,26 +30,37 @@ const Side = () => {
   const menuItems = [
     { label: "Dashboard", icon: <RxDashboard />, link: "/admin/dashboard" },
     {
-      label: "Ecommerce",
-      icon: <FiShoppingCart />,
-      subMenuItems: [
-        {
-          label: "Products",
-          icon: <GoDotFill />,
-          link: "/admin/products",
-        },
-        {
-          label: "Orders",
-          icon: <GoDotFill />,
-          link: "/admin/category/all-category",
-        },
-        {
-          label: "Categories",
-          icon: <GoDotFill />,
-          link: "/admin/categories",
-        },
-      ],
+      label: "Products",
+      icon: <GoDotFill />,
+      link: "/admin/products",
     },
+    {
+      label: "Orders",
+      icon: <GoDotFill />,
+      link: "/admin/order",
+    },
+    {
+      label: "Categories",
+      icon: <GoDotFill />,
+      link: "/admin/categories",
+    },
+    // {
+    //   label: "Ecommerce",
+    //   icon: <FiShoppingCart />,
+    //   subMenuItems: [
+    //     {
+    //       label: "Products",
+    //       icon: <GoDotFill />,
+    //       link: "/admin/products",
+    //     },
+    //     {
+    //       label: "Orders",
+    //       icon: <GoDotFill />,
+    //       link: "/admin/category/all-category",
+    //     },
+
+    //   ],
+    // },
     // {
     //   label: "Product",
     //   icon: <BsPhoneFill />,
@@ -81,8 +92,9 @@ const Side = () => {
 
   return (
     <div
-      className={` overflow-hidden border-none ${collapsSidbar ? "collapsed" : ""
-        }`}
+      className={` overflow-hidden border-none ${
+        collapsSidbar ? "collapsed" : ""
+      }`}
     >
       <Sidebar
         collapsed={collapsSidbar}
@@ -106,7 +118,6 @@ const Side = () => {
             width={20}
             height={20}
             loading="lazy"
-
           />
           <p className={cn(!collapsSidbar ? "text-start" : "hidden")}>Rocket</p>
         </div>
@@ -127,20 +138,22 @@ const Side = () => {
         >
           {menuItems.map((item, index) => (
             <React.Fragment key={index}>
-              {item.subMenuItems ? (
-                <SubMenu label={item.label} icon={item.icon}>
-                  {item.subMenuItems.map((subItem, subIndex) => (
-                    <MenuItem
-                      key={subIndex}
-                      onClick={() => handleItemClick(subItem.link)}
-                      icon={subItem.icon}
-                      active={selectedItem === subItem.link}
-                    >
-                      {subItem.label}
-                    </MenuItem>
-                  ))}
-                </SubMenu>
-              ) : (
+              {
+                // false ? (
+                // <SubMenu label={item.label} icon={item.icon}>
+                //   {item.subMenuItems.map((subItem, subIndex) => (
+                //     <MenuItem
+                //       key={subIndex}
+                //       onClick={() => handleItemClick(subItem.link)}
+                //       icon={subItem.icon}
+                //       active={selectedItem === subItem.link}
+                //     >
+                //       {subItem.label}
+                //     </MenuItem>
+                //   ))}
+                // </SubMenu>
+                //   <div></div>
+                // ) : (
                 <MenuItem
                   onClick={() => handleItemClick(item.link)}
                   icon={item.icon}
@@ -148,7 +161,7 @@ const Side = () => {
                 >
                   {item.label}
                 </MenuItem>
-              )}
+              }
             </React.Fragment>
           ))}
           {/* <MenuItem
