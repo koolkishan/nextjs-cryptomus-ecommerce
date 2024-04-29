@@ -1,5 +1,5 @@
 import { Header, Side } from "@/components/admin";
-import { loginIsRequiredServer } from "@/lib/auth";
+// import { loginIsRequiredServer } from "@/lib/auth";
 
 // export const metadata = {
 //   title: "Next.js",
@@ -11,7 +11,7 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  await loginIsRequiredServer();
+  // await loginIsRequiredServer();
   return (
     <html lang="en">
       <body className="w-full">

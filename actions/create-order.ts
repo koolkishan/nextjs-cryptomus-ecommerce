@@ -42,9 +42,7 @@ export async function createOrderAndOrderProducts(
           amount: amount.toString() + ".00",
           order_id: order.id.toString(),
           lifetime: 300,
-          url_callback:
-            "https://d2ba-2409-4080-9d98-8ed9-1661-4da5-b733-5594.ngrok-free.app/callback?id=" +
-            order.id,
+          url_callback: "http://localhost:3000/callback?id=" + order.id,
           url_return: `http://localhost:3000`,
         };
         const merchant = process.env.CRYPTOMUS_MERCHANT_ID as string;
