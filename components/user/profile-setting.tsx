@@ -179,17 +179,19 @@ const ProfileSetting = () => {
                     </div>
                   </div>
                   <div className="col-span-1 flex flex-col items-center justify-center gap-8">
-                    <Avatar className="h-40 w-40">
-                      <AvatarImage
-                        src={
-                          uploadedImageUrl.length
-                            ? uploadedImageUrl
-                            : userAndProfile.image.length > 0
-                            ? userAndProfile.image
-                            : "https://github.com/shadcn.png"
-                        }
-                      />
-                    </Avatar>
+                    {userAndProfile && userAndProfile.image && (
+                      <Avatar className="h-40 w-40">
+                        <AvatarImage
+                          src={
+                            uploadedImageUrl.length
+                              ? uploadedImageUrl
+                              : userAndProfile.image.length > 0
+                              ? userAndProfile.image
+                              : "https://github.com/shadcn.png"
+                          }
+                        />
+                      </Avatar>
+                    )}
                     <CldUploadButton
                       options={{ multiple: true }}
                       uploadPreset={

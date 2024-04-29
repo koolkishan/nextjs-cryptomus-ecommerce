@@ -23,7 +23,7 @@ useEffect(() => {
       }
     }
     fetchOrders();
-  }, []);
+  }, [setOrders]);
 
   if (!isMounted) {
     return null;

@@ -41,7 +41,7 @@ const UserProfile = () => {
   return (
     <div className="h-full rounded-xl px-6">
       {user ? (
-        userAndProfile ? (
+        userAndProfile && userAndProfile.name && userAndProfile.image ? (
           <>
             <div className="h-[calc(100vh-500px)]">
               <div className="flex gap-4 h-32 items-center">

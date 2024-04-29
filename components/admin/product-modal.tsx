@@ -96,7 +96,7 @@ ProductModalProps) => {
     // if (product.images) setImages([...product.images]);
     // setQuantity(product.quantity);
     // if (product.tags) setTags(product.tags.join(","));
-  }, [viewingProductId]);
+  }, [categoriesData, setViewingProduct, viewingProductId]);
 
   const handleUploadSuccess = (uploaded: any) => {
     if (uploaded?.event === "success") {
