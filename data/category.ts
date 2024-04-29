@@ -86,3 +86,18 @@ export const getProductsFormCategoryName = async (categoryName: string) => {
     throw error;
   }
 };
+
+export const getCategoryWithAllProductsData = async () => {
+  try {
+    const result = await db.categories.findMany({
+      select: {
+        id: true,
+        categoryName: true,
+        products: true,
+      },
+    });
+    return result;
+  } catch (error) {
+    console.log('Cannot find category',error);
+  }
+}

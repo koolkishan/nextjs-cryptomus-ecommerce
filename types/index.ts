@@ -49,7 +49,7 @@ export interface orderTypes {
   orderStatus: string;
   paymentStatus: string;
   products: OrderProductsType[];
-  user?: UserAndProfileTypes
+  user?: UserAndProfileTypes;
 }
 export interface OrderProductsType {
   id: string;
@@ -59,6 +59,11 @@ export interface OrderProductsType {
   product: ProductTypes;
 }
 
+export interface CtegoryWithProduct {
+  id: string;
+  categoryName: string;
+  products?: ProductTypes[] | [];
+}
 export interface CategoryWithProductCount {
   id: string;
   categoryName: string;
@@ -89,5 +94,5 @@ export interface AdminTypes {
   email: string;
   password: string;
   status: boolean;
-  roles?: (string)[] | null;
+  roles?: string[] | null;
 }
