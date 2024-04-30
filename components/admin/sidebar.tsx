@@ -15,6 +15,7 @@ import {
   SubMenu,
   sidebarClasses,
 } from "react-pro-sidebar";
+import { signOut } from "next-auth/react";
 
 const Side = () => {
   const router = useRouter();
@@ -121,14 +122,12 @@ const Side = () => {
               }
             </React.Fragment>
           ))}
-          {/* <MenuItem
-          
-            onClick={() => handleItemClick("/admin/logout")}
+          <MenuItem
+            onClick={() => signOut({ redirect: true, callbackUrl: "/" })}
             icon={<LuLogOut />}
-            active={selectedItem === "/admin/logout"}
           >
             Logout
-          </MenuItem> */}
+          </MenuItem>
         </Menu>
       </Sidebar>
     </div>

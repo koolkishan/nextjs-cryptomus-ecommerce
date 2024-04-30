@@ -1,10 +1,7 @@
 "use client";
 import { register } from "@/instrumentation";
-import { lazy, useEffect, useState } from "react";
-import Image from "next/image";
+import { useEffect, useState } from "react";
 import {
-  CredentialsSignInButton,
-  GithubSignInButton,
   GoogleSignInButton,
 } from "@/components/auth/authButtons";
 import { CredentialsForm } from "@/components/auth/credentialsForm";

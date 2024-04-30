@@ -1,9 +1,9 @@
 import NextAuth from "next-auth";
-
 import authConfig from "./auth.config";
 import { protectedEndpoints } from "./routes";
 const { auth } = NextAuth(authConfig);
 export default auth((req) => {
+  // console.log(req.auth?.user);
   const { nextUrl } = req;
   const isLoggedIn = !!req.auth;
   const pathName = nextUrl.pathname;

@@ -4,6 +4,8 @@ import { PrismaAdapter } from "@auth/prisma-adapter";
 import { db } from "./lib/db";
 import { getProfileAction } from "./actions/get-profile-action";
 import { createUserProfileAction } from "./actions/create-user-profile-action";
+import { getUserByEmailAction } from "./actions/get-user-by-email-action";
+import { getAdminDetailsAction } from "./actions/get-admin-details";
 
 export const {
   handlers: { GET, POST },
@@ -25,13 +27,17 @@ export const {
       return true;
     },
     async session({ token, user, session }) {
-      if (token.sub) {
-        const userProfile = await getProfileAction(token.sub);
-        if (!userProfile) {
-          await createUserProfileAction(token.sub);
+      if (token.sub && token.email) {
+        const adminDetails = await getAdminDetailsAction(token.email);
+        if (!adminDetails) {
+          const userProfile = await getProfileAction(token.sub);
+          if (!userProfile) {
+            await createUserProfileAction(token.sub);
+          }
         }
       }
-      if (session.user && token.sub) {
+      if (session.user && token.sub && token.email) {
+        const getUserByEmail = await getUserByEmailAction(token.email);
         if (token.provider !== "credentials") {
           return {
             ...session,
@@ -40,6 +46,7 @@ export const {
               id: token.sub,
               emailVerified: token.emailVerified,
               provider: token.provider,
+              role: getUserByEmail?.role,
             },
           };
         }
