@@ -17,6 +17,7 @@ import { orderTypes } from "@/types";
 import { useAppStore } from "@/store";
 import { updateOrderStatus } from "@/actions/update-order-status";
 import { getAllOrderAction } from "@/actions/get-all-orders";
+import { toast } from "sonner";
 
 interface OrderModalProps {
   setOrderModal: Dispatch<SetStateAction<boolean>>;
@@ -47,6 +48,7 @@ const OrderModal = ({ setOrderModal, orderModal }: OrderModalProps) => {
       if (orders && orders.length > 0) {
         setOrders(orders);
       }
+      toast.success('Order updated successfully.')
       setOrderModal(false);
       const response = await getOrderFromOrderIdAction(viewingOrderId);
       if (response) {

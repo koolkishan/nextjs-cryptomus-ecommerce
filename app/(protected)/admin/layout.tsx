@@ -1,13 +1,14 @@
 import { auth } from "@/auth";
 import { Header, Side } from "@/components/admin";
 import { redirect } from "next/navigation";
+// import { Toaster } from "sonner";
 
 export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const session = await auth() as any;
+  const session = (await auth()) as any;
   if (session?.user && session.user.role === "USER") redirect("/");
   return (
     <html lang="en">
@@ -22,6 +23,7 @@ export default async function RootLayout({
             </div>
             <div className="flex-1">{children}</div>
           </div>
+          {/* <Toaster richColors closeButton className=""/> */}
         </div>
       </body>
     </html>

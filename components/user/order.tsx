@@ -30,7 +30,7 @@ const Order = ({ order }: OrderProps) => {
   }, [user, setUserAndProfile]);
 
   return (
-    <>
+    <div>
       {userAndProfile &&
         userAndProfile.profile &&
         userAndProfile.profile.length > 0 && (
@@ -182,7 +182,7 @@ const Order = ({ order }: OrderProps) => {
       {userAndProfile && userAndProfile.profile && userAndProfile.profile.length === 0 && (
         <p>User profile not found.</p>
       )} */}
-    </>
+    </div>
   );
 };
 

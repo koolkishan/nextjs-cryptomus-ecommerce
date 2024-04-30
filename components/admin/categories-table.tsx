@@ -17,19 +17,14 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from "@/components/ui/hover-card";
 import { CategoryTypes, CategoryWithProductCount } from "@/types";
 import { getAllCategorisWithProductCount } from "@/actions/get-all-categories-with-product-count";
 import useDebounce from "@/hooks/useDebounce";
-import { PiDotsThreeOutlineVerticalFill } from "react-icons/pi";
 import { cn } from "@/lib/utils";
 import CategoryModal from "./category-modal";
 import { deleteCategory } from "@/actions/delete-category";
 import { getCategories } from "@/actions/get-all-categories";
+import { toast } from "sonner";
 
 interface CategoriesTableProps {
   categories: boolean;
@@ -121,7 +116,7 @@ const CategoriesTable = ({ categories }: CategoriesTableProps) => {
         setCategoriesData([]);
       }
     } else {
-      alert("You can't delete this category as it has products");
+      toast.info("You can't delete this category as it has products.");
     }
   };
 
@@ -133,7 +128,7 @@ const CategoriesTable = ({ categories }: CategoriesTableProps) => {
   return (
     categoriesData &&
     categoriesData.length > 0 && (
-      <>
+      <div>
         <CategoryModal
           // category={item}
           setsetCategoryModal={setsetCategoryModal}
@@ -289,7 +284,7 @@ const CategoriesTable = ({ categories }: CategoriesTableProps) => {
             </div>
           </div>
         </div>
-      </>
+      </div>
     )
   );
 };

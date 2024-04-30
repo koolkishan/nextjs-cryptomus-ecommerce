@@ -1,17 +1,19 @@
-'use client';
+"use client";
 import { CldUploadButton } from "next-cloudinary";
 import React, { useState } from "react";
 import { IoCloudUploadOutline } from "react-icons/io5";
 
-interface CloudinaryUploadImagesProps{
-    handleUploadSuccess: (uploaded: any) => void;
+interface CloudinaryUploadImagesProps {
+  handleUploadSuccess: (uploaded: any) => void;
 }
 
-const CloudinaryUploadImages = ({handleUploadSuccess}: CloudinaryUploadImagesProps) => {
+const CloudinaryUploadImages = ({
+  handleUploadSuccess,
+}: CloudinaryUploadImagesProps) => {
   const [IsDialogOpen, setIsDialogOpen] = useState<boolean>(false);
 
   return (
-    <>
+    <div>
       <p>
         <IoCloudUploadOutline size={22} className="text-custom-font" />
       </p>
@@ -34,7 +36,7 @@ const CloudinaryUploadImages = ({handleUploadSuccess}: CloudinaryUploadImagesPro
           </span>
         </CldUploadButton>
       </p>
-    </>
+    </div>
   );
 };
 

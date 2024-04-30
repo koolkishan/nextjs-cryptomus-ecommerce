@@ -15,6 +15,11 @@ const Header = () => {
   const { collapsSidbar, setCollapsSidbar } = useAppStore();
   const [adminDetails, setAdminDetails] = useState<AdminTypes>();
   const user = useAuthUser();
+  const [isMounted, setIsMounted] = useState<boolean>(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   useEffect(() => {
     async function fetchAdminDetails() {
@@ -25,6 +30,9 @@ const Header = () => {
     }
     fetchAdminDetails();
   }, [user]);
+  if (!isMounted) {
+    return null;
+  }
   return (
     <div className="flex">
       <div className="hidden md:flex-1 md:flex md:justify-start ">
@@ -47,8 +55,7 @@ const Header = () => {
             />
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
-          <p>{adminDetails?.firstName + ' ' + adminDetails?.lastName}</p>
-
+          <p>{adminDetails?.firstName + " " + adminDetails?.lastName}</p>
         </div>
       </div>
       {/* <Button className="bg-red-700 flex mr-10" onClick={handleLogOut}>

@@ -23,6 +23,11 @@ const Side = () => {
   const [selectedItem, setSelectedItem] = useState("/admin/dashboard");
   const [toggled, setToggled] = useState(false);
   const { collapsSidbar, setCollapsSidbar } = useAppStore();
+  const [isMounted, setIsMounted] = useState<boolean>(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   useEffect(() => {
     setSelectedItem(pathname);
@@ -51,7 +56,10 @@ const Side = () => {
     setSelectedItem(link);
     router.push(link);
   };
-
+  if (!isMounted) {
+    return null;
+  }
+  
   return (
     <div className={` border-none ${collapsSidbar ? "collapsed" : ""}`}>
       <Sidebar

@@ -41,7 +41,7 @@ const UserProfile = () => {
     <div className="h-full rounded-xl px-6">
       {user ? (
         userAndProfile && userAndProfile.name ? (
-          <>
+          <div>
             <div className="h-[calc(100vh-500px)]">
               <div className="flex gap-4 h-32 items-center">
                 <div className="h-20 flex items-center">
@@ -132,7 +132,7 @@ const UserProfile = () => {
                 </div>
               )}
             </div>
-          </>
+          </div>
         ) : (
           <div>Loading...</div>
         )

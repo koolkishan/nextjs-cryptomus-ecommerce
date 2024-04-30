@@ -1,9 +1,7 @@
 "use client";
 import { register } from "@/instrumentation";
 import { useEffect, useState } from "react";
-import {
-  GoogleSignInButton,
-} from "@/components/auth/authButtons";
+import { GoogleSignInButton } from "@/components/auth/authButtons";
 import { CredentialsForm } from "@/components/auth/credentialsForm";
 
 export default function Home() {
@@ -34,9 +32,7 @@ export default function Home() {
             </p>
             <div className="border-b border-zinc-400/20"></div>
           </div>
-          <div className="w-full">
-            <GoogleSignInButton />
-          </div>
+          <GoogleSignInButton />
         </div>
       </div>
     </div>
