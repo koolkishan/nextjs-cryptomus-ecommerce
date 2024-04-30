@@ -1,6 +1,4 @@
 "use client";
-import { createUserdb, getUserbyEmail } from "@/data/user";
-import { useAuthUser } from "@/hooks/useAuthUser";
 import Image from "next/image";
 import { useEffect } from "react";
 import { getProducts } from "@/actions/get-products";
@@ -12,10 +10,8 @@ import Categories from "./categories";
 import { getCategories } from "@/actions/get-all-categories";
 
 const EcommerceLandingPage = () => {
-  const user = useAuthUser();
   const { userProductsData, setUserProductsData, setAllCategories } =
     useAppStore();
-  
 
   useEffect(() => {
     async function getProductsData() {
@@ -32,7 +28,7 @@ const EcommerceLandingPage = () => {
   }, [setUserProductsData, setAllCategories]);
 
   return (
-    <div className="lg:container flex px-6 lg:px-0">
+    <div className="lg:container lg:px-0 px-6">
       {userProductsData.length > 0 && (
         <div>
           <div className="w-full">

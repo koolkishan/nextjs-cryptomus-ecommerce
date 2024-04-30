@@ -85,16 +85,6 @@ const FilterProducts = ({
     { label: "Higest first", value: "highToLow" },
   ];
 
-  const handleCategoryChange = (categoryName: string) => {
-    // setSelectedCategory(categoryName);
-    const selectedCategory = allCategories.find(
-      (category) => category.categoryName === categoryName
-    );
-    if (selectedCategory) {
-      setSelectedCategoryId(selectedCategory.id);
-    }
-  };
-
   const handleSortChange = (value: string) => {
     setSortBy(value);
   };
@@ -102,62 +92,6 @@ const FilterProducts = ({
   const handleChange = (e: any) => {
     setPriceRange([e[0], e[1]]);
   };
-
-  // const handleFilter = async () => {
-  //   if (deBouncePriceRange) {
-  //     const [debounceMinPrice, debounceMaxPrice] =
-  //       deBouncePriceRange.split(",");
-
-  //     let filteredProducts;
-  //     // = categoryProducts.filter((product) => {
-  //     //   const price = product.price;
-  //     //   return (
-  //     //     price >= parseInt(debounceMinPrice) &&
-  //     //     price <= parseInt(debounceMaxPrice)
-  //     //   );
-  //     // });
-  //     // setFilterProducts(filteredProducts);
-  //     if (categoryFilter) {
-  //       filteredProducts = categoryProducts.filter((product) => {
-  //         const price = product.price;
-  //         return (
-  //           price >= parseInt(debounceMinPrice) &&
-  //           price <= parseInt(debounceMaxPrice)
-  //         );
-  //       });
-  //       setFilterProducts(filteredProducts);
-  //     }
-  //     if (searchFilter && searchProducts) {
-  //       filteredProducts = searchProducts.filter((product) => {
-  //         const price = product.price;
-  //         return (
-  //           price >= parseInt(debounceMinPrice) &&
-  //           price <= parseInt(debounceMaxPrice)
-  //         );
-  //       });
-  //       setFilterProducts(filteredProducts);
-  //     }
-  //     if (sortBy === "highToLow" && filteredProducts) {
-  //       setFilterProducts(filteredProducts.sort((a, b) => b.price - a.price));
-  //     } else if (sortBy === "lowToHigh" && filteredProducts) {
-  //       setFilterProducts(filteredProducts.sort((a, b) => a.price - b.price));
-  //     }
-  //   }
-  //   if (sortBy === "highToLow") {
-  //     if (searchFilter && searchProducts) {
-  //       setFilterProducts(searchProducts.sort((a, b) => b.price - a.price));
-  //     } else {
-  //       setFilterProducts(categoryProducts.sort((a, b) => b.price - a.price));
-  //     }
-  //   }
-  //   if (sortBy === "lowToHigh") {
-  //     if (searchFilter && searchProducts) {
-  //       setFilterProducts(searchProducts.sort((a, b) => a.price - b.price));
-  //     } else {
-  //       setFilterProducts(categoryProducts.sort((a, b) => a.price - b.price));
-  //     }
-  //   }
-  // };
 
   const handleFilter = async () => {
     let filteredProducts: ProductTypes[] | [] = [];
@@ -184,26 +118,6 @@ const FilterProducts = ({
           );
         });
       }
-      // if (searchFilter && searchProducts) {
-      //   // Filter by category name if selected
-      //   if (selectCategoryId) {
-      //     filteredProducts = searchProducts.filter((product) => {
-      //       return (
-      //         product.categoryId === selectCategoryId &&
-      //         product.price >= parseInt(debounceMinPrice) &&
-      //         product.price <= parseInt(debounceMaxPrice)
-      //       );
-      //     });
-      //   } else {
-      //     // Filter only by price range if no category is selected
-      //     filteredProducts = searchProducts.filter((product) => {
-      //       return (
-      //         product.price >= parseInt(debounceMinPrice) &&
-      //         product.price <= parseInt(debounceMaxPrice)
-      //       );
-      //     });
-      //   }
-      // }
     }
 
     if (sortBy === "highToLow") {
@@ -217,32 +131,6 @@ const FilterProducts = ({
   return (
     <div className="bg-secondary-white rounded-2xl shadow-[2px_2px_2px_2px_rgba(0,0,0,0.03)] mt-4">
       <div className="grid grid-rows-4 gap-6 px-4 py-2">
-        {/* {!categoryFilter && (
-          <div className="">
-            <Select
-              onValueChange={handleCategoryChange}
-              defaultValue={categoryName}
-            >
-              <SelectTrigger className="w-[280px] ring-0 ring-offset-0 focus:ring-0">
-                <SelectValue placeholder="Select category" />
-              </SelectTrigger>
-
-              <SelectContent className=" ">
-                {allCategories.map((category) => (
-                  <SelectItem
-                    key={category.id}
-                    className="focus:text-secondary-blue"
-                    value={category.categoryName}
-                    onClick={() => handleCategoryChange(category.categoryName)}
-                    defaultChecked={true}
-                  >
-                    {category.categoryName}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-        )} */}
         <div className="">
           <Select onValueChange={handleSortChange} defaultValue="">
             <SelectTrigger className="w-[280px] ring-0 ring-offset-0 focus:ring-0">

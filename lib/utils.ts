@@ -8,6 +8,7 @@ import {
   ProductTypes,
   orderTypes,
 } from "@/types";
+import { Slide, } from "react-toastify";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -103,4 +104,13 @@ const calculateAvgDiscount = (arr: ProductTypes[]) => {
   return sum / arr.length;
 };
 
+export const TOAST_OBJ = {
+  position: "top-center",
+  autoClose: 2000,
+  hideProgressBar: false,
+  closeOnClick: true,
+  theme: "light",
+  transition: Slide,
+  
+} as const;
 // Transform data

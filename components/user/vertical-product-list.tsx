@@ -3,7 +3,6 @@
 import {
   Pagination,
   PaginationContent,
-  PaginationEllipsis,
   PaginationItem,
   PaginationLink,
   PaginationNext,
@@ -23,6 +22,7 @@ import { getProductsFormCategoryId } from "@/data/product";
 import { searchProductsByTagAction } from "@/actions/search-product-by-tag-action";
 import { removeWishListAction } from "@/actions/remove-wishlist-action";
 import { createOrderAndOrderProducts } from "@/actions/create-order";
+import { toast } from "sonner";
 const ITEMS_PER_PAGE = 5;
 
 interface VerticalProductListProps {
@@ -31,9 +31,7 @@ interface VerticalProductListProps {
   searchFilter: boolean;
   tag?: string;
 }
-// const products = await getProductsFormCategoryId(params.categoryId);
 const VerticalProductList = ({
-  // searchProducts,
   categoryFilter,
   searchFilter,
   tag,
@@ -83,6 +81,7 @@ const VerticalProductList = ({
             setCategoryProducts(productResponse);
           }
         }
+        toast.success("Product added to wishlist.");
       } else {
         const response = await addProductToWishList(user.email, productId);
         if (response?.success) {
@@ -95,9 +94,11 @@ const VerticalProductList = ({
             }
           }
         }
+        toast.success("Product added to wishlist.");
       }
     } else {
       router.push("/auth");
+      toast.error("Please sign in to proceed.");
     }
   };
 
@@ -116,6 +117,8 @@ const VerticalProductList = ({
             setCategoryProducts(productResponse);
           }
         }
+        toast.success("Product removed from wishlist.");
+
       } else {
         const response = await removeWishListAction(user.email, productId);
         if (response?.success) {
@@ -126,11 +129,14 @@ const VerticalProductList = ({
             if (productResponse && productResponse.length > 0) {
               setSearchProducts(productResponse);
             }
+            
           }
         }
+        toast.success("Product removed from wishlist.");
       }
     } else {
       router.push("/auth");
+      toast.error("Please sign in to proceed.");
     }
   };
   const totalPages = Math.ceil(displayProductList.length / ITEMS_PER_PAGE);
@@ -171,7 +177,7 @@ const VerticalProductList = ({
     }
   };
   return (
-    <div className="min-h-[calc(100vh-223px)]">
+    <div className="">
       {displayProductList &&
         displayProductList.length > 0 &&
         displayProductList.slice(startIndex, endIndex).map((product) => (
@@ -267,7 +273,6 @@ const VerticalProductList = ({
               }
             />
           </PaginationItem>
-          {/* Generate pagination links */}
           {Array.from({ length: totalPages }).map((_, index) => (
             <PaginationItem key={index}>
               <PaginationLink

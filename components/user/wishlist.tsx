@@ -12,6 +12,7 @@ import { removeWishListAction } from "@/actions/remove-wishlist-action";
 import { ProductTypes } from "@/types";
 import { createOrderAndOrderProducts } from "@/actions/create-order";
 import { addToCart } from "@/actions/add-cart-action";
+import { toast } from "sonner";
 
 const Wishlist = () => {
   const { userProductsData, setUserProductsData } = useAppStore();
@@ -41,9 +42,11 @@ const Wishlist = () => {
         if (productResponse && productResponse.length > 0) {
           setUserProductsData(productResponse);
         }
+      toast.success("Product added to wish list." )
       }
     } else {
       router.push("/auth");
+      toast.error('Please sign in to proceed.')
     }
   };
 
@@ -55,8 +58,10 @@ const Wishlist = () => {
         if (productResponse && productResponse.length > 0) {
           setUserProductsData(productResponse);
         }
+        toast.success("Product removed from wish list.");
       } else {
         router.push("/auth");
+        toast.error('Please sign in to proceed.')
       }
     }
   };
@@ -90,13 +95,14 @@ const Wishlist = () => {
   const handleCart = async (productId: string | undefined) => {
     if (user && user.email && productId) {
       const response = await addToCart(user.email, productId, 1);
+      toast.success('Product added to cart.')
     } else {
       router.push("/auth");
     }
   };
 
   return (
-    <div className="lg:container lg:px-6 px-0 min-h-[calc(100vh-210px)]">
+    <div className="lg:container lg:px-6 px-0 ">
       {userProductsData &&
         userProductsData.length > 0 &&
         userProductsData.map((product) =>

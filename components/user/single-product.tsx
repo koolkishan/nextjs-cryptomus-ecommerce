@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import { IoHeart, IoHeartOutline } from "react-icons/io5";
 import { AlertTriangle } from "lucide-react";
-import RecommendedProducts from "./recommended";
 import { useRouter } from "next/navigation";
 import { useAuthUser } from "@/hooks/useAuthUser";
 import { getProductFromProductId } from "@/actions/get-product-from-id";
@@ -15,6 +14,7 @@ import { removeWishListAction } from "@/actions/remove-wishlist-action";
 import SameCateGoryProducts from "./same-category-products";
 import { addToCart } from "@/actions/add-cart-action";
 import { createOrderAndOrderProducts } from "@/actions/create-order";
+import { toast } from "sonner";
 
 const SingleProduct = () => {
   const user = useAuthUser();
@@ -53,9 +53,11 @@ const SingleProduct = () => {
         if (response) {
           setProduct(response);
         }
+        toast.success("Product added to wishlist.");
       }
     } else {
       router.push("/auth");
+      toast.error("Please sign in to proceed.");
     }
   };
 
@@ -69,8 +71,10 @@ const SingleProduct = () => {
         if (response) {
           setProduct(response);
         }
+        toast.success("Product removed from wishlist.");
       } else {
         router.push("/auth");
+        toast.error("Please sign in to proceed.");
       }
     }
   };
@@ -78,8 +82,11 @@ const SingleProduct = () => {
   const handleCart = async (productId: string | undefined) => {
     if (user && user.email && productId) {
       const response = await addToCart(user.email, productId, quantity);
+      toast.success("Product added to cart.");
     } else {
       router.push("/auth");
+      toast.error("Please sign in to proceed.");
+      
     }
   };
 
@@ -91,8 +98,9 @@ const SingleProduct = () => {
           quantity,
         },
       ];
-      const totalPrice = (product?.price - (product?.price * product.discount)/100);
-      const totalDiscount = (product?.price * product.discount)/100;
+      const totalPrice =
+        product?.price - (product?.price * product.discount) / 100;
+      const totalDiscount = (product?.price * product.discount) / 100;
       const paymentUrl = await createOrderAndOrderProducts(
         user.email,
         products,
@@ -119,7 +127,6 @@ const SingleProduct = () => {
             width={300}
             height={300}
             loading="lazy"
-
           />
         </div>
         <div className="visible lg:hidden flex gap-5 justify-center mb-4">
@@ -139,8 +146,7 @@ const SingleProduct = () => {
                 alt="sub image"
                 width={60}
                 height={60}
-              loading="lazy"
-
+                loading="lazy"
               />
             </div>
           ))}
@@ -254,8 +260,7 @@ const SingleProduct = () => {
                 alt="sub image"
                 width={60}
                 height={60}
-              loading="lazy"
-
+                loading="lazy"
               />
             </div>
           ))}
@@ -266,6 +271,7 @@ const SingleProduct = () => {
           productsForSameCategory={true}
           categoryId={product?.categoryId}
         /> */}
+        <p className="text-2xl font-medium my-6">Recommended</p>
         {product && product?.categoryId && (
           <SameCateGoryProducts categoryId={product?.categoryId} />
         )}

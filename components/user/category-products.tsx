@@ -1,8 +1,5 @@
 "use client";
-
 import { useAppStore } from "@/store";
-import { Products } from "@prisma/client";
-
 interface CategoryProductsProps {
   products: ProductTypes[];
 }

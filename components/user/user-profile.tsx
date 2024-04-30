@@ -23,6 +23,7 @@ const UserProfile = () => {
   const user = useAuthUser();
   const router = useRouter();
   const { setUserAndProfile, userAndProfile } = useAppStore();
+  console.log("UserProfile ~ userAndProfile:", userAndProfile);
 
   useEffect(() => {
     async function getUserProfile() {
@@ -31,8 +32,6 @@ const UserProfile = () => {
         if (userDetails) {
           setUserAndProfile(userDetails);
         }
-      } else {
-        router.push("/auth");
       }
     }
     getUserProfile();
@@ -41,7 +40,7 @@ const UserProfile = () => {
   return (
     <div className="h-full rounded-xl px-6">
       {user ? (
-        userAndProfile && userAndProfile.name && userAndProfile.image ? (
+        userAndProfile && userAndProfile.name ? (
           <>
             <div className="h-[calc(100vh-500px)]">
               <div className="flex gap-4 h-32 items-center">
@@ -73,7 +72,8 @@ const UserProfile = () => {
               </div>
               {userAndProfile.profile &&
               userAndProfile.profile[0]?.addresses &&
-              userAndProfile.profile[0]?.addresses.length > 0 ? (
+              userAndProfile.profile[0]?.addresses.length > 0 &&
+              userAndProfile.profile[0]?.addresses[0].length > 0 ? (
                 <div className="">
                   <div className="grid grid-cols-2 gap-10">
                     <div className="flex mt-5 bg-secondary-white rounded-xl items-center px-2">
@@ -124,7 +124,7 @@ const UserProfile = () => {
                     variant={"outline"}
                     className="bg-secondary-blue hover:bg-secondary-blue hover:text-primary-text text-primary-text"
                     onClick={() => {
-                      router.push("/profile/profile-setting");
+                      router.push("/profile/setting");
                     }}
                   >
                     <GoPlus size={18} className="mr-2" /> Add Address

@@ -1,32 +1,30 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
-import { Input } from "@/components/ui/input";
 import { FaUser } from "react-icons/fa";
-import { IoHeartSharp, IoLocationSharp, IoMenuOutline } from "react-icons/io5";
+import { IoHeartSharp } from "react-icons/io5";
 import { IoCart } from "react-icons/io5";
 import { useRouter } from "next/navigation";
-import { useAppStore } from "@/store";
 import { useEffect, useState } from "react";
 import Search from "./search";
 import { useAuthUser } from "@/hooks/useAuthUser";
-import Image from "next/image";
-import { cn } from "@/lib/utils";
-import { signOut } from "next-auth/react";
+import { toast } from "sonner";
 
 const Header = () => {
   const router = useRouter();
-  const { setProductCategory, productCategory } = useAppStore();
   const user = useAuthUser();
   const [isMounted, setIsMounted] = useState<boolean>(false);
 
   useEffect(() => {
     setIsMounted(true);
   }, []);
+
   const handleClick = () => {
     if (user) {
       router.push("/wishlist");
     } else {
       router.push("/auth");
+      toast.error("Please sign in to proceed.");
+
     }
   };
 
@@ -34,38 +32,19 @@ const Header = () => {
     if (user) {
       router.push("/cart");
     } else {
+      toast.error("Please sign in to proceed.");
       router.push("/auth");
+
     }
   };
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        // const products = await getProducts();
-        // if (products) {
-        //   setProducts(products);
-        // }
-      } catch (error) {
-        // console.error("Error calling oneEntryTry:", error);
-      }
-    };
-    fetchData();
-  }, []);
-
-  // get products for particular product.
-  // const handleCategory = (name: string) => {
-  //   setProductCategory(name);
-  // };
-
-  // const handleLogOut = () => {
-  //   // signOut();
-  //   router.push("/auth");
-  // };
 
   const handleProfile = () => {
     if (user) {
       router.push("/profile");
     } else {
+      toast.error("Please sign in to proceed.");
       router.push("/auth");
+
     }
   };
 
