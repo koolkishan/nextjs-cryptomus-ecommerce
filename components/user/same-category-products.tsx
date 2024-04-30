@@ -10,6 +10,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { IoHeart, IoHeartOutline } from "react-icons/io5";
+import { toast } from "sonner";
 
 interface SameCateGoryProductsProps {
   categoryId: string;
@@ -50,8 +51,10 @@ const SameCateGoryProducts = ({ categoryId }: SameCateGoryProductsProps) => {
         const response = await getProductFromCategoryId(categoryId);
         setCategoryProduct(response);
       }
+      toast.success("Product added to wish list.");
     } else {
       router.push("/auth");
+      toast.error("Please sign in to proceed.");
     }
   };
 
@@ -64,9 +67,11 @@ const SameCateGoryProducts = ({ categoryId }: SameCateGoryProductsProps) => {
           setUserProductsData(productResponse);
         }
         const response = await getProductFromCategoryId(categoryId);
-          setCategoryProduct(response);
+        setCategoryProduct(response);
+        toast.success("Product removed from wish list.");
       } else {
         router.push("/auth");
+        toast.error("Please sign in to proceed.");
       }
     }
   };

@@ -31,6 +31,7 @@ import { createProduct } from "@/actions/create-product";
 import { useAppStore } from "@/store";
 import { getCategories } from "@/actions/get-all-categories";
 import { getProducts } from "@/actions/get-products";
+import { toast } from "sonner";
 
 const AddProductForm = () => {
   const [error, setError] = useState<string | undefined>();
@@ -72,26 +73,29 @@ const AddProductForm = () => {
   const onSubmit = async (values: z.infer<typeof ProductSchema>) => {
     setError("");
     setSuccess("");
-    const category = categoriesData.find(category => category.categoryName === values.category);
+    const category = categoriesData.find(
+      (category) => category.categoryName === values.category
+    );
     if (category) {
-      const { error, success } = await createProduct(values, uploadedImageUrl, category?.id);
-      setError(error);
-      setSuccess(success);
+      const { error, success } = await createProduct(
+        values,
+        uploadedImageUrl,
+        category?.id
+      );
+      if (error) {
+        toast.error("Please provide a valid product data.");
+        setToggleSheet(false);
+      }
+      if (success) {
+        toast.success("Product created successfully.");
+        setToggleSheet(false);
+      }
       setUploadedImageUrl([]);
     }
     const response = await getProducts();
     if (response && response.length) {
       setProductsData(response);
-      const timerId = setTimeout(() => {
-        setError("");
-        setSuccess("");
-      }, 2000);
-
-      setTimeout(() => {
-        clearTimeout(timerId);
-      }, 2000);
-    }
-    else {
+    } else {
       setProductsData([]);
     }
     form.reset();
@@ -110,7 +114,7 @@ const AddProductForm = () => {
   const isLoading = form.formState.isSubmitting;
 
   return (
-    <>
+    <div>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="h-full">
           <div className="flex h-full flex-col">
@@ -348,7 +352,7 @@ const AddProductForm = () => {
           </div>
         </form>
       </Form>
-    </>
+    </div>
   );
 };
 

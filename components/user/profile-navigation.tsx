@@ -6,6 +6,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { FaHeart } from "react-icons/fa";
 import { IoHomeSharp, IoSettingsSharp } from "react-icons/io5";
 import { RiChatHistoryFill } from "react-icons/ri";
+import { TbLogout2 } from "react-icons/tb";
 
 const ProfileNavigation = () => {
   const path = usePathname();
@@ -95,13 +96,21 @@ const ProfileNavigation = () => {
         </p>
         <p
           className={cn(
-            "cursor-pointer py-2 px-2 mb-4 hover:bg-blue-100 hver:border hover:rounded-lg hover:text-blue-600"
+            "flex items-center gap-3 cursor-pointer py-2 px-2 mb-4 hover:bg-blue-100 hver:border hover:rounded-lg hover:text-blue-600"
             // path === "/logout"
             //   ? "bg-blue-100 border rounded-lg text-blue-600    "
             //   : ""
           )}
           onClick={handleLogOut}
         >
+          <TbLogout2
+            size={22}
+            className={cn(
+              path === "/profile/logout"
+                ? " rounded-lg text-blue-600   hover:text-blue-600  "
+                : "text-custom-font  hover:text-blue-600"
+            )}
+          />
           LogOut
         </p>
       </div>

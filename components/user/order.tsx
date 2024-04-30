@@ -30,7 +30,7 @@ const Order = ({ order }: OrderProps) => {
   }, [user, setUserAndProfile]);
 
   return (
-    <>
+    <div>
       {userAndProfile &&
         userAndProfile.profile &&
         userAndProfile.profile.length > 0 && (
@@ -43,23 +43,26 @@ const Order = ({ order }: OrderProps) => {
               <div className="flex gap-4">
                 <p className="text-custom-font flex gap-1 items-center">
                   <span className="font-medium text-black">Order status:</span>
-                  {order.orderStatus === "cancel" ? (
-                    <p className="border border-red-400 bg-red-400/20 px-4 rounded-lg">
-                      {order.orderStatus}
+                  {order.orderStatus.toLowerCase() === "cancel" ? (
+                    <p className="border text-red-400 border-red-400 bg-red-400/20 px-4 rounded-lg">
+                      {order.orderStatus.charAt(0).toUpperCase() +
+                        order.orderStatus.slice(1)}
                     </p>
                   ) : (
                     ""
                   )}
-                  {order.orderStatus === "Pending" ? (
-                    <p className="border border-yellow-400 bg-yellow-400/20 px-4 rounded-lg">
-                      {order.orderStatus}
+                  {order.orderStatus.toLowerCase() === "pending" ? (
+                    <p className="border text-yellow-400 border-yellow-400 bg-yellow-400/20 px-4 rounded-lg">
+                      {order.orderStatus.charAt(0).toUpperCase() +
+                        order.orderStatus.slice(1)}
                     </p>
                   ) : (
                     ""
                   )}
-                  {order.orderStatus === "Delivered" ? (
-                    <p className="border border-green-400 bg-green-400/20 px-4 rounded-lg">
-                      {order.orderStatus}
+                  {order.orderStatus.toLowerCase() === "delivered" ? (
+                    <p className="border text-green-400 border-green-400 bg-green-400/20 px-4 rounded-lg">
+                      {order.orderStatus.charAt(0).toUpperCase() +
+                        order.orderStatus.slice(1)}
                     </p>
                   ) : (
                     ""
@@ -69,34 +72,37 @@ const Order = ({ order }: OrderProps) => {
                   <span className="font-medium text-black">
                     Payment status:
                   </span>
-                  {order.paymentStatus ===
+                  {order.paymentStatus.toLocaleLowerCase() ===
                   ("cancel" ||
                     "fail" ||
                     "system_fail" ||
                     "refund_fail" ||
                     "locked") ? (
-                    <p className="border  border-red-400 bg-red-400/20 px-4 rounded-lg">
-                      {order.paymentStatus}
+                    <p className="border text-red-400 border-red-400 bg-red-400/20 px-4 rounded-lg">
+                      {order.paymentStatus.charAt(0).toUpperCase() +
+                        order.paymentStatus.slice(1)}
                     </p>
                   ) : (
                     ""
                   )}
-                  {order.paymentStatus ===
+                  {order.paymentStatus.toLowerCase() ===
                   ("pending" ||
                     "process" ||
                     "confirm_check" ||
                     "check" ||
                     "refund_process") ? (
-                    <p className="border border-yellow-400 bg-yellow-400/20 px-4 rounded-lg">
-                      {order.paymentStatus}
+                    <p className="border text-yellow-400 border-yellow-400 bg-yellow-400/20 px-4 rounded-lg">
+                      {order.paymentStatus.charAt(0).toUpperCase() +
+                        order.paymentStatus.slice(1)}
                     </p>
                   ) : (
                     ""
                   )}
-                  {order.paymentStatus ===
+                  {order.paymentStatus.toLowerCase() ===
                   ("paid" || "paid_over" || "refund_paid") ? (
-                    <p className="border border-green-400 bg-green-400/20 px-4 rounded-lg">
-                      {order.paymentStatus}
+                    <p className="border text-green-400 border-green-400 bg-green-400/20 px-4 rounded-lg">
+                      {order.paymentStatus.charAt(0).toUpperCase() +
+                        order.paymentStatus.slice(1)}
                     </p>
                   ) : (
                     ""
@@ -176,7 +182,7 @@ const Order = ({ order }: OrderProps) => {
       {userAndProfile && userAndProfile.profile && userAndProfile.profile.length === 0 && (
         <p>User profile not found.</p>
       )} */}
-    </>
+    </div>
   );
 };
 

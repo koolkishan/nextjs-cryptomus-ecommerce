@@ -4,6 +4,8 @@ import { PrismaAdapter } from "@auth/prisma-adapter";
 import { db } from "./lib/db";
 import { getProfileAction } from "./actions/get-profile-action";
 import { createUserProfileAction } from "./actions/create-user-profile-action";
+import { getUserByEmailAction } from "./actions/get-user-by-email-action";
+import { getAdminDetailsAction } from "./actions/get-admin-details";
 
 export const {
   handlers: { GET, POST },
@@ -12,51 +14,6 @@ export const {
   signOut,
 } = NextAuth({
   callbacks: {
-    // async session({ session, token }:{session:any, token:any}) {
-    //   if (session.user && token.sub) {
-    //     if (token.provider !== "credentials") {
-    //       return {
-    //         ...session,
-    //         user: {
-    //           ...session.user,
-    //           id: token.sub,
-    //           emailVerified: token.emailVerified,
-    //           provider: token.provider,
-    //         },
-    //       };
-    //     } else {
-    //       try {
-    //         const existingUser = await getUserById(token.sub);
-    //         if (existingUser) {
-    //           return {
-    //             ...session,
-    //             user: {
-    //               ...session.user,
-    //               id: token.sub,
-    //               emailVerified: existingUser.emailVerified,
-    //             },
-    //           };
-    //         }
-    //       } catch (error) {}
-    //     }
-    //   }
-    //   return session;
-    // },
-    // async jwt({ token, account, profile }: {token: any, account: any, profile: any}) {
-    //   if (account) {
-    //     token.provider = account.provider;
-    //   }
-
-    //   if (profile) {
-    //     token.emailVerified = profile.email_verified;
-    //   }
-
-    //   return token;
-    // },
-    // async signIn({ account }: {account: any}) {
-    //   if (account?.provider !== "credentials") return true;
-    //   return true;
-    // },
     async jwt({ token, account }) {
       if (account) {
         token.id = account.providerAccountId;
@@ -70,10 +27,28 @@ export const {
       return true;
     },
     async session({ token, user, session }) {
-      if(token.sub) {
-        const userProfile = await getProfileAction(token.sub);
-        if (!userProfile) {
-          await createUserProfileAction(token.sub);
+      if (token.sub && token.email) {
+        const adminDetails = await getAdminDetailsAction(token.email);
+        if (!adminDetails) {
+          const userProfile = await getProfileAction(token.sub);
+          if (!userProfile) {
+            await createUserProfileAction(token.sub);
+          }
+        }
+      }
+      if (session.user && token.sub && token.email) {
+        const getUserByEmail = await getUserByEmailAction(token.email);
+        if (token.provider !== "credentials") {
+          return {
+            ...session,
+            user: {
+              ...session.user,
+              id: token.sub,
+              emailVerified: token.emailVerified,
+              provider: token.provider,
+              role: getUserByEmail?.role,
+            },
+          };
         }
       }
       return session;

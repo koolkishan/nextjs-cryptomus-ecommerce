@@ -18,7 +18,6 @@ export const getProfileById = async (userId: string) => {
     return await db.profile.findFirst({
       where: {
         userId,
-        user: {},
       },
       include: {
         user: true,

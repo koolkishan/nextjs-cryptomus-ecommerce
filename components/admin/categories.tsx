@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import ProductsTable from "./products-table";
 import { AddCategorySideBar } from "./add-category-sidebar";
 import CategoriesTable from "./categories-table";
 

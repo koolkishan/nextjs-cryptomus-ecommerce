@@ -5,28 +5,23 @@ import { ProductTypes } from "@/types";
 import { IoHeart, IoHeartOutline } from "react-icons/io5";
 import { useRouter } from "next/navigation";
 import { useAuthUser } from "@/hooks/useAuthUser";
-import { wishListAction } from "@/actions/add-wishlist-action";
-import { getUserByEmailAction } from "@/actions/get-user-by-email-action";
-import { error } from "console";
 import { addProductToWishList } from "@/lib/utils";
 import { useAppStore } from "@/store";
 import { getProducts } from "@/actions/get-products";
 import { removeWishListAction } from "@/actions/remove-wishlist-action";
-import { useEffect, useState } from "react";
+import { toast } from "sonner";
 interface HorizontalProductListProps {
   products?: ProductTypes[];
   productsForSameCategory?: boolean;
 }
-const HorizontalProductList = ({
-  products,
-}: HorizontalProductListProps) => {
-  const { setUserProductsData} = useAppStore();
+const HorizontalProductList = ({ products }: HorizontalProductListProps) => {
+  const { setUserProductsData } = useAppStore();
   const user = useAuthUser();
   const router = useRouter();
+
   const handleProductClick = (productId: string) => {
     router.push(`/products/${productId}`);
   };
-
 
   const handleWishList = async (productId: string) => {
     if (user && user.email) {
@@ -37,8 +32,10 @@ const HorizontalProductList = ({
           setUserProductsData(productResponse);
         }
       }
+      toast.success("Product added to wish list." )
     } else {
       router.push("/auth");
+      toast.error('Please sign in to proceed.')
     }
   };
 
@@ -50,11 +47,14 @@ const HorizontalProductList = ({
         if (productResponse && productResponse.length > 0) {
           setUserProductsData(productResponse);
         }
+        toast.success("Product removed from wish list.");
       } else {
         router.push("/auth");
+        toast.error('Please sign in to proceed.')
       }
     }
   };
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 h-[50%] gap-6">
       {products &&
@@ -70,8 +70,7 @@ const HorizontalProductList = ({
                     alt="alt image"
                     width={150}
                     height={150}
-              loading="lazy"
-
+                    loading="lazy"
                   />
                 </div>
               )}

@@ -1,7 +1,7 @@
 "use client";
 
 import { orderTypes } from "@/types";
-import Order from "./order"; // Assuming you have an Order component to render individual orders
+import Order from "./order";
 import { useEffect } from "react";
 import { useAuthUser } from "@/hooks/useAuthUser";
 import { useRouter } from "next/navigation";

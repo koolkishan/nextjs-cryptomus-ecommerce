@@ -32,6 +32,7 @@ import { CldUploadButton } from "next-cloudinary";
 import { updateProduct } from "@/actions/update-product";
 import { getProducts } from "@/actions/get-products";
 import { getProductFromProductId } from "@/actions/get-product-from-id";
+import { toast } from "sonner";
 
 interface ProductModalProps {
   setProductModal: Dispatch<SetStateAction<boolean>>;
@@ -39,8 +40,8 @@ interface ProductModalProps {
   //   product: ProductTypes;
 }
 const ProductModal = ({
-  productModal,
   setProductModal,
+  productModal,
 }: //   product,
 ProductModalProps) => {
   const [error, setError] = useState<string | undefined>();
@@ -84,18 +85,6 @@ ProductModalProps) => {
       }
     }
     productFromId();
-    // const category = categoriesData.find((c) => c.id === product.categoryId);
-    // if (category) {
-    //   setCategoryName(category?.categoryName);
-    //   setCategoryId(category?.id);
-    // }
-    // setProductName(product.productName);
-    // setDiscount(product.discount);
-    // setDescription(product.description);
-    // setPrice(product.price);
-    // if (product.images) setImages([...product.images]);
-    // setQuantity(product.quantity);
-    // if (product.tags) setTags(product.tags.join(","));
   }, [categoriesData, setViewingProduct, viewingProductId]);
 
   const handleUploadSuccess = (uploaded: any) => {
@@ -120,19 +109,12 @@ ProductModalProps) => {
         discount,
         quantity
       );
-      setError(error);
-      setSuccess(success);
+      if(success) toast.success('Product updated successfully.')
+      if(error) toast.error('Please fill valid details.');
       const response = await getProducts();
       if (response && response.length > 0) {
         setProductsData(response);
-        const timerId = setTimeout(() => {
-          setError("");
-          setSuccess("");
-        }, 2000);
-
-        setTimeout(() => {
-          clearTimeout(timerId);
-        }, 2000);
+        
       }
     }
     setProductModal((prev) => !prev);

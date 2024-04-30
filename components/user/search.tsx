@@ -2,7 +2,6 @@
 import { Input } from "@/components/ui/input";
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useAppStore } from "@/store";
 import { IoSearchOutline } from "react-icons/io5";
 import useDebounce from "@/hooks/useDebounce";
 import { getAllTagsAction } from "@/actions/get-all-tags-action";
@@ -105,7 +104,6 @@ const Search = () => {
               }`}
               key={index}
               onClick={() => {
-                // Handle click on tag suggestion
                 router.push(`/search/${encodeURIComponent(t)}`);
               }}
             >

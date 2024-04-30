@@ -36,44 +36,46 @@ export function CredentialsForm(props: CredentialsFormProps) {
   };
 
   return (
-    <form
-      className="w-full h-full text-xl font-semibold flex flex-col"
-      onSubmit={handleSubmit}
-    >
-      {error && (
-        <span className="p-4 py-2 mb-2 text-lg font-semibold text-white bg-red-500 rounded-md">
-          {error}
-        </span>
-      )}
-      <div className="relative">
-        <MdAlternateEmail className="absolute text-zinc-400 mt-[10px] mx-2" />
-
-        <Input
-          type="email"
-          name="email"
-          placeholder="Email"
-          required
-          className="w-full px-8 py-2 mb-4  rounded-md border border-zin-400/20 bg-transparent focus:border-custom-font placeholder:text-zinc-400 placeholder:font-medium placeholder:text-lg"
-        />
-      </div>
-
-      <div className="relative">
-        <MdOutlineLockOpen className="absolute text-zinc-400 mt-[10px] mx-2 " />
-        <Input
-          type="password"
-          name="password"
-          placeholder="Password"
-          required
-          className="w-full px-8 py-2 mb-4  rounded-md border border-zinc-400/20 bg-transparent focus:border-custom-font placeholder:text-zinc-400 placeholder:font-medium placeholder:text-lg"
-        />
-      </div>
-
-      <Button
-        type="submit"
-        className="w-full h-10 px-6 text-lg text-white transition-colors duration-150 bg-secondary-blue  rounded-md focus:shadow-outline hover:bg-secondary-blue"
+    <div>
+      <form
+        className="w-full h-full text-xl font-semibold flex flex-col"
+        onSubmit={handleSubmit}
       >
-        Sign in
-      </Button>
-    </form>
+        {error && (
+          <span className="p-4 py-2 mb-2 text-lg font-semibold text-white bg-red-500 rounded-md">
+            {error}
+          </span>
+        )}
+        <div className="relative">
+          <MdAlternateEmail className="absolute text-zinc-400 mt-[10px] mx-2" />
+
+          <Input
+            type="email"
+            name="email"
+            placeholder="Email"
+            required
+            className="w-full px-8 py-2 mb-4  rounded-md border border-zin-400/20 bg-transparent focus:border-custom-font placeholder:text-zinc-400 placeholder:font-medium placeholder:text-lg"
+          />
+        </div>
+
+        <div className="relative">
+          <MdOutlineLockOpen className="absolute text-zinc-400 mt-[10px] mx-2 " />
+          <Input
+            type="password"
+            name="password"
+            placeholder="Password"
+            required
+            className="w-full px-8 py-2 mb-4  rounded-md border border-zinc-400/20 bg-transparent focus:border-custom-font placeholder:text-zinc-400 placeholder:font-medium placeholder:text-lg"
+          />
+        </div>
+
+        <Button
+          type="submit"
+          className="w-full h-10 px-6 text-lg text-white transition-colors duration-150 bg-secondary-blue  rounded-md focus:shadow-outline hover:bg-secondary-blue"
+        >
+          Sign in
+        </Button>
+      </form>
+    </div>
   );
 }

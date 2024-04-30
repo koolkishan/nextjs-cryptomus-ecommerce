@@ -7,7 +7,7 @@ import React, { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import { removeProductFromCart } from "@/actions/remove-cart-action";
 import { useRouter } from "next/navigation";
-import { createOrderAndOrderProducts } from "@/actions/create-order";
+import { toast } from "sonner";
 
 const Cart = () => {
   const user = useAuthUser();
@@ -60,6 +60,7 @@ const Cart = () => {
       if (result) {
         setCart(result);
       }
+      toast.success('Item removed from cart.')
     }
   };
 
@@ -72,7 +73,7 @@ const Cart = () => {
   return (
     <div>
       <div className="lg:container lg:px-0 grid grid-cols-4 gap-5 pt-5">
-        <div className="col-span-3 min-h-[calc(100vh-230px)] overflow-y-auto scrollbar-hide">
+        <div className="col-span-3 overflow-y-auto scrollbar-hide">
           {cart && cart.products && cart.products.length > 0 ? (
             cart.products.map((p, index) => (
               <div key={p.id}>
@@ -184,14 +185,4 @@ const Cart = () => {
     </div>
   );
 };
-{
-  /* <div class="flex flex-col">
-  <div class="overflow-auto h-full">
-    <!-- Scrollable content -->
-  </div>
-  <div class="fixed bottom-0 left-0 right-0">
-    <!-- Fixed content -->
-  </div>
-</div> */
-}
 export default Cart;

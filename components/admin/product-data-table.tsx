@@ -8,11 +8,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from "@/components/ui/hover-card";
 import { Input } from "../ui/input";
 import { IoIosSearch } from "react-icons/io";
 import {
@@ -22,18 +17,15 @@ import {
   MdOutlineEdit,
 } from "react-icons/md";
 import { Button } from "../ui/button";
-import { Ghost } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ProductTypes } from "@/types";
 import { useAppStore } from "@/store";
-import { PiDotsThreeOutlineVerticalFill } from "react-icons/pi";
 import ProductModal from "./product-modal";
-import { getProduct } from "@/data/product";
 import { getProducts } from "@/actions/get-products";
 import { deleteProduct } from "@/actions/delete-product";
 import useDebounce from "@/hooks/useDebounce";
-import { FiEdit2 } from "react-icons/fi";
-import { RiDeleteBinLine } from "react-icons/ri";
+import { toast } from "sonner";
+
 
 interface DataTableProps {
   products: boolean;
@@ -96,12 +88,12 @@ export const DataTable = ({ products }: DataTableProps) => {
     return;
   }
 
-
   const handleDelete = async (id: string) => {
     await deleteProduct(id);
     const response = await getProducts();
     if (response && response.length > 0) {
       setProductsData(response);
+      toast.success("Product deleted successfully.");
     } else {
       setProductsData([]);
     }
@@ -110,13 +102,14 @@ export const DataTable = ({ products }: DataTableProps) => {
   const handleProductEdit = async (id: string) => {
     setviewingProductId(id);
     setProductModal(true);
+    
   };
 
   return (
     <div className="bg-surface rounded-3xl">
       <ProductModal
-        setProductModal={setProductModal}
         productModal={productModal}
+        setProductModal={setProductModal}
       />
 
       <div className=" felx justify-center items-center py-4 px-5 mt-4">

@@ -15,6 +15,7 @@ import {
   SubMenu,
   sidebarClasses,
 } from "react-pro-sidebar";
+import { signOut } from "next-auth/react";
 
 const Side = () => {
   const router = useRouter();
@@ -22,6 +23,11 @@ const Side = () => {
   const [selectedItem, setSelectedItem] = useState("/admin/dashboard");
   const [toggled, setToggled] = useState(false);
   const { collapsSidbar, setCollapsSidbar } = useAppStore();
+  const [isMounted, setIsMounted] = useState<boolean>(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   useEffect(() => {
     setSelectedItem(pathname);
@@ -50,7 +56,10 @@ const Side = () => {
     setSelectedItem(link);
     router.push(link);
   };
-
+  if (!isMounted) {
+    return null;
+  }
+  
   return (
     <div className={` border-none ${collapsSidbar ? "collapsed" : ""}`}>
       <Sidebar
@@ -121,14 +130,12 @@ const Side = () => {
               }
             </React.Fragment>
           ))}
-          {/* <MenuItem
-          
-            onClick={() => handleItemClick("/admin/logout")}
+          <MenuItem
+            onClick={() => signOut({ redirect: true, callbackUrl: "/" })}
             icon={<LuLogOut />}
-            active={selectedItem === "/admin/logout"}
           >
             Logout
-          </MenuItem> */}
+          </MenuItem>
         </Menu>
       </Sidebar>
     </div>

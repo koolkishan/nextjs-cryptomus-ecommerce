@@ -14,22 +14,6 @@ const RecommendedProducts = ({
   categoryId = "",
 }: RecommendedProductsProps) => {
   const { userProductsData } = useAppStore();
-  // const [categoryProduct, setCategoryProduct] = useState<ProductTypes[]>([]);
-
-  // useEffect(() => {
-  //   async function fetchCategoryProducts() {
-  //     if (productsForSameCategory && categoryId) {
-  //       try {
-  //         const response = await getProductFromCategoryId(categoryId);
-  //         setCategoryProduct(response);
-  //       } catch (error) {
-  //         console.error("Error fetching category products:", error);
-  //       }
-  //     }
-  //   }
-
-  //   fetchCategoryProducts();
-  // }, [categoryId]);
 
   let productsToDisplay: ProductTypes[] = [];
 
