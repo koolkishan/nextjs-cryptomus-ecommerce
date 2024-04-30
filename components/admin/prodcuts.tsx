@@ -20,8 +20,7 @@ const Products = () => {
       }
     }
     fetchCategories();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [setCategoriesData]);
 
   if (!isMounted) {
     return null;

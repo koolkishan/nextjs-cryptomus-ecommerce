@@ -8,7 +8,7 @@ import {
   ProductTypes,
   orderTypes,
 } from "@/types";
-import { Slide, } from "react-toastify";
+import { Slide } from "react-toastify";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -62,7 +62,7 @@ export const makeBarchartOptions = (
       const totalProducts = category?.products.length;
       const avgPrice = calculateAvgPrice(category.products);
       const avgDiscountInpercentage = calculateAvgDiscount(category.products);
-      const avgDiscountRupees = (avgDiscountInpercentage / 100) * avgPrice; 
+      const avgDiscountRupees = (avgDiscountInpercentage / 100) * avgPrice;
 
       return {
         categoryName: category.categoryName,
@@ -92,8 +92,7 @@ export const makeBarchartOptions = (
     totalProducts,
     avgPrices,
     avgDiscounts,
-  }
-  
+  };
 };
 const calculateAvgPrice = (arr: ProductTypes[]) => {
   const sum = arr.reduce((total, item) => total + item[`price`], 0);
@@ -104,13 +103,27 @@ const calculateAvgDiscount = (arr: ProductTypes[]) => {
   return sum / arr.length;
 };
 
-export const TOAST_OBJ = {
-  position: "top-center",
-  autoClose: 2000,
-  hideProgressBar: false,
-  closeOnClick: true,
-  theme: "light",
-  transition: Slide,
-  
-} as const;
-// Transform data
+export const getTotalIncomeAndDeliveredOrder = (orders: orderTypes[] | []) => {
+  let income = 0;
+  let deliveredOrder = 0;
+  let uniqueCustomers: string[] | [] = [];
+  for (let order of orders) {
+    if (order.user) {
+      const userId = order.userId;
+      // @ts-ignore
+      if (!uniqueCustomers.includes(userId)) {
+        // @ts-ignore
+        uniqueCustomers.push(userId);
+      }
+    }
+    if (order.orderStatus.toLocaleLowerCase() === "delivered".toLowerCase()) {
+      for (let p of order.products) {
+        const calculatedDiscountedPrice =
+          p.product.price - (p.product.price * p.product.discount) / 100;
+        deliveredOrder += 1;
+        income += Math.round(calculatedDiscountedPrice);
+      }
+    }
+  }
+  return { income, deliveredOrder, uniqueCustomers };
+};

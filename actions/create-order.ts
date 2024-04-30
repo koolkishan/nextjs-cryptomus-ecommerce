@@ -33,21 +33,20 @@ export async function createOrderAndOrderProducts(
         },
       });
       if (order) {
-        console.log(order, "???>><<");
         const endPoint = "https://api.cryptomus.com/v1/payment";
         const apiKey = process.env.CRYPTOMUS_PAYMENT_API_KEY as string;
-        const amount = order.totalPrice - order.totalDiscount;
+        const amount = Math.round(order.totalPrice) - Math.round(order.totalDiscount);
         const data = {
           currency: "USD",
           amount: amount.toString() + ".00",
           order_id: order.id.toString(),
           lifetime: 300,
-          url_callback: "http://localhost:3000/callback?id=" + order.id,
+          url_callback: "http://localhost:3000/callback?id=" + order.id,  //  Add your ngrock webhook localhost not work 
           url_return: `http://localhost:3000`,
         };
         const merchant = process.env.CRYPTOMUS_MERCHANT_ID as string;
         const sign = md5(btoa(JSON.stringify(data)) + apiKey);
-        console.log({ data });
+        console.log('create order data:--',{ data });
         const response = await axios.post(endPoint, data, {
           headers: {
             merchant,

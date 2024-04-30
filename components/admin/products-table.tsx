@@ -20,7 +20,7 @@ const ProductsTable = () => {
     getDbProducts();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  return productsData && productsData.length>0 && <DataTable products={true}  />;
+  return  <DataTable products={true}  />;
 };
 
 export default ProductsTable;
