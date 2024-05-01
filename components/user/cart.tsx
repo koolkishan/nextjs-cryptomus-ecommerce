@@ -8,6 +8,7 @@ import { Button } from "../ui/button";
 import { removeProductFromCart } from "@/actions/remove-cart-action";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { cn } from "@/lib/utils";
 
 const Cart = () => {
   const user = useAuthUser();
@@ -60,7 +61,7 @@ const Cart = () => {
       if (result) {
         setCart(result);
       }
-      toast.success('Item removed from cart.')
+      toast.success("Item removed from cart.");
     }
   };
 
@@ -71,7 +72,7 @@ const Cart = () => {
   };
 
   return (
-    <div>
+    <div className="relative">
       <div className="lg:container lg:px-0 grid grid-cols-4 gap-5 pt-5">
         <div className="col-span-3 overflow-y-auto scrollbar-hide">
           {cart && cart.products && cart.products.length > 0 ? (
@@ -80,7 +81,7 @@ const Cart = () => {
                 <div className="mb-8 grid grid-cols-6 gap-4">
                   <div className="flex  col-span-3 gap-4 w-[90%]">
                     <div className="grid grid-cols-3 items-center gap-x-4">
-                      <div className="relative w-full h-[100px] border border-zinc-400/20 rounded-md col-span-1  ">
+                      <div className="relative w-[100px] h-[100px] border border-zinc-400/20 rounded-md col-span-1  ">
                         <Image
                           src={p.product.images[0]}
                           alt={p.product.productName}
@@ -136,51 +137,65 @@ const Cart = () => {
               </div>
             ))
           ) : (
-            <div>no cart items</div>
+            <div className="absolute z-[11111] h-[400px] inset-0 flex justify-center items-center">
+              <Image
+                src="/shopping-cart.png"
+                alt="cart is empty"
+                // className="bg-secondary-white rounded-md py-2"
+                layout="fill"
+                loading="lazy"
+                objectFit="contain"
+              />
+            </div>
           )}
         </div>
-        {cart && cart.products && cart.products.length > 0 && (
-          <div className="col-span-1 w-full">
-            <div className="bg-secondary-white p-6 rounded-xl ">
-              <div className="flex my-2">
-                <p className="flex-1">Total Price: </p>
-                <p>${totalPrice.toLocaleString("us")}</p>
+        <div
+          className={cn(
+            "",
+            cart && cart.products && cart.products.length > 0
+              ? "block col-span-1 w-full"
+              : "hidden"
+          )}
+        >
+          <div className="bg-secondary-white p-6 rounded-xl ">
+            <div className="flex my-2">
+              <p className="flex-1">Total Price: </p>
+              <p>${totalPrice.toLocaleString("us")}</p>
+            </div>
+            <div className="flex my-2">
+              <p className="flex-1">Discount: </p>
+              <p className="text-destructive">
+                -${totalDiscount.toLocaleString("us")}
+              </p>
+            </div>
+            <div className="border border-b-zinc-400/20"></div>
+            <div className="flex my-2">
+              <p className="flex-1">Total:</p>
+              <p className="text-xl font-bold">
+                ${(totalPrice - totalDiscount).toLocaleString("us")}
+              </p>
+            </div>
+            <div className="flex flex-col gap-y-4">
+              <div>
+                <Button
+                  className="w-full bg-secondary-blue hover:bg-secondary-blue"
+                  onClick={handleCheckOut}
+                >
+                  Checkout
+                </Button>
               </div>
-              <div className="flex my-2">
-                <p className="flex-1">Discount: </p>
-                <p className="text-destructive">
-                  -${totalDiscount.toLocaleString("us")}
-                </p>
-              </div>
-              <div className="border border-b-zinc-400/20"></div>
-              <div className="flex my-2">
-                <p className="flex-1">Total:</p>
-                <p className="text-xl font-bold">
-                  ${(totalPrice - totalDiscount).toLocaleString("us")}
-                </p>
-              </div>
-              <div className="flex flex-col gap-y-4">
-                <div>
-                  <Button
-                    className="w-full bg-secondary-blue hover:bg-secondary-blue"
-                    onClick={handleCheckOut}
-                  >
-                    Checkout
-                  </Button>
-                </div>
-                <div>
-                  <Button
-                    variant={"outline"}
-                    className="w-full text-secondary-blue hover:text-secondary-blue"
-                    onClick={() => router.push("/")}
-                  >
-                    Back to shop
-                  </Button>
-                </div>
+              <div>
+                <Button
+                  variant={"outline"}
+                  className="w-full text-secondary-blue hover:text-secondary-blue"
+                  onClick={() => router.push("/")}
+                >
+                  Back to shop
+                </Button>
               </div>
             </div>
           </div>
-        )}
+        </div>
       </div>
     </div>
   );

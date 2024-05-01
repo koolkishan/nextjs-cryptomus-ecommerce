@@ -8,10 +8,12 @@ import { useEffect, useState } from "react";
 import Search from "./search";
 import { useAuthUser } from "@/hooks/useAuthUser";
 import { toast } from "sonner";
+import { FiLogIn } from "react-icons/fi";
 
 const Header = () => {
   const router = useRouter();
   const user = useAuthUser();
+  console.log("Header ~ user:", user);
   const [isMounted, setIsMounted] = useState<boolean>(false);
 
   useEffect(() => {
@@ -24,7 +26,6 @@ const Header = () => {
     } else {
       router.push("/auth");
       toast.error("Please sign in to proceed.");
-
     }
   };
 
@@ -34,7 +35,6 @@ const Header = () => {
     } else {
       toast.error("Please sign in to proceed.");
       router.push("/auth");
-
     }
   };
 
@@ -44,7 +44,6 @@ const Header = () => {
     } else {
       toast.error("Please sign in to proceed.");
       router.push("/auth");
-
     }
   };
 
@@ -71,33 +70,52 @@ const Header = () => {
         </div>
         <div className="flex w-full md:w-[40%] lg:w-[30%]">
           <div className="flex justify-end gap-6 md:grid md:grid-cols-3 w-full items-center">
-            <div
-              className="flex items-center cursor-pointer"
-              onClick={handleProfile}
-            >
-              {" "}
-              <FaUser
-                size={18}
-                className=" md:mr-4  text-primary-gray"
-                // onClick={handleClick}
-              />
-              <p className="hidden md:block font-medium">Profile</p>
-            </div>
-            <div
-              className="flex items-center cursor-pointer"
-              onClick={handleClick}
-            >
-              {" "}
-              <IoHeartSharp size={22} className=" md:mr-4  text-primary-gray" />
-              <p className="hidden md:block font-medium">Wishlist</p>
-            </div>
-            <div
-              className="flex items-center cursor-pointer"
-              onClick={handleCart}
-            >
-              <IoCart size={22} className=" md:mr-4  text-primary-gray" />
-              <p className="hidden md:block font-medium">My cart</p>
-            </div>
+            {user ? (
+              <>
+                <div
+                  className="flex items-center cursor-pointer"
+                  onClick={handleProfile}
+                >
+                  {" "}
+                  <FaUser
+                    size={18}
+                    className=" md:mr-4  text-primary-gray"
+                    // onClick={handleClick}
+                  />
+                  <p className="hidden md:block font-medium">Profile</p>
+                </div>
+                <div
+                  className="flex items-center cursor-pointer"
+                  onClick={handleClick}
+                >
+                  {" "}
+                  <IoHeartSharp
+                    size={22}
+                    className=" md:mr-4  text-primary-gray"
+                  />
+                  <p className="hidden md:block font-medium">Wishlist</p>
+                </div>
+                <div
+                  className="flex items-center cursor-pointer"
+                  onClick={handleCart}
+                >
+                  <IoCart size={22} className=" md:mr-4  text-primary-gray" />
+                  <p className="hidden md:block font-medium">My cart</p>
+                </div>
+              </>
+            ) : (
+              <div
+                className="col-span-3 flex items-center  justify-end cursor-pointer"
+                onClick={() => router.push("/auth")}
+              >
+                {" "}
+                <FiLogIn
+                  size={18}
+                  className=" md:mr-4  text-primary-gray"
+                />
+                <p className="hidden md:block font-medium">Login</p>
+              </div>
+            )}
           </div>
         </div>
       </div>

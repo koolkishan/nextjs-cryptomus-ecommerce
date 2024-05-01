@@ -1,35 +1,38 @@
 "use client";
 
 import Image from "next/image";
-import * as Highcharts from "highcharts";
 import { useEffect, useState } from "react";
 import { getAllOrderAction } from "@/actions/get-all-orders";
-import {
-  CategoryWithProductCount,
-  CtegoryWithProduct,
-  orderTypes,
-} from "@/types";
+import { CtegoryWithProduct, orderTypes } from "@/types";
 import PieChart from "./pie-chart";
 import { getAllCategoriesWithProduct } from "@/actions/get-all-categories-with-product-count";
 import BarChart from "./bar-chart";
 import { OrderTable } from "./order-table";
+import { getTotalIncomeAndDeliveredOrder } from "@/lib/utils";
 
 const DashBoard = () => {
   const [allOrders, setAllOrders] = useState<orderTypes[] | []>([]);
   const [allCategoryWithProduct, setAllCategoryWithProduct] = useState<
     CtegoryWithProduct[] | []
   >([]);
-  console.log("DashBoard ~ allCategoryWithProduct:", allCategoryWithProduct);
+  const [totalIncome, setTotalIncome] = useState<number>(0);
+  const [totalSales, setTotalSales] = useState<number>(0);
+  const [totalCustomers, setTotalCustomers] = useState<number>(0);
   useEffect(() => {
-    async function getAllReader() {
+    async function getAllOrders() {
       const allOrdersDetails = await getAllOrderAction();
+      console.log("getAllOrders ~ allOrdersDetails:", allOrdersDetails);
       if (allOrdersDetails) {
         setAllOrders(allOrdersDetails);
+        const { income, deliveredOrder, uniqueCustomers } = getTotalIncomeAndDeliveredOrder(allOrdersDetails);
+        setTotalIncome(income);
+        setTotalSales(deliveredOrder);
+        setTotalCustomers(uniqueCustomers.length)
       }
       const categoryAndProducts = await getAllCategoriesWithProduct();
       if (categoryAndProducts) setAllCategoryWithProduct(categoryAndProducts);
     }
-    getAllReader();
+    getAllOrders();
   }, []);
 
   return (
@@ -41,7 +44,7 @@ const DashBoard = () => {
         <div className="my-5 lg:my-0 flex justify-center items-center bg-surface rounded-3xl px-10">
           <div className=" flex-1">
             <p className="text-custom-font font-medium">Total Income</p>
-            <p className="sm:text-4xl">$8.500</p>
+            <p className="sm:text-4xl">${totalIncome.toLocaleString("us")}</p>
           </div>
           <div className="py-5 lg:py-0">
             <Image
@@ -57,7 +60,7 @@ const DashBoard = () => {
         <div className="my-5 lg:my-0 flex justify-center items-center bg-surface rounded-3xl px-10">
           <div className=" flex-1">
             <p className="text-custom-font font-medium">Total Sales</p>
-            <p className="sm:text-4xl">$8.500</p>
+            <p className="sm:text-4xl">{totalSales.toLocaleString("us")}</p>
           </div>
           <div className="py-5 lg:py-0">
             <Image
@@ -73,7 +76,7 @@ const DashBoard = () => {
         <div className="my-5 lg:my-0 flex justify-center items-center bg-surface rounded-3xl px-10">
           <div className=" flex-1">
             <p className="text-custom-font font-medium">Total Customer</p>
-            <p className="sm:text-4xl">$8.500</p>
+            <p className="sm:text-4xl">{totalCustomers}</p>
           </div>
           <div className="py-5 lg:py-0">
             <Image

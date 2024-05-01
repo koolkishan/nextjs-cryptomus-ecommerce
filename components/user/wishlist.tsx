@@ -89,6 +89,9 @@ const Wishlist = () => {
       if (paymentUrl && window && window.location) {
         window.location.href = paymentUrl;
       }
+    } else {
+      router.push("/auth");
+      toast.error("Please sign in to proceed.");
     }
   };
 
