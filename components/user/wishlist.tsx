@@ -13,16 +13,13 @@ import { ProductTypes } from "@/types";
 import { createOrderAndOrderProducts } from "@/actions/create-order";
 import { addToCart } from "@/actions/add-cart-action";
 import { toast } from "sonner";
+import { divide } from "lodash";
+import ContainerLoader from "../loader";
 
 const Wishlist = () => {
   const { userProductsData, setUserProductsData } = useAppStore();
   const router = useRouter();
   const user = useAuthUser();
-  useEffect(() => {
-    if (!user) {
-      router.push("/auth");
-    }
-  }, [router, user]);
 
   useEffect(() => {
     async function getProductsData() {
@@ -42,7 +39,7 @@ const Wishlist = () => {
         if (productResponse && productResponse.length > 0) {
           setUserProductsData(productResponse);
         }
-      toast.success("Product added to wish list." )
+        toast.success("Product added to wish list.")
       }
     } else {
       router.push("/auth");
@@ -107,7 +104,7 @@ const Wishlist = () => {
   return (
     <div className="lg:container lg:px-6 px-0 ">
       {userProductsData &&
-        userProductsData.length > 0 &&
+        userProductsData.length > 0 ?
         userProductsData.map((product) =>
           product.wishlist && product.wishlist?.length > 0 ? (
             <div
@@ -170,8 +167,8 @@ const Wishlist = () => {
                   </Button>
                   <p className="text-secondary-blue">
                     {product.wishlist &&
-                    product.wishlist?.length > 0 &&
-                    user ? (
+                      product.wishlist?.length > 0 &&
+                      user ? (
                       <IoHeart
                         size={22}
                         className="text-secondary-blue"
@@ -189,7 +186,9 @@ const Wishlist = () => {
               </div>
             </div>
           ) : null
-        )}
+        ) : <div className="h-[230px] w-full flex justify-center items-center">
+          <ContainerLoader />
+        </div>}
     </div>
   );
 };

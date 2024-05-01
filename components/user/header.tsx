@@ -80,7 +80,7 @@ const Header = () => {
                   <FaUser
                     size={18}
                     className=" md:mr-4  text-primary-gray"
-                    // onClick={handleClick}
+                  // onClick={handleClick}
                   />
                   <p className="hidden md:block font-medium">Profile</p>
                 </div>

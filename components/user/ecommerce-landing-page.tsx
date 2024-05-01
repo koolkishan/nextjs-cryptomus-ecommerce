@@ -8,6 +8,7 @@ import RecomendedProducts from "./recommended";
 import { Button } from "../ui/button";
 import Categories from "./categories";
 import { getCategories } from "@/actions/get-all-categories";
+import ContainerLoader from "../loader";
 
 const EcommerceLandingPage = () => {
   const { userProductsData, setUserProductsData, setAllCategories } =
@@ -28,8 +29,7 @@ const EcommerceLandingPage = () => {
   }, [setUserProductsData, setAllCategories]);
 
   return (
-    <div className="lg:container lg:px-0 px-6">
-      {userProductsData.length > 0 && (
+    <div className="lg:container lg:px-0 px-6 h-full">
         <div>
           <div className="w-full">
             <Image
@@ -42,6 +42,7 @@ const EcommerceLandingPage = () => {
             />
           </div>
           <Categories />
+          <p className="text-2xl font-medium my-4">New Products</p>
           <NewProduct />
           <div className="flex justify-center items-center bg-secondary-blue my-8 py-4 text-white font-medium px-4">
             <div className="flex-1">
@@ -54,9 +55,10 @@ const EcommerceLandingPage = () => {
               </Button>
             </div>
           </div>
+          <p className="text-2xl font-medium my-4">Recommended</p>
           <RecomendedProducts categoryId="" productsForSameCategory={false} />
         </div>
-      )}
+     
     </div>
   );
 };

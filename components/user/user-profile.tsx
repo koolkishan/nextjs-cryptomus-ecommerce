@@ -1,15 +1,12 @@
 "use client";
 
-import { getProfileAction } from "@/actions/get-profile-action";
 import { getUserByEmailAction } from "@/actions/get-user-by-email-action";
 import { useAuthUser } from "@/hooks/useAuthUser";
 import { useAppStore } from "@/store";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { UserAndProfileTypes } from "@/types";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { IoLocationSharp } from "react-icons/io5";
-import { BsThreeDotsVertical } from "react-icons/bs";
 import {
   HoverCard,
   HoverCardContent,
@@ -18,12 +15,12 @@ import {
 import { PiDotsThreeOutlineVerticalFill } from "react-icons/pi";
 import { Button } from "../ui/button";
 import { GoPlus } from "react-icons/go";
+import ContainerLoader from "../loader";
 
 const UserProfile = () => {
   const user = useAuthUser();
   const router = useRouter();
   const { setUserAndProfile, userAndProfile } = useAppStore();
-  console.log("UserProfile ~ userAndProfile:", userAndProfile);
 
   useEffect(() => {
     async function getUserProfile() {
@@ -38,7 +35,7 @@ const UserProfile = () => {
   }, [router, setUserAndProfile, user]);
 
   return (
-    <div className="h-full rounded-xl px-6">
+    <div className="h-full w-full rounded-xl px-6">
       {user ? (
         userAndProfile && userAndProfile.name ? (
           <div>
@@ -62,7 +59,7 @@ const UserProfile = () => {
                   <div className="flex gap-4 font-light">
                     <p>Email: {userAndProfile.email}</p>
                     {userAndProfile.profile &&
-                    userAndProfile.profile[0]?.mobileNo ? (
+                      userAndProfile.profile[0]?.mobileNo ? (
                       <p>Phone: {userAndProfile.profile[0]?.mobileNo}</p>
                     ) : (
                       ""
@@ -71,9 +68,9 @@ const UserProfile = () => {
                 </div>
               </div>
               {userAndProfile.profile &&
-              userAndProfile.profile[0]?.addresses &&
-              userAndProfile.profile[0]?.addresses.length > 0 &&
-              userAndProfile.profile[0]?.addresses[0].length > 0 ? (
+                userAndProfile.profile[0]?.addresses &&
+                userAndProfile.profile[0]?.addresses.length > 0 &&
+                userAndProfile.profile[0]?.addresses[0].length > 0 ? (
                 <div className="">
                   <div className="grid grid-cols-2 gap-10">
                     <div className="flex mt-5 bg-secondary-white rounded-xl items-center px-2">
@@ -90,7 +87,6 @@ const UserProfile = () => {
                             userAndProfile.profile[0].addresses &&
                             userAndProfile.profile[0].addresses[0]}
                           <br />
-                          <span className="text-sm">{`(primary address)`}</span>
                         </p>
                         <p>
                           <HoverCard>
@@ -134,10 +130,14 @@ const UserProfile = () => {
             </div>
           </div>
         ) : (
-          <div>Loading...</div>
+          <div className="h-[230px] w-full flex justify-center items-center">
+            <ContainerLoader />
+          </div>
         )
       ) : (
-        ""
+        <div className="h-[230px] w-full flex justify-center items-center">
+          <ContainerLoader />
+        </div>
       )}
     </div>
   );

@@ -45,3 +45,7 @@ export const UserProfileSchema = z.object({
     message: "Address required",
   })
 });
+
+export const CheckOutSchema = z.object({
+  
+})

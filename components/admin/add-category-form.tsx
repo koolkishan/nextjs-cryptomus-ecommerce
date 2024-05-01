@@ -17,7 +17,6 @@ import { FormError } from "../form-error";
 import { FormSuccess } from "../form-success";
 import { useState } from "react";
 import { Button } from "../ui/button";
-import {} from "@/actions/create-product";
 import { useAppStore } from "@/store";
 import { createCategory } from "@/actions/add-category";
 import { getCategories } from "@/actions/get-all-categories";

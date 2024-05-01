@@ -33,6 +33,7 @@ export const updateProfile = async (
   mobileNo: string,
   id: string
 ) => {
+  console.log("addresses:", addresses);
   try {
     return await db.profile.update({
       where: {
@@ -44,6 +45,6 @@ export const updateProfile = async (
       },
     });
   } catch (error) {
-    console.log("Error while updating profile");
+    console.log("Error while updating profile", error);
   }
 };
