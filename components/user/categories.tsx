@@ -17,23 +17,39 @@ const Categories = () => {
   }, []);
 
   return (
-    <div>
+    <div className="h-full">
       {allCategories && allCategories.length > 0 && (
-        <ul className="bg-secondary-white py-5  grid gap-8 grid-cols-3 md:grid-cols-6 text-center my-4">
+        <div className="flex h-full flex-col overflow-y-scroll  scrollbar-hide">
           {allCategories.map((category, index) => (
-            <li
+            <p
               key={category.id}
               className={cn(
-                "text-sm md:text-base cursor-pointer hover:bg-blue-400/30 py-3 rounded-xl"
+                "text-sm md:text-base cursor-pointer  hover:bg-blue-400/30 p-2"
               )}
               onClick={() => {
                 router.push(`/category/${category.id}`);
               }}
             >
               {category.categoryName}
-            </li>
+            </p>
           ))}
-        </ul>
+          {/* <p className="cursor-pointer hover:bg-blue-400/30 p-2">test</p>
+          <p className="cursor-pointer hover:bg-blue-400/30 p-2">test</p>
+          <p className="cursor-pointer hover:bg-blue-400/30 p-2">test</p>
+          <p className="cursor-pointer hover:bg-blue-400/30 p-2">test</p>
+          <p className="cursor-pointer hover:bg-blue-400/30 p-2">test</p>
+          <p className="cursor-pointer hover:bg-blue-400/30 p-2">test</p>
+          <p className="cursor-pointer hover:bg-blue-400/30 p-2">test</p>
+          <p className="cursor-pointer hover:bg-blue-400/30 p-2">test</p>
+          <p className="cursor-pointer hover:bg-blue-400/30 p-2">test</p>
+          <p className="cursor-pointer hover:bg-blue-400/30 p-2">test</p>
+          <p className="cursor-pointer hover:bg-blue-400/30 p-2">test</p>
+          <p className="cursor-pointer hover:bg-blue-400/30 p-2">test</p>
+          <p className="cursor-pointer hover:bg-blue-400/30 p-2">test</p>
+          <p className="cursor-pointer hover:bg-blue-400/30 p-2">test</p>
+          <p className="cursor-pointer hover:bg-blue-400/30 p-2">test</p> */}
+        </div>
+
       )}
     </div>
   );

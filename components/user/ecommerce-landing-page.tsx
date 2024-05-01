@@ -30,35 +30,40 @@ const EcommerceLandingPage = () => {
 
   return (
     <div className="lg:container lg:px-0 px-6 h-full">
-        <div>
-          <div className="w-full">
+      <div>
+        <div className="flex h-[350px] gap-5 bg-primary-text my-4">
+          <div className=" w-1/3 h-[350px] py-4">
+            <Categories />
+          </div>
+          <div className="">
             <Image
               src="/best-deal.png"
               alt="best deal"
-              className="w-full h-[350px] cursor-pointer"
+              className="w-full h-[350px] cursor-pointer py-4"
               width={500}
               height={150}
               loading="lazy"
             />
           </div>
-          <Categories />
-          <p className="text-2xl font-medium my-4">New Products</p>
-          <NewProduct />
-          <div className="flex justify-center items-center bg-secondary-blue my-8 py-4 text-white font-medium px-4">
-            <div className="flex-1">
-              <p>Great place for promo</p>
-              <p>banners and ads</p>
-            </div>
-            <div>
-              <Button className="bg-yellow-400 hover:bg-yellow-400/90">
-                Subscribe
-              </Button>
-            </div>
-          </div>
-          <p className="text-2xl font-medium my-4">Recommended</p>
-          <RecomendedProducts categoryId="" productsForSameCategory={false} />
+
         </div>
-     
+        <p className="text-2xl font-medium my-4">New Products</p>
+        <NewProduct />
+        <div className="flex justify-center items-center bg-secondary-blue my-8 py-4 text-white font-medium px-4">
+          <div className="flex-1">
+            <p>Great place for promo</p>
+            <p>banners and ads</p>
+          </div>
+          <div>
+            <Button className="bg-yellow-400 hover:bg-yellow-400/90">
+              Subscribe
+            </Button>
+          </div>
+        </div>
+        <p className="text-2xl font-medium my-4">Recommended</p>
+        <RecomendedProducts categoryId="" productsForSameCategory={false} />
+      </div>
+
     </div>
   );
 };

@@ -6,7 +6,7 @@
   :root {
     --primary-background: #1d1e24;
     --primary-text: #fff;
-    --secondary-white: #f9f9f9;
+    --secondary-white: #f3f3f3;
     --surface: #23262b;
     --custom-font: #7c7c7c;
     --background: 0 0% 100%;
@@ -109,7 +109,7 @@
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #93959c ; /* Color of the scroll handle */
+  background: #93959c; /* Color of the scroll handle */
   border-radius: 3px; /* Rounded corners */
 }
 
