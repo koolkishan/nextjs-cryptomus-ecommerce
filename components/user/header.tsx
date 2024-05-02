@@ -13,7 +13,6 @@ import { FiLogIn } from "react-icons/fi";
 const Header = () => {
   const router = useRouter();
   const user = useAuthUser();
-  console.log("Header ~ user:", user);
   const [isMounted, setIsMounted] = useState<boolean>(false);
 
   useEffect(() => {

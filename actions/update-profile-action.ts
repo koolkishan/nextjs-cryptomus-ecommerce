@@ -15,7 +15,6 @@ export const updateProfileAction = async (
   try {
     // const validation = UserProfileSchema.safeParse(values);
     const { firstName, lastName, updatedEmail, phone, address } = values;
-    console.log('address:', address)
     const name = firstName + " " + lastName;
     const updateUserResponse = await updateUser(name,id, updatedEmail, image);
     const updateUserProfile =  await updateProfile([address],phone, profileId)

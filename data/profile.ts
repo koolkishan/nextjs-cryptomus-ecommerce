@@ -33,7 +33,6 @@ export const updateProfile = async (
   mobileNo: string,
   id: string
 ) => {
-  console.log("addresses:", addresses);
   try {
     return await db.profile.update({
       where: {

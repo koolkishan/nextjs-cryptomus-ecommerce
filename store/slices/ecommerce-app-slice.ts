@@ -130,7 +130,7 @@ const createEcommerceAppSlice: StateCreator<EcommerceAppSliceTypes> = (
   },
   searchProducts: [],
   setSearchProducts: (data: ProductTypes[]) => {
-    set({ categoryProducts: data });
+    set({ searchProducts: data });
   },
   product: undefined,
   setProduct: (data: ProductTypes) => {

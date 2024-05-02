@@ -12,7 +12,6 @@ export default {
     }),
     CredentialsProvider({
       async authorize(credentials) {
-        console.log("authorize ~ credentials:", credentials);
         if (!credentials || !credentials.email || !credentials.password)
           return null;
 
@@ -25,35 +24,6 @@ export default {
           return dbUser;
         }
         return null;
-
-        // const validatedFields = LoginFormSchema.safeParse(credentials);
-
-        // if (!validatedFields.success) {
-        //   return null; // Validation failed
-        // }
-
-        // const { emailOrUsername, password } = validatedFields.data;
-        // const user = await db.user.findFirst({
-        //   where: {
-        //     OR: [{ email: emailOrUsername }, { username: emailOrUsername }],
-        //   },
-        // });
-
-        // if (!user) {
-        //   // User not found
-        //   return null;
-        // }
-
-        // if (user.password) {
-        //   const passwordMatch = await bcrypt.compare(password, user.password);
-        //   if (!passwordMatch) {
-        //     // Password does not match
-        //     return null;
-        //   }
-        // }
-
-        // Convert user ID to string if it's a number
-        
       },
     }),
   ],

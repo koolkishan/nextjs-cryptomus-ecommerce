@@ -43,10 +43,24 @@ const VerticalProductList = ({
     setSearchProducts,
     searchProducts,
   } = useAppStore();
+    console.log('searchProducts --vertical:', searchProducts)
   const [currentPage, setCurrentPage] = useState(1);
   const [displayProductList, setDisplayProductList] = useState<
     ProductTypes[] | []
   >([]);
+
+    useEffect(() => {
+    (async function getProduct() {
+      if (tag) {
+        console.log('getProduct vertical~ tag:', tag)
+        const response = await searchProductsByTagAction(tag) as ProductTypes[];
+        if (response.length) {
+          console.log('getProduct ~ response:', response)
+          setSearchProducts(response);
+        }
+      }
+    })();
+  }, [setSearchProducts, tag]);
 
   useEffect(() => {
     if (filterProducts.length > 0 && categoryFilter) {
