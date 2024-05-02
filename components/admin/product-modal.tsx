@@ -1,19 +1,8 @@
 "use client";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import { CategoryTypes, ProductTypes } from "@/types";
+import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog";
 import { Input } from "../ui/input";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Button } from "../ui/button";
-import { updateCategory } from "@/actions/update-category";
-import { FormError } from "../form-error";
-import { FormSuccess } from "../form-success";
-import { getCategories } from "@/actions/get-all-categories";
 import { useAppStore } from "@/store";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "../ui/textarea";
@@ -24,7 +13,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import CloudinaryUploadImages from "./cloudinary-upload-images";
 import Image from "next/image";
 import { RxCrossCircled } from "react-icons/rx";
 import { IoCloudUploadOutline } from "react-icons/io5";
@@ -33,24 +21,20 @@ import { updateProduct } from "@/actions/update-product";
 import { getProducts } from "@/actions/get-products";
 import { getProductFromProductId } from "@/actions/get-product-from-id";
 import { toast } from "sonner";
+import { TagsInput } from "react-tag-input-component";
+import "../style/edit-product-modal.css";
+import CloudinaryUploadImages from "./cloudinary-upload-images";
 
 interface ProductModalProps {
   setProductModal: Dispatch<SetStateAction<boolean>>;
   productModal: boolean;
-  //   product: ProductTypes;
 }
-const ProductModal = ({
-  setProductModal,
-  productModal,
-}: //   product,
-ProductModalProps) => {
-  const [error, setError] = useState<string | undefined>();
-  const [success, setSuccess] = useState<string | undefined>();
+const ProductModal = ({ setProductModal, productModal }: ProductModalProps) => {
   const [productName, setProductName] = useState<string | "">("");
   const [categoryName, setCategoryName] = useState<string | "">("");
   const [description, setDescription] = useState<string | "">("");
   const [categoryId, setCategoryId] = useState<string | "">("");
-  const [tag, setTags] = useState<string | "">("");
+  const [tag, setTags] = useState<string[] | []>([]);
   const [price, setPrice] = useState<number>();
   const [discount, setDiscount] = useState<number>();
   const [images, setImages] = useState<string[] | []>([]);
@@ -81,7 +65,7 @@ ProductModalProps) => {
         setPrice(response.price);
         if (response.images) setImages([...response.images]);
         setQuantity(response.quantity);
-        if (response.tags) setTags(response.tags.join(","));
+        if (response.tags) setTags(response.tags);
       }
     }
     productFromId();
@@ -109,19 +93,18 @@ ProductModalProps) => {
         discount,
         quantity
       );
-      if(success) toast.success('Product updated successfully.')
-      if(error) toast.error('Please fill valid details.');
+      if (success) toast.success("Product updated successfully.");
+      if (error) toast.error("Please fill valid details.");
       const response = await getProducts();
       if (response && response.length > 0) {
         setProductsData(response);
-        
       }
     }
     setProductModal((prev) => !prev);
   };
   return (
     <Dialog open={productModal} onOpenChange={setProductModal}>
-      <DialogContent className="bg-surface border border-secondary-black h-[570px]">
+      <DialogContent className="bg-surface border border-secondary-black min-h-[600px]">
         <Tabs defaultValue="information" className="w-full">
           <div className="flex flex-col">
             <div className="flex-1">
@@ -197,10 +180,14 @@ ProductModalProps) => {
                       <div>
                         <div className="text-custom-font">Tags</div>
                         <div>
-                          <Input
-                            onChange={(e) => setTags(e.target.value)}
+                          <TagsInput
                             value={tag}
-                            className="font-light bg-transparent border-secondary-black focus:outline-none placeholder:text-custom-font"
+                            onChange={setTags}
+                            name="tags"
+                            placeHolder="Enter tags"
+                            classNames={{
+                              input: "bg-[#23262b]",
+                            }}
                           />
                         </div>
                       </div>
@@ -276,43 +263,9 @@ ProductModalProps) => {
                             className="flex flex-col justify-center items-center"
                             style={{ pointerEvents: "auto" }}
                           >
-                            <CldUploadButton
-                              options={{ multiple: true }}
-                              uploadPreset={
-                                process.env.NEXT_PUBLIC_CLOUDINARY_PRESET_NAME
-                              }
-                              onUpload={handleUploadSuccess}
-                              onOpen={() => {
-                                setTimeout(
-                                  () =>
-                                    (document.body.style.pointerEvents = ""),
-                                  0
-                                );
-                                setIsDialogOpen && setIsDialogOpen(true);
-                              }}
-                              onClose={() => {
-                                setTimeout(
-                                  () =>
-                                    (document.body.style.pointerEvents =
-                                      "none"),
-                                  0
-                                );
-                              }}
-                            >
-                              <p>
-                                <IoCloudUploadOutline
-                                  size={22}
-                                  className="text-custom-font"
-                                />
-                              </p>
-                              <p className="hover:underline">
-                                Brows to{" "}
-                                <span className="text-blue-700 underline">
-                                  upload
-                                </span>{" "}
-                                images
-                              </p>
-                            </CldUploadButton>
+                            <CloudinaryUploadImages
+                              handleUploadSuccess={handleUploadSuccess}
+                            />
                           </div>
                         </div>
                       </div>
@@ -328,10 +281,14 @@ ProductModalProps) => {
                                 loading="lazy"
                               />
                               <div
-                                className="absolute top-0 right-2"
+                                className="absolute top-[-7px] right-[42px]"
                                 onClick={() => removeImage(imageUrl)}
                               >
-                                <RxCrossCircled size={18} color="red" />
+                                <RxCrossCircled
+                                  size={18}
+                                  color="red"
+                                  className="cursor-pointer"
+                                />
                               </div>
                             </div>
                           ))}
@@ -340,13 +297,6 @@ ProductModalProps) => {
                   )}
                 </TabsContent>
               ))}
-
-              <div className="my-4">
-                <FormError message={error} />
-              </div>
-              <div className="my-4">
-                <FormSuccess message={success} />
-              </div>
             </div>
             <div className="fixed bottom-4 ">
               <Button

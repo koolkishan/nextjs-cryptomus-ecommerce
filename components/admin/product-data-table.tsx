@@ -159,7 +159,6 @@ export const DataTable = ({ products }: DataTableProps) => {
           <Table>
             <TableHeader>
               <TableRow className="hover:bg-surface border-b-secondary-black">
-                {/* {products && productsData.length ? ( */}
                 <>
                   <TableHead className="text-base text-primary-text">No</TableHead>
                   <TableHead className="text-base text-primary-text">Product Name</TableHead>
@@ -171,7 +170,6 @@ export const DataTable = ({ products }: DataTableProps) => {
                   <TableHead className="text-base text-primary-text">Edit</TableHead>
                   <TableHead className="text-base text-primary-text">Delete</TableHead>
                 </>
-                {/* ) : null} */}
               </TableRow>
             </TableHeader>
 

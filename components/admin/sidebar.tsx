@@ -108,21 +108,6 @@ const Side = () => {
           {menuItems.map((item, index) => (
             <React.Fragment key={index}>
               {
-                // false ? (
-                // <SubMenu label={item.label} icon={item.icon}>
-                //   {item.subMenuItems.map((subItem, subIndex) => (
-                //     <MenuItem
-                //       key={subIndex}
-                //       onClick={() => handleItemClick(subItem.link)}
-                //       icon={subItem.icon}
-                //       active={selectedItem === subItem.link}
-                //     >
-                //       {subItem.label}
-                //     </MenuItem>
-                //   ))}
-                // </SubMenu>
-                //   <div></div>
-                // ) : (
                 <MenuItem
                   onClick={() => handleItemClick(item.link)}
                   icon={item.icon}

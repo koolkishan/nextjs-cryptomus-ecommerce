@@ -19,8 +19,6 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ProductSchema } from "@/schemas";
 import * as z from "zod";
-import { FormError } from "../form-error";
-import { FormSuccess } from "../form-success";
 import { Textarea } from "../ui/textarea";
 import CloudinaryUploadImages from "./cloudinary-upload-images";
 import Image from "next/image";
@@ -32,11 +30,14 @@ import { useAppStore } from "@/store";
 import { getCategories } from "@/actions/get-all-categories";
 import { getProducts } from "@/actions/get-products";
 import { toast } from "sonner";
+import { TagsInput } from "react-tag-input-component";
+import "../style/add-product-form.css";
 
 const AddProductForm = () => {
-  const [error, setError] = useState<string | undefined>();
-  const [success, setSuccess] = useState<string | undefined>();
   const [uploadedImageUrl, setUploadedImageUrl] = useState<string[] | []>([]);
+  const [selected, setSelected] = useState<string[] | []>([]);
+  const [tagError, setTagError] = useState<boolean>(false);
+  console.log("AddProductForm ~ tagError:", tagError);
   const { setProductsData, setToggleSheet, setCategoriesData, categoriesData } =
     useAppStore();
 
@@ -58,7 +59,6 @@ const AddProductForm = () => {
       category: "",
       price: "",
       discount: "",
-      tags: "",
       qty: "",
     },
   });
@@ -70,35 +70,44 @@ const AddProductForm = () => {
   };
 
   const onSubmit = async (values: z.infer<typeof ProductSchema>) => {
-    setError("");
-    setSuccess("");
-    const category = categoriesData.find(
-      (category) => category.categoryName === values.category
-    );
-    if (category) {
-      const { error, success } = await createProduct(
-        values,
-        uploadedImageUrl,
-        category?.id
+    if (selected.length) {
+      setTagError(true);
+      const tags = selected;
+      const category = categoriesData.find(
+        (category) => category.categoryName === values.category
       );
-      if (error) {
-        toast.error("Please provide a valid product data.");
-        setToggleSheet(false);
+      if (category) {
+        const { error, success } = await createProduct(
+          values,
+          uploadedImageUrl,
+          category?.id,
+          tags
+        );
+        if (error) {
+          toast.error("Please provide a valid product data.");
+          setToggleSheet(false);
+          setTagError(false);
+        }
+        if (success) {
+          toast.success("Product created successfully.");
+          setTagError(false);
+
+          setToggleSheet(false);
+        }
+        setUploadedImageUrl([]);
       }
-      if (success) {
-        toast.success("Product created successfully.");
-        setToggleSheet(false);
+      const response = await getProducts();
+      if (response && response.length) {
+        setProductsData(response);
+      } else {
+        setProductsData([]);
       }
-      setUploadedImageUrl([]);
-    }
-    const response = await getProducts();
-    if (response && response.length) {
-      setProductsData(response);
+      form.reset();
+      return;
     } else {
-      setProductsData([]);
+      setTagError(true);
+      return;
     }
-    form.reset();
-    return;
   };
 
   const removeImage = async (url: string) => {
@@ -268,19 +277,28 @@ const AddProductForm = () => {
               </div>
               <div className="w-[98%] ml-1 my-6 text-primary-text">
                 <FormField
-                  control={form.control}
-                  name="tags"
+                  name=""
                   render={({ field }) => (
                     <FormItem className="">
                       <FormLabel className="text-custom-font">Tags</FormLabel>
-                      <FormControl>
-                        <Input
-                          disabled={isLoading}
-                          className=" bg-transparent border-secondary-black focus:outline-none placeholder:text-custom-font"
-                          placeholder="Enter comma seprated tags"
-                          {...field}
+                      <FormControl className="bg-black">
+                        <TagsInput
+                          value={selected}
+                          onChange={setSelected}
+                          name="tags"
+                          placeHolder="Enter tags"
+                          classNames={{
+                            input: "bg-[#1d1e24]",
+                          }}
                         />
                       </FormControl>
+                      {tagError ? (
+                        <div className="text-red-600 font-medium">
+                          Tag is required
+                        </div>
+                      ) : (
+                        ""
+                      )}
                       <FormMessage />
                     </FormItem>
                   )}
@@ -316,7 +334,11 @@ const AddProductForm = () => {
                               className="absolute top-0 right-2"
                               onClick={() => removeImage(imageUrl)}
                             >
-                              <RxCrossCircled size={18} color="red" />
+                              <RxCrossCircled
+                                size={18}
+                                color="red"
+                                className="cursor-pointer"
+                              />
                             </div>
                           </div>
                         </>
@@ -324,8 +346,6 @@ const AddProductForm = () => {
                     })}
                 </div>
               </div>
-              <FormError message={error} />
-              <FormSuccess message={success} />
             </div>
             <div className="fixed bottom-0 right-0 w-[384px] bg-surface  p-4 flex justify-end gap-4">
               <div className="w-full">

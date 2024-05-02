@@ -7,18 +7,19 @@ import { z } from "zod";
 export const createProduct = async (
   value: z.infer<typeof ProductSchema>,
   imagesUrl: string[],
-  categoryId: string
+  categoryId: string,
+  tags: string[]
 ) => {
   const validation = ProductSchema.safeParse(value);
 
   if (!validation.success) {
     return { error: "Invalid Fields!" };
   }
-  const { productName, description, price, tags, discount, qty } =
+  const { productName, description, price, discount, qty } =
     validation.data;
   const priceInNum = +price;
   const discountInNum = discount ? +discount : 0;
-  const tagsInArr = tags.toLowerCase().split(",");
+  const tagsInArr = tags;
   const qtyInNum = +qty;
 
   try {
