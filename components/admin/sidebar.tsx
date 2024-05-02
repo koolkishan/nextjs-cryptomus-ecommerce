@@ -2,12 +2,13 @@
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { useAppStore } from "@/store";
-import { LuLogOut } from "react-icons/lu";
+import { LuLogOut, LuShoppingBag } from "react-icons/lu";
 import { GoDotFill } from "react-icons/go";
 import { RxDashboard } from "react-icons/rx";
 import { FiShoppingCart } from "react-icons/fi";
 import React, { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
+import { BsCartCheck } from "react-icons/bs";
 import {
   Sidebar,
   Menu,
@@ -16,6 +17,7 @@ import {
   sidebarClasses,
 } from "react-pro-sidebar";
 import { signOut } from "next-auth/react";
+import { IoShirtOutline } from "react-icons/io5";
 
 const Side = () => {
   const router = useRouter();
@@ -36,20 +38,21 @@ const Side = () => {
   const menuItems = [
     { label: "Dashboard", icon: <RxDashboard />, link: "/admin/dashboard" },
     {
+      label: "Categories",
+      icon: <BsCartCheck />,
+      link: "/admin/categories",
+    },
+    {
       label: "Products",
-      icon: <GoDotFill />,
+      icon: <IoShirtOutline />,
       link: "/admin/products",
     },
     {
       label: "Orders",
-      icon: <GoDotFill />,
+      icon: <LuShoppingBag />,
       link: "/admin/order",
     },
-    {
-      label: "Categories",
-      icon: <GoDotFill />,
-      link: "/admin/categories",
-    },
+
   ];
 
   const handleItemClick = (link: string) => {
@@ -59,7 +62,7 @@ const Side = () => {
   if (!isMounted) {
     return null;
   }
-  
+
   return (
     <div className={` border-none ${collapsSidbar ? "collapsed" : ""}`}>
       <Sidebar
@@ -131,7 +134,7 @@ const Side = () => {
             </React.Fragment>
           ))}
           <MenuItem
-            onClick={() => signOut({ redirect: true, callbackUrl: "/" })}
+            onClick={() => signOut({ redirect: true, callbackUrl: "/auth/admin" })}
             icon={<LuLogOut />}
           >
             Logout

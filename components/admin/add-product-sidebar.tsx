@@ -32,14 +32,14 @@ const AddProductSideBar = () => {
         </SheetTrigger>
         <SheetContent
           side={"right"}
-          className={`bg-primary-background rounded-lg border-none`}
+          className={`bg-primary-background rounded-lg border-none h-[100vh]  overflow-y-scroll`}
         >
           <SheetHeader>
             <SheetTitle className="text-primary-text font-bold text-2xl my-4">
               Add Product
             </SheetTitle>
             <SheetDescription className="text-primary-txt h-full">
-              <div className="h-full">
+              <div >
                 <AddProductForm />
               </div>
             </SheetDescription>

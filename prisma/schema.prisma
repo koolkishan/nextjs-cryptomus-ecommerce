@@ -94,12 +94,12 @@ model Profile {
     userId    String   @unique
     addresses String[]
     mobileNo  String?
-    user      User     @relation(fields: [userId], references: [id])
+    user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Wishlist {
     id        String     @id @default(cuid())
-    user      User       @relation(fields: [userId], references: [id])
+    user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
     userId    String     @unique
     products  Products[] // Many-to-many relationship with Products
     createdAt DateTime   @default(now())
@@ -107,7 +107,7 @@ model Wishlist {
 
 model Cart {
     id        String        @id @default(cuid())
-    user      User          @relation(fields: [userId], references: [id])
+    user      User          @relation(fields: [userId], references: [id], onDelete: Cascade)
     userId    String        @unique
     products  CartProduct[]
     createdAt DateTime      @default(now())
@@ -117,14 +117,14 @@ model CartProduct {
     id        String   @id @default(cuid())
     cart      Cart     @relation(fields: [cartId], references: [id])
     cartId    String
-    product   Products @relation(fields: [productId], references: [id])
+    product   Products @relation(fields: [productId], references: [id], onDelete: Cascade)
     productId String
     quantity  Int
 }
 
 model Order {
     id            String         @id @default(cuid())
-    user          User           @relation(fields: [userId], references: [id])
+    user          User           @relation(fields: [userId], references: [id], onDelete: Cascade)
     userId        String
     products      OrderProduct[]
     createdAt     DateTime       @default(now())
@@ -136,9 +136,9 @@ model Order {
 
 model OrderProduct {
     id        String   @id @default(cuid())
-    order     Order    @relation(fields: [orderId], references: [id])
+    order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
     orderId   String
-    product   Products @relation(fields: [productId], references: [id])
+    product   Products @relation(fields: [productId], references: [id], onDelete: Cascade)
     productId String
     quantity  Int
 }

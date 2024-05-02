@@ -42,7 +42,7 @@ export function CredentialsForm(props: CredentialsFormProps) {
         onSubmit={handleSubmit}
       >
         {error && (
-          <span className="p-4 py-2 mb-2 text-lg font-semibold text-white bg-red-500 rounded-md">
+          <span className="p-4 py-2 mb-4 text-center text-lg font-semibold text-white bg-destructive/20 rounded-md">
             {error}
           </span>
         )}
@@ -54,7 +54,7 @@ export function CredentialsForm(props: CredentialsFormProps) {
             name="email"
             placeholder="Email"
             required
-            className="w-full px-8 py-2 mb-4  rounded-md border border-zin-400/20 bg-transparent focus:border-custom-font placeholder:text-zinc-400 placeholder:font-medium placeholder:text-lg"
+            className="w-full px-8 py-2 mb-4 text-primary-text rounded-md border border-zin-400/20 bg-transparent focus:border-custom-font placeholder:text-zinc-400 placeholder:font-medium placeholder:text-lg"
           />
         </div>
 
@@ -65,13 +65,13 @@ export function CredentialsForm(props: CredentialsFormProps) {
             name="password"
             placeholder="Password"
             required
-            className="w-full px-8 py-2 mb-4  rounded-md border border-zinc-400/20 bg-transparent focus:border-custom-font placeholder:text-zinc-400 placeholder:font-medium placeholder:text-lg"
+            className="w-full px-8 py-2 mb-4 text-primary-text rounded-md border border-zinc-400/20 bg-transparent focus:border-custom-font placeholder:text-zinc-400 placeholder:font-medium placeholder:text-lg"
           />
         </div>
 
         <Button
           type="submit"
-          className="w-full h-10 px-6 text-lg text-white transition-colors duration-150 bg-secondary-blue  rounded-md focus:shadow-outline hover:bg-secondary-blue"
+          className="w-full h-10  px-6 text-lg text-white transition-colors duration-150 bg-secondary-blue  rounded-md focus:shadow-outline hover:bg-secondary-blue"
         >
           Sign in
         </Button>

@@ -9,6 +9,9 @@ import { getAllCategoriesWithProduct } from "@/actions/get-all-categories-with-p
 import BarChart from "./bar-chart";
 import { OrderTable } from "./order-table";
 import { getTotalIncomeAndDeliveredOrder } from "@/lib/utils";
+import { LuCircleDollarSign } from "react-icons/lu";
+import { BsBarChartFill } from "react-icons/bs";
+import { RiUser3Fill } from "react-icons/ri";
 
 const DashBoard = () => {
   const [allOrders, setAllOrders] = useState<orderTypes[] | []>([]);
@@ -46,15 +49,18 @@ const DashBoard = () => {
             <p className="text-custom-font font-medium">Total Income</p>
             <p className="sm:text-4xl">${totalIncome.toLocaleString("us")}</p>
           </div>
-          <div className="py-5 lg:py-0">
-            <Image
+          <div className="py-3 flex items-center h-full">
+            {/* <Image
               src="/Dollar.png"
               className="mx-3"
               alt="in dollar"
               width={100}
               height={100}
               loading="lazy"
-            />
+            /> */}
+            <div className="p-3 rounded-2xl bg-blue-400/10">
+              <LuCircleDollarSign size={50} className="text-secondary-blue " />
+            </div>
           </div>
         </div>
         <div className="my-5 lg:my-0 flex justify-center items-center bg-surface rounded-3xl px-10">
@@ -62,15 +68,18 @@ const DashBoard = () => {
             <p className="text-custom-font font-medium">Total Sales</p>
             <p className="sm:text-4xl">{totalSales.toLocaleString("us")}</p>
           </div>
-          <div className="py-5 lg:py-0">
-            <Image
+          <div className="py-3 flex items-center h-full">
+            {/* <Image
               src="/sales.png"
               className="mx-3"
               alt="in dollar"
               width={100}
               height={100}
               loading="lazy"
-            />
+            /> */}
+            <div className="p-3 rounded-2xl bg-blue-400/10">
+              <BsBarChartFill size={50} className="text-secondary-blue " />
+            </div>
           </div>
         </div>
         <div className="my-5 lg:my-0 flex justify-center items-center bg-surface rounded-3xl px-10">
@@ -78,15 +87,18 @@ const DashBoard = () => {
             <p className="text-custom-font font-medium">Total Customer</p>
             <p className="sm:text-4xl">{totalCustomers}</p>
           </div>
-          <div className="py-5 lg:py-0">
-            <Image
+          <div className="py-3 flex items-center h-full">
+            {/* <Image
               src="/customer.png"
               className="mx-3"
               alt="in dollar"
               width={100}
               height={100}
               loading="lazy"
-            />
+            /> */}
+            <div className="p-3 rounded-2xl bg-blue-400/10">
+              <RiUser3Fill size={50} className="text-secondary-blue " />
+            </div>
           </div>
         </div>
       </div>

@@ -48,8 +48,7 @@ const AddProductForm = () => {
       }
     }
     fetchCategories();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [setCategoriesData]);
 
   const form = useForm({
     resolver: zodResolver(ProductSchema),
@@ -114,11 +113,11 @@ const AddProductForm = () => {
   const isLoading = form.formState.isSubmitting;
 
   return (
-    <div>
+    <div className="h-full ">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="h-full">
           <div className="flex h-full flex-col">
-            <div className="h-[80%] overflow-y-scroll scrollbar-hide">
+            <div className="h-full ">
               <div className="w-[98%] ml-1 my-6 text-primary-text">
                 <FormField
                   control={form.control}
@@ -328,7 +327,7 @@ const AddProductForm = () => {
               <FormError message={error} />
               <FormSuccess message={success} />
             </div>
-            <div className="fixed bottom-0 right-0 w-[384px]  p-4 flex justify-end gap-4">
+            <div className="fixed bottom-0 right-0 w-[384px] bg-surface  p-4 flex justify-end gap-4">
               <div className="w-full">
                 <Button
                   size={"sm"}

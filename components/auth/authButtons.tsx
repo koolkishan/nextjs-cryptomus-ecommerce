@@ -12,25 +12,27 @@ export function GoogleSignInButton() {
 
   return (
     <div>
-      <Button
-        onClick={handleClick}
-        className="w-full flex items-center font-base justify-center h-12 px-6 mt-4 text-[15px] transition-colors duration-300 bg-transparent hover:bg-transparent border border-zinc-400/20 rounded-xl focus:shadow-outline"
-      >
-        <div className="flex w-full items-center justify-center">
-          <div>
-            <Image
-              src={googleLogo}
-              alt="Google Logo"
-              width={20}
-              height={20}
-              loading="lazy"
-            />
+      <div>
+        <Button
+          onClick={handleClick}
+          className="w-full flex items-center font-base justify-center h-12 px-6 mt-4 text-[15px] transition-colors duration-300 bg-transparent hover:bg-transparent border border-zinc-400/20 rounded-xl focus:shadow-outline"
+        >
+          <div className="flex w-full items-center justify-center">
+            <div>
+              <Image
+                src={googleLogo}
+                alt="Google Logo"
+                width={30}
+                height={30}
+                loading="lazy"
+              />
+            </div>
+            <div className=" text-secondary-gray">
+              <p className="ml-4 text-black/70 text-lg">Login With Google</p>
+            </div>
           </div>
-          <div className="flex-1 w-full text-secondary-gray">
-            <p className="ml-4 text-black/70">Continue With Google</p>
-          </div>
-        </div>
-      </Button>
+        </Button>
+      </div>
     </div>
   );
 }

@@ -89,6 +89,7 @@ export const DataTable = ({ products }: DataTableProps) => {
   }
 
   const handleDelete = async (id: string) => {
+    console.log('handleDelete ~ id:', id);
     await deleteProduct(id);
     const response = await getProducts();
     if (response && response.length > 0) {
@@ -160,15 +161,15 @@ export const DataTable = ({ products }: DataTableProps) => {
               <TableRow className="hover:bg-surface border-b-secondary-black">
                 {/* {products && productsData.length ? ( */}
                 <>
-                  <TableHead>No</TableHead>
-                  <TableHead>Product Name</TableHead>
-                  <TableHead>Price</TableHead>
-                  <TableHead>Discount</TableHead>
-                  <TableHead>Categor Name</TableHead>
-                  <TableHead>Quantity</TableHead>
-                  <TableHead className="text-custom-font">Available</TableHead>
-                  <TableHead>Edit</TableHead>
-                  <TableHead>Delete</TableHead>
+                  <TableHead className="text-base text-primary-text">No</TableHead>
+                  <TableHead className="text-base text-primary-text">Product Name</TableHead>
+                  <TableHead className="text-base text-primary-text">Price</TableHead>
+                  <TableHead className="text-base text-primary-text">Discount</TableHead>
+                  <TableHead className="text-base text-primary-text">Categor Name</TableHead>
+                  <TableHead className="text-base text-primary-text">Quantity</TableHead>
+                  <TableHead className="text-base text-primary-text">Available</TableHead>
+                  <TableHead className="text-base text-primary-text">Edit</TableHead>
+                  <TableHead className="text-base text-primary-text">Delete</TableHead>
                 </>
                 {/* ) : null} */}
               </TableRow>
@@ -180,15 +181,15 @@ export const DataTable = ({ products }: DataTableProps) => {
                   <>
                     <TableRow
                       key={item.id}
-                      className="hover:bg-primary-background  border-b-secondary-black cursor-pointer"
+                      className="hover:bg-primary-background text-primary-text font-light  border-b-secondary-black cursor-pointer"
                     >
                       <TableCell>{index + 1}</TableCell>
                       <TableCell className="">{item.productName}</TableCell>
-                      <TableCell className="text-custom-font font-medium">
+                      <TableCell className="">
                         ${item.price}
                       </TableCell>
                       <TableCell>{item.discount}%</TableCell>
-                      <TableCell className="text-custom-font font-medium">
+                      <TableCell className="">
                         {
                           categoriesData.find(
                             (category) => category.id === item.categoryId
@@ -232,10 +233,10 @@ export const DataTable = ({ products }: DataTableProps) => {
 
           {
             products && productsData.length > 0 && (
-              <div className="flex justify-end mt-1 pb-2 mx-5  cursor-pointer">
-                <div className="flex justify-center items-center">
+              <div className="flex justify-end mt-1 pb-2 mx-5  ">
+                <div className="flex justify-center items-center my-7">
                   <Button
-                    className={`bg-primary-background hover:bg-primary-background rounded-xl`}
+                    className={`bg-primary-background hover:bg-primary-background disabled:cursor-not-allowed rounded-xl`}
                     onClick={() => handlePageChange(currentPage - 1)}
                     disabled={currentPage === 1}
                   >
@@ -261,7 +262,7 @@ export const DataTable = ({ products }: DataTableProps) => {
                       )
                   )}
                   <Button
-                    className={`bg-primary-background hover:bg-primary-background rounded-xl`}
+                    className={`bg-primary-background hover:bg-primary-background disabled:cursor-not-allowed rounded-xl`}
                     onClick={() => handlePageChange(currentPage + 1)}
                     disabled={
                       currentPage === Math.ceil(productsData.length / itemsPerPage)

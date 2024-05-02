@@ -24,11 +24,12 @@ const BarChart = ({ allCategoryWithProduct }: BarChartProps) => {
 
   // Define an array of colors for the categories
   const categoryColors = [
-    "#ffa500",
-    "#ffa368",
-    "#f28500",
-    "#FF6700",
-    "#ffa500",
+    "#4169E1",
+    "#6495ED",
+    "#87CEEB",
+    "#0000FF",
+    "#00008B",
+    "#ADD8E6",
   ];
 
   const options = {
