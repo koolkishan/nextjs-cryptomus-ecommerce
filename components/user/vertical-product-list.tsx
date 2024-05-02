@@ -193,13 +193,13 @@ const VerticalProductList = ({
     }
   };
   return (
-    <div className="">
+    <div className="mt-4">
       {displayProductList &&
         displayProductList.length > 0 &&
         displayProductList.slice(startIndex, endIndex).map((product) => (
           <div
             key={product.id}
-            className="cursor-pointer grid grid-cols-5 bg-secondary-white m-4 rounded-2xl shadow-[2px_2px_2px_2px_rgba(0,0,0,0.03)]"
+            className="cursor-pointer grid grid-cols-5 bg-white m-4 rounded-2xl"
           >
             <div key={product.id} className="m-4 ">
               {product && product.images && (

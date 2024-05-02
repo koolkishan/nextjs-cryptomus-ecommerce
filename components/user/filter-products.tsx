@@ -107,11 +107,10 @@ FilterProductsProps) => {
 
   const handleFilter = async () => {
     let filteredProducts: ProductTypes[] | [] = [];
-
-    if (deBouncePriceRange) {
+    if (deBouncePriceRange || sortBy) {
+     if(deBouncePriceRange) {
       const [debounceMinPrice, debounceMaxPrice] =
-        deBouncePriceRange.split(",");
-
+      deBouncePriceRange.split(",");
       if (categoryFilter) {
         filteredProducts = categoryProducts.filter((product) => {
           const price = product.price;
@@ -121,7 +120,7 @@ FilterProductsProps) => {
           );
         });
       }
-      if (searchFilter && searchProducts) {
+      if (searchFilter) {
         filteredProducts = searchProducts.filter((product) => {
           const price = product.price;
           return (
@@ -131,18 +130,43 @@ FilterProductsProps) => {
         });
       }
     }
+      if (sortBy === "highToLow") {
+        if(filteredProducts.length > 0) { 
+          filteredProducts.sort((a, b) => b.price - a.price);
+        }  else {
+          if(categoryFilter) {
+            filteredProducts = categoryProducts;
+            filteredProducts.sort((a, b) => b.price - a.price);
+          } 
+          if(searchFilter) {
+            filteredProducts = searchProducts;
+            filteredProducts.sort((a, b) => b.price - a.price);
+          }
+        }
+      } 
+      if (sortBy === "lowToHigh") {
+        if(filteredProducts.length > 0) { 
+        filteredProducts.sort((a, b) => a.price - b.price);
+        }  else {
+          if(categoryFilter) {
+            filteredProducts = categoryProducts;
+            filteredProducts.sort((a, b) => a.price - b.price);
 
-    if (sortBy === "highToLow") {
-      filteredProducts.sort((a, b) => b.price - a.price);
-    } else if (sortBy === "lowToHigh") {
-      filteredProducts.sort((a, b) => a.price - b.price);
+          } 
+          if(searchFilter) {
+            filteredProducts = searchProducts;
+            filteredProducts.sort((a, b) => a.price - b.price);
+
+          }
+        }
+      }
     }
     setFilterProducts(filteredProducts);
   };
 
   return (
    
-    isMinMaxPrice &&  <div className="bg-secondary-white rounded-2xl shadow-[2px_2px_2px_2px_rgba(0,0,0,0.03)] mt-4">
+    isMinMaxPrice &&  <div className="bg-white rounded-2xl mt-4">
     <div className="grid grid-rows-4 gap-6 px-4 py-2">
       <div className="">
         <Select onValueChange={handleSortChange} defaultValue="">
