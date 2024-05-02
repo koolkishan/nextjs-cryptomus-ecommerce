@@ -80,7 +80,7 @@ const Cart = () => {
 
   return (
     <div className="">
-      <div className="lg:container  lg:px-0 grid grid-cols-4  gap-5   pt-5">
+      <div className="lg:container  lg:px-0 grid grid-cols-4  gap-5 pt-5">
         <div className="col-span-3 overflow-y-auto scrollbar-hide">
           {cart && cart.products && cart.products.length > 0 ? (
             cart.products.map((p, index) => (
@@ -88,7 +88,7 @@ const Cart = () => {
                 <div className="mb-8 grid grid-cols-6 gap-4 bg-white rounded-xl  py-4 items-center place-items-center">
                   <div className="flex  col-span-3 gap-4 w-[90%]">
                     <div className="grid grid-cols-3 items-center gap-x-4">
-                      <div className="relative w-[100px] h-[100px]  rounded-md col-span-1  ">
+                      <div className="relative  hover:scale-105 transition-all duration-500 w-[100px] h-[100px]  rounded-md col-span-1  ">
                         <Image
                           src={p.product.images[0]}
                           alt={p.product.productName}

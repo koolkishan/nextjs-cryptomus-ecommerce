@@ -187,11 +187,12 @@ const AddProductForm = () => {
                             field.onChange(value);
                           }}
                           defaultValue={field.value}
+                          
                         >
-                          <SelectTrigger className="w-[98%] ml-1  bg-transparent outline-none border-secondary-black">
-                            <SelectValue placeholder="" />
+                          <SelectTrigger  className="w-[98%] ml-1  bg-transparent outline-none border-secondary-black">
+                            <SelectValue placeholder="Select category" />
                           </SelectTrigger>
-                          <SelectContent className=" text-primary-text hover:bg-surface  bg-primary-background outline-none border-secondary-black">
+                          <SelectContent className="placeholder:text-red-900 text-primary-text hover:bg-surface  bg-primary-background outline-none border-secondary-black">
                             {categoriesData.map((category) => (
                               <SelectItem
                                 key={category.id}
@@ -281,14 +282,14 @@ const AddProductForm = () => {
                   render={({ field }) => (
                     <FormItem className="">
                       <FormLabel className="text-custom-font">Tags</FormLabel>
-                      <FormControl className="bg-black">
+                      <FormControl >
                         <TagsInput
                           value={selected}
                           onChange={setSelected}
                           name="tags"
                           placeHolder="Enter tags"
                           classNames={{
-                            input: "bg-[#1d1e24]",
+                            input: "bg-[#23262b]",
                           }}
                         />
                       </FormControl>

@@ -33,21 +33,7 @@ const Categories = () => {
               {category.categoryName}
             </p>
           ))}
-          {/* <p className="cursor-pointer hover:bg-blue-400/30 p-2">test</p>
-          <p className="cursor-pointer hover:bg-blue-400/30 p-2">test</p>
-          <p className="cursor-pointer hover:bg-blue-400/30 p-2">test</p>
-          <p className="cursor-pointer hover:bg-blue-400/30 p-2">test</p>
-          <p className="cursor-pointer hover:bg-blue-400/30 p-2">test</p>
-          <p className="cursor-pointer hover:bg-blue-400/30 p-2">test</p>
-          <p className="cursor-pointer hover:bg-blue-400/30 p-2">test</p>
-          <p className="cursor-pointer hover:bg-blue-400/30 p-2">test</p>
-          <p className="cursor-pointer hover:bg-blue-400/30 p-2">test</p>
-          <p className="cursor-pointer hover:bg-blue-400/30 p-2">test</p>
-          <p className="cursor-pointer hover:bg-blue-400/30 p-2">test</p>
-          <p className="cursor-pointer hover:bg-blue-400/30 p-2">test</p>
-          <p className="cursor-pointer hover:bg-blue-400/30 p-2">test</p>
-          <p className="cursor-pointer hover:bg-blue-400/30 p-2">test</p>
-          <p className="cursor-pointer hover:bg-blue-400/30 p-2">test</p> */}
+          
         </div>
 
       )}

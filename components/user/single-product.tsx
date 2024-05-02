@@ -120,98 +120,6 @@ const SingleProduct = () => {
     }
   };
 
-  // mobile view 
-  // <div className="visible lg:hidden flex gap-5 justify-center py-4">
-  // {product?.images?.map((image: string) => (
-  //   <div
-  //     key={image}
-  //     className={cn(
-  //       "bg-blue-100 p-4 rounded-lg border ",
-  //       image === singleProductImages
-  //         ? "border-secondary-blue"
-  //         : "border-none"
-  //     )}
-  //   >
-  //     <Image
-  //       onClick={() => setSingleProductImages(image)}
-  //       src={image}
-  //       alt="sub image"
-  //       width={60}
-  //       height={60}
-  //       loading="lazy"
-  //     />
-  //   </div>
-  // ))}
-  //               </div>
-
-  // desktop view 
-
-  // return (
-  //   <div className="bg-white">
-  //     <div className="lg:container lg:px-0 px-6">
-  //       <div className="lg:px-0 px-6 lg:grid lg:grid-cols-3 space-x-12 py-5">
-  //         {
-  //           product ? (
-  //             <>
-  //               {/* <div className="flex flex-col"> */}
-  //               <div className="relative  w-full flex flex-col col-span-1 ">
-  //                 <Image
-  //                   src={product.images[0]}
-  //                   alt="single product image "
-  //                   className="mb-5 h-[200px] md:h-[300px]  lg:h-[400px] rounded-2xl "
-  //                   layout="fill"
-  //                   loading="lazy"
-  //                   objectFit="contain"
-  //                 />
-  //               </div>
-  //               {/* <div className="">
-  //                   {product?.images?.map((image: string) => (
-  //                     <div
-  //                       key={image}
-  //                       className={cn(
-  //                         "bg-blue-100 p-4 rounded-lg border ",
-  //                         image === singleProductImages
-  //                           ? "border-secondary-blue"
-  //                           : "border-none"
-  //                       )}
-  //                     >
-  //                       <Image
-  //                         onClick={() => setSingleProductImages(image)}
-  //                         src={image}
-  //                         alt="sub image"
-  //                         width={60}
-  //                         height={60}
-  //                         loading="lazy"
-  //                       />
-  //                     </div>
-  //                   ))}
-  //                 // </div> */}
-
-  //               {/* </div> */}
-
-
-  //             </>
-  //           ) : (
-  //             <div className="h-[230px] col-span-2 flex justify-center items-center">
-  //               <ContainerLoader />
-  //             </div>
-  //           )
-  //         }
-  //       </div>
-  // <div>
-  //   <p className="text-2xl font-medium my-6">Recommended</p>
-  //   {product && product?.categoryId ? (
-  //     <SameCateGoryProducts categoryId={product?.categoryId} />
-  //   ) : (
-  // <div className="h-[230px] flex justify-center items-center">
-  //   <ContainerLoader />
-  // </div>
-  //   )}
-  // </div>
-  //     </div>
-  //   </div>
-  // );
-
   return (
     <div>
       <div className="bg-white py-6 ">
@@ -220,7 +128,7 @@ const SingleProduct = () => {
             <div className=" grid grid-cols-3 lg:container lg:px-0 px-6 ">
 
               <div className="flex flex-col col-span-1 justify-center items-center gap-y-6 ">
-                <div className="relative w-[300px] h-[300px] rounded-xl">
+                <div className="relative  hover:scale-105 transition-all duration-500 w-[300px] h-[300px] rounded-xl">
                   <Image
                     src={singleProductImages}
                     alt="single product image "

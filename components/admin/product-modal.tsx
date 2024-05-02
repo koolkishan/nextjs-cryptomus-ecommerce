@@ -15,8 +15,6 @@ import {
 } from "@/components/ui/select";
 import Image from "next/image";
 import { RxCrossCircled } from "react-icons/rx";
-import { IoCloudUploadOutline } from "react-icons/io5";
-import { CldUploadButton } from "next-cloudinary";
 import { updateProduct } from "@/actions/update-product";
 import { getProducts } from "@/actions/get-products";
 import { getProductFromProductId } from "@/actions/get-product-from-id";
@@ -39,7 +37,6 @@ const ProductModal = ({ setProductModal, productModal }: ProductModalProps) => {
   const [discount, setDiscount] = useState<number>();
   const [images, setImages] = useState<string[] | []>([]);
   const [quantity, setQuantity] = useState<number>();
-  const [IsDialogOpen, setIsDialogOpen] = useState<boolean>(false);
   const {
     categoriesData,
     setProductsData,

@@ -41,7 +41,7 @@ const CategoryProducts = ({ products }: CategoryProductsProps) => {
 
   return (
     <div className="px-6   lg:px-0 h-full flex">
-      <div className=" fixed bg-blue-100 w-full  p-4">
+      <div className=" fixed z-[40] bg-blue-100 w-full  p-4">
         <div className="lg:container lg:px-0 px-6">
           <p className="text-2xl lg:text-4xl font-bold">
             {category?.categoryName}

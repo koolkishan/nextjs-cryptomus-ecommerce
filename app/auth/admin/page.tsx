@@ -30,7 +30,7 @@ export default function Home() {
       <div className="h-[90%] md:w-1/2 md:mx-32 flex justify-center items-center  bg-surface rounded-2xl">
         <div className="w-[200px ] px-10 lg:px-0 lg:w-[400px]">
           <h1 className="text-center text-3xl text-white my-10 font-medium">
-            Signin To Your Account
+            Sign In To Your Account
           </h1>
           <div className="grid grid-cols-3 text-[12px] ">
             <div className="border-b border-secondary-black"></div>

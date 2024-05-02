@@ -113,7 +113,7 @@ const Wishlist = () => {
             >
               <div key={product.id} className="m-4 ">
                 {product && product.images && (
-                  <div className="relative h-[200px]">
+                  <div className="relative  hover:scale-105 transition-all duration-500 h-[200px]">
                     <Image
                       src={product?.images[0]}
                       alt={product.productName}

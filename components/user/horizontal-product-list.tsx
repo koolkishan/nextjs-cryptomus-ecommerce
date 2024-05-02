@@ -63,7 +63,7 @@ const HorizontalProductList = ({ products }: HorizontalProductListProps) => {
             <div className="flex flex-col  h-full">
               {product.images && product.images.length > 0 && (
                 <div className="flex justify-center items-center mt-4">
-                  <div className="relative w-[200px] h-[200px]  py-4">
+                  <div className="relative  hover:scale-105 transition-all duration-500 w-[200px] h-[200px]  py-4">
                     <Image
                       onClick={() => handleProductClick(product.id)}
                       src={product.images[0]}

@@ -84,7 +84,7 @@ const SameCateGoryProducts = ({ categoryId }: SameCateGoryProductsProps) => {
             <div className="p-4  flex flex-col h-full bg-primary-text shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),0px_1px_0px_0px_rgba(25,28,33,0.02),0px_0px_0px_1px_rgba(25,28,33,0.08)]">
               {product.images && product.images.length > 0 && (
                 <div className="flex justify-center items-center mt-4">
-                  <div className="relative w-[200px] h-[200px]  py-4">
+                  <div className="relative  hover:scale-105 transition-all duration-500 w-[200px] h-[200px]  py-4">
                     <Image
                       onClick={() => handleProductClick(product.id)}
                       src={product.images[0]}

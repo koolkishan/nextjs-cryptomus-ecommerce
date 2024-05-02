@@ -23,7 +23,7 @@ export default function RootLayout({
                 "flex-1 relative",
                 pathName === "/"
                   ? "min-h-[calc(100vh-85px)]"
-                  : "min-h-[calc(100vh-210px)]"
+                  : "min-h-[calc(100vh-194px)]"
               )}
             >
               {children}
