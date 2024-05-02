@@ -30,27 +30,26 @@ const FilterProducts = ({
   categoryName,
   categoryFilter,
   searchFilter,
-  // searchProducts,
-}: FilterProductsProps) => {
-  const {
-    allCategories,
-    categoryProducts,
-    setCategoryProducts,
-    filterProducts,
-    setFilterProducts,
-    searchProducts
-  } = useAppStore();
+}: // searchProducts,
+FilterProductsProps) => {
+  console.log("searchFilter in search :", searchFilter);
+  const { categoryProducts, setFilterProducts, searchProducts } = useAppStore();
+  console.log("searchProducts in search:", searchProducts);
   const [sortBy, setSortBy] = useState<string>("");
   const [minPrice, setMinPrice] = useState<number>(0);
   const [maxPrice, setMaxPrice] = useState<number>(0);
   const [priceRange, setPriceRange] = useState<number[]>([]);
-  const [selectCategoryId, setSelectedCategoryId] = useState<string>("");
+  const [isMinMaxPrice, setIsMinMaxPrice] = useState<boolean>(false);
+  // const [selectCategoryId, setSelectedCategoryId] = useState<string>("");
   const deBouncePriceRange = useDebounce(priceRange.join(","), 200);
 
   useEffect(() => {
-    let max = Number.MIN_VALUE;
-    let min = Number.MAX_VALUE;
-    if (categoryFilter) {
+    if (categoryFilter && categoryProducts) {
+      setIsMinMaxPrice(false);
+      let max = 0;
+      // console.log('useEffect category ~ max:', max)
+      let min = 0;
+      // console.log('useEffect category ~ min:', min)
       categoryProducts.forEach((product) => {
         if (product.price > max) {
           max = product.price;
@@ -61,23 +60,36 @@ const FilterProducts = ({
       });
       setMaxPrice(max);
       setMinPrice(min);
+      setIsMinMaxPrice(true)
     }
-  }, [categoryFilter, categoryProducts, searchFilter]);
+  }, [categoryFilter, categoryProducts]);
 
   useEffect(() => {
-    let max = Number.MIN_VALUE;
-    let min = Number.MAX_VALUE;
-    if (searchFilter && searchProducts) {
+    console.log("useEffect search ~ searchFilter:", searchFilter);
+    if (searchFilter && searchProducts.length) {
+      setIsMinMaxPrice(false);
+
+      let max = 0;
+      let min = 0;
+      console.log("searchProducts.forEach search~ max:", max);
+      console.log("searchProducts.forEach search ~ min:", min);
       searchProducts.forEach((product) => {
         if (product.price > max) {
+          console.log(
+            "searchProducts.forEach ~ product.price: in max",
+            product.price
+          );
           max = product.price;
         }
         if (product.price < min) {
+          console.log("searchProducts.forEach ~ product.price:", product.price);
           min = product.price;
         }
       });
       setMaxPrice(max);
       setMinPrice(min);
+      setIsMinMaxPrice(true);
+
     }
   }, [searchFilter, searchProducts]);
   const sortingOptions = [
@@ -129,78 +141,86 @@ const FilterProducts = ({
   };
 
   return (
-    <div className="bg-secondary-white rounded-2xl shadow-[2px_2px_2px_2px_rgba(0,0,0,0.03)] mt-4">
-      <div className="grid grid-rows-4 gap-6 px-4 py-2">
-        <div className="">
-          <Select onValueChange={handleSortChange} defaultValue="">
-            <SelectTrigger className="w-[280px] ring-0 ring-offset-0 focus:ring-0">
-              <SelectValue placeholder="Sort By" />
-            </SelectTrigger>
-
-            <SelectContent className="">
-              {sortingOptions.map((option) => (
-                <SelectItem
-                  key={option.value}
-                  className="hover:bg-surface focus:text-secondary-blue"
-                  value={option.value}
-                  onClick={() => handleSortChange(option.value)}
-                  defaultChecked={true}
-                >
-                  {option.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-      </div>
-      <div
-        className={cn("px-6", categoryFilter ? "mt-[-180px]" : "mt-[-180px]")}
-      >
-        <p className="">Prices</p>
-        <Slider
-          range
-          min={minPrice}
-          max={maxPrice}
-          allowCross={false}
-          defaultValue={[0, 30]}
-          onChange={handleChange}
-          className="my-4 "
-          trackStyle={[
-            { backgroundColor: "#0090ff" },
-            { backgroundColor: "#0090ff" },
-          ]}
-          handleStyle={[
-            { backgroundColor: "#0090ff" },
-            { backgroundColor: "#0090ff" },
-          ]}
-        />
-        <div className="flex justify-between ">
-          <div>
-            <p>Min</p>
-            <p className="text-secondary-gray">
-              $
-              {deBouncePriceRange ? deBouncePriceRange.split(",")[0] : minPrice}
-            </p>
-          </div>
-          <div>
-            <p>Max</p>
-            <p className="text-secondary-gray">
-              $
-              {deBouncePriceRange ? deBouncePriceRange.split(",")[1] : maxPrice}
-            </p>
-          </div>
-        </div>
-      </div>
-      <div>
-        <Button
-          variant={"outline"}
-          className="bg-white hover:bg-bg-white border-secondary-blue text-secondary-blue px-10 my-4 ml-6"
-          onClick={handleFilter}
-        >
-          Apply
-        </Button>
+   
+    isMinMaxPrice &&  <div className="bg-secondary-white rounded-2xl shadow-[2px_2px_2px_2px_rgba(0,0,0,0.03)] mt-4">
+    <div className="grid grid-rows-4 gap-6 px-4 py-2">
+      <div className="">
+        <Select onValueChange={handleSortChange} defaultValue="">
+          <SelectTrigger className="w-[280px] ring-0 ring-offset-0 focus:ring-0">
+            <SelectValue placeholder="Sort By" />
+          </SelectTrigger>
+          <SelectContent className="">
+            {sortingOptions.map((option) => (
+              <SelectItem
+                key={option.value}
+                className="hover:bg-surface focus:text-secondary-blue"
+                value={option.value}
+                onClick={() => handleSortChange(option.value)}
+                defaultChecked={true}
+              >
+                {option.label}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
       </div>
     </div>
+        <div
+          className={cn(
+            "px-6",
+            categoryFilter ? "mt-[-180px]" : "mt-[-180px]"
+          )}
+        >
+          <p className="">Prices</p>
+          <Slider
+            range
+            min={minPrice}
+            max={maxPrice}
+            allowCross={false}
+            defaultValue={[minPrice, maxPrice]}
+            onChange={handleChange}
+            className="my-4 "
+            trackStyle={[
+              { backgroundColor: "#0090ff" },
+              { backgroundColor: "#0090ff" },
+            ]}
+            handleStyle={[
+              { backgroundColor: "#0090ff" },
+              { backgroundColor: "#0090ff" },
+            ]}
+          />
+          <div className="flex justify-between ">
+            <div>
+              <p>Min</p>
+              <p className="text-secondary-gray">
+                $
+                {deBouncePriceRange
+                  ? deBouncePriceRange.split(",")[0]
+                  : minPrice}
+              </p>
+            </div>
+            <div>
+              <p>Max</p>
+              <p className="text-secondary-gray">
+                $
+                {deBouncePriceRange
+                  ? deBouncePriceRange.split(",")[1]
+                  : maxPrice}
+              </p>
+            </div>
+          </div>
+        </div>
+        <div>
+          <Button
+            variant={"outline"}
+            className="bg-white hover:bg-bg-white border-secondary-blue text-secondary-blue px-10 my-4 ml-6"
+            onClick={handleFilter}
+          >
+            Apply
+          </Button>
+        </div>
+  </div>
+   
   );
 };
 

@@ -177,14 +177,14 @@ const CategoriesTable = ({ categories }: CategoriesTableProps) => {
         <div className="w-full">
           <Table className="w-full">
             <TableHeader>
-              <TableRow className="hover:bg-surface border-b-secondary-black">
+              <TableRow className="hover:bg-surface text-primary-text font-medium border-b-secondary-black">
                 {/* {categories && categoriesData.length ? ( */}
                 <>
-                  <TableHead>No</TableHead>
-                  <TableHead>Category Name</TableHead>
-                  <TableHead>Total Products</TableHead>
-                  <TableHead>Edit</TableHead>
-                  <TableHead>Delete</TableHead>
+                  <TableHead className="text-primary-text font-medium">No</TableHead>
+                  <TableHead className="text-primary-text font-medium">Category Name</TableHead>
+                  <TableHead className="text-primary-text font-medium">Total Products</TableHead>
+                  <TableHead className="text-primary-text font-medium">Edit</TableHead>
+                  <TableHead className="text-primary-text font-medium">Delete</TableHead>
                 </>
                 {/* ) : null} */}
               </TableRow>
@@ -197,7 +197,7 @@ const CategoriesTable = ({ categories }: CategoriesTableProps) => {
                     <TableRow
                       // onClick={() => setsetCategoryModal(true)}
                       key={item.id}
-                      className="hover:bg-primary-background  border-b-secondary-black cursor-pointer"
+                      className="hover:bg-primary-background font-light border-b-secondary-black cursor-pointer"
                     >
                       <TableCell>{index + 1}</TableCell>
                       <TableCell className="">{item.categoryName}</TableCell>
@@ -242,51 +242,53 @@ const CategoriesTable = ({ categories }: CategoriesTableProps) => {
                 ))}
             </TableBody>
           </Table>
-          {
-            categoriesData &&
-            categoriesData.length > 0 && (
-              <div className="flex justify-end mt-4 pb-2 mx-5 mb-3 cursor-pointer">
-                <div className="flex justify-center items-center">
-                  <Button
-                    className={`bg-primary-background hover:bg-primary-background rounded-xl`}
-                    onClick={() => handlePageChange(currentPage - 1)}
-                    disabled={currentPage === 1}
-                  >
-                    <MdKeyboardArrowLeft size={22} />
-                  </Button>
+          {currentItems && currentItems.length > 0 && (
+            <div className="flex justify-end  pb-2 mx-5  ">
+              <div className="flex justify-center my-7 items-center">
+                <Button
+                  className={`bg-primary-background hover:bg-primary-background cursor-pointer rounded-xl`}
+                  onClick={() => handlePageChange(currentPage - 1)}
+                  disabled={currentPage === 1}
+                >
+                  <MdKeyboardArrowLeft size={22} />
+                </Button>
 
-                  {[
-                    ...Array(Math.ceil(categoriesData.length / itemsPerPage)),
-                  ].map(
-                    (_, i) =>
-                      i >= currentPage - 2 &&
-                      i <= currentPage + 2 && (
-                        <Button
-                          key={i}
-                          className={`px-4 mx-3 bg-secondary-blue h-9 rounded-xl hover:bg-secondary-blue`}
-                          onClick={() => handlePageChange(i + 1)}
-                        >
-                          {i + 1}
-                        </Button>
-                      )
-                  )}
-                  <Button
-                    className={`bg-primary-background hover:bg-primary-background rounded-xl`}
-                    onClick={() => handlePageChange(currentPage + 1)}
-                    disabled={
-                      currentPage ===
-                      Math.ceil(categoriesData.length / itemsPerPage)
-                    }
-                  >
-                    <MdKeyboardArrowRight size={22} />
-                  </Button>
-                </div>
+                {[...Array(Math.ceil(categoriesData.length / itemsPerPage))].map(
+                  (_, i) =>
+                    i >= currentPage - 2 &&
+                    i <= currentPage + 2 && (
+                      <Button
+                        key={i}
+                        className={cn(
+                          "px-4 mx-3  h-9 rounded-xl hover:bg-secondary-blue",
+                          i + 1 === currentPage
+                            ? "bg-secondary-blue"
+                            : "bg-transparent"
+                        )}
+                        onClick={() => handlePageChange(i + 1)}
+                      >
+                        {i + 1}
+                      </Button>
+                    )
+                )}
+                <Button
+                  className={`bg-primary-background hover:bg-primary-background disabled:cursor-not-allowed rounded-xl`}
+                  onClick={() => handlePageChange(currentPage + 1)}
+                  disabled={
+                    currentPage === Math.ceil(categoriesData.length / itemsPerPage)
+                  }
+                >
+                  <MdKeyboardArrowRight size={22} />
+                </Button>
               </div>
-            )
-          }
+            </div>
+          )}
         </div>
+
       </div>
-      {categoriesData && categoriesData.length > 0 ? "" : <div className="text-center mt-4 text-custom-font"><p>No Categories Are Available</p></div>}
+      {currentItems && currentItems.length === 0 && (
+        <div className="text-center text-custom-font mt-4">No Categoryies Are Availabe</div>
+      )}
 
     </div>
   );

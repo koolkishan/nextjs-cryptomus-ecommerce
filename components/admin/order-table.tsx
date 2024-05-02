@@ -92,24 +92,24 @@ export const OrderTable = ({ orders }: OrderTable) => {
 
   return (
     <>
-      <div className="bg-surface rounded-3xl">
+      <div className=" bg-surface rounded-3xl">
         <OrderModal setOrderModal={setOrderModal} orderModal={orderModal} />
 
-        <div className=" flex items-center py-4 px-5 mt-4">
-          <label className="relative block">
+        <div className="flex items-center py-4 px-5 mt-4 ">
+          <label className="w-full relative block">
             <span className="sr-only">Search</span>
             <span className="absolute inset-y-0 left-0 flex items-center pl-2">
               <IoIosSearch size={22} className="text-secondary-gray " />
             </span>
-            <div className="relative">
+            <div className="w-full">
               <Input
-                className="placeholder:text-secondary-gray bg-transparent w-full border border-secondary-black focus:border-none rounded-md py-2 pl-9 pr-3 shadow-sm sm:text-sm"
+                className=" placeholder:text-secondary-gray bg-transparent w-full border border-secondary-black focus:border-none rounded-md py-2 pl-9 pr-3 shadow-sm sm:text-sm"
                 placeholder="Search Orders By Order Id..."
                 type="text"
                 name="search"
                 onChange={handleChange}
               />
-              <div className="absolute z-50 top-full left-0 w-full my-1 bg-surface rounded-b-xl rounded-md shadow-2xl">
+              <div className="absolute text-base z-50 top-full left-0 w-full my-1 bg-surface rounded-b-xl rounded-md shadow-2xl">
                 {searchOrders &&
                   searchOrders.length > 0 &&
                   searchOrders.map((order: orderTypes, index: number) => {
@@ -139,18 +139,18 @@ export const OrderTable = ({ orders }: OrderTable) => {
         <div className="">
           <Table>
             <TableHeader>
-              <TableRow className="hover:bg-surface border-b-secondary-black">
-                <TableHead className="text-custom-font">No</TableHead>
-                <TableHead className="text-custom-font">Order Id</TableHead>
-                <TableHead className="text-custom-font">Customer Name</TableHead>
-                <TableHead className="text-custom-font">
+              <TableRow className="hover:bg-surface  border-b-secondary-black">
+                <TableHead className="text-primary-text ">No</TableHead>
+                <TableHead className="text-primary-text ">Order Id</TableHead>
+                <TableHead className="text-primary-text ">Customer Name</TableHead>
+                <TableHead className="text-primary-text ">
                   Total Items
                 </TableHead>{" "}
-                <TableHead className="text-custom-font">Total Amount</TableHead>
-                <TableHead className="text-custom-font">Total Discount</TableHead>
-                <TableHead className="text-custom-font">Order Status</TableHead>
-                <TableHead className="text-custom-font">Payment Status</TableHead>
-                <TableHead className="text-custom-font">Edit</TableHead>
+                <TableHead className="text-primary-text ">Total Amount</TableHead>
+                <TableHead className="text-primary-text ">Total Discount</TableHead>
+                <TableHead className="text-primary-text ">Order Status</TableHead>
+                <TableHead className="text-primary-text ">Payment Status</TableHead>
+                <TableHead className="text-primary-text ">Edit</TableHead>
               </TableRow>
             </TableHeader>
 
@@ -160,17 +160,17 @@ export const OrderTable = ({ orders }: OrderTable) => {
                   <>
                     <TableRow
                       key={order.id}
-                      className="hover:bg-primary-background  border-b-secondary-black cursor-pointer"
+                      className="hover:bg-primary-background text-primary-text font-light  border-b-secondary-black cursor-pointer"
                     >
-                      <TableCell className="text-custom-font font-medium">
+                      <TableCell className="">
                         {index + 1}
                       </TableCell>
                       <TableCell className="">{order.id}</TableCell>
-                      <TableCell className="text-custom-font font-medium">
+                      <TableCell className="">
                         {order.user?.name}
                       </TableCell>
                       <TableCell>{order.products.length}</TableCell>
-                      <TableCell className="text-custom-font font-medium">
+                      <TableCell className="">
                         ${order.totalPrice}
                       </TableCell>
                       <TableCell>${order.totalDiscount}</TableCell>
@@ -269,10 +269,10 @@ export const OrderTable = ({ orders }: OrderTable) => {
           </Table>
 
           {currentItems && currentItems.length > 0 && (
-            <div className="flex justify-end mt-4 pb-2 mx-5 mb-3 cursor-pointer">
-              <div className="flex justify-center items-center">
+            <div className="flex justify-end  pb-2 mx-5  ">
+              <div className="flex justify-center my-7 items-center">
                 <Button
-                  className={`bg-primary-background hover:bg-primary-background rounded-xl`}
+                  className={`bg-primary-background hover:bg-primary-background cursor-pointer rounded-xl`}
                   onClick={() => handlePageChange(currentPage - 1)}
                   disabled={currentPage === 1}
                 >
@@ -298,7 +298,7 @@ export const OrderTable = ({ orders }: OrderTable) => {
                     )
                 )}
                 <Button
-                  className={`bg-primary-background hover:bg-primary-background rounded-xl`}
+                  className={`bg-primary-background hover:bg-primary-background disabled:cursor-not-allowed rounded-xl`}
                   onClick={() => handlePageChange(currentPage + 1)}
                   disabled={
                     currentPage === Math.ceil(orders.length / itemsPerPage)

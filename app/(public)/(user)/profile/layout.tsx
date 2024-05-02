@@ -14,7 +14,7 @@ export default async function RootLayout({
     <div className="marker:border-none w-full h-full">
       <div
         className={cn(
-          " lg:container px-0 lg:px-6 mt-4 w-full grid grid-cols-5 gap-10"
+          " lg:container px-0 lg:px-6 my-6 w-full grid grid-cols-5 gap-10"
         )}
       >
         <div>

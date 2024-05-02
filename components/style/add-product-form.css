@@ -1,0 +1,10 @@
+.rti--container {
+    max-width: 300px;
+    --rti-bg: rgb(35, 38, 43) !important; 
+    --rti-border: rgb(51, 54, 61) !important;
+    --rti-main: r !important;
+    --rti-radius: 0.375rem !important;
+    --rti-s: 0.5rem !important; /* spacing */
+    --rti-tag: #48494e !important;
+    --rti-tag-remove: #f0ec24 !important;
+  }

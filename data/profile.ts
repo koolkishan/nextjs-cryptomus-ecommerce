@@ -44,6 +44,6 @@ export const updateProfile = async (
       },
     });
   } catch (error) {
-    console.log("Error while updating profile");
+    console.log("Error while updating profile", error);
   }
 };

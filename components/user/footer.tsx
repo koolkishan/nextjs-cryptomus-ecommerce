@@ -5,7 +5,7 @@ import {
 } from "react-icons/ri";
 const Footer = () => {
   return (
-    <footer className="flex justify-between items-center mt-4 bg-secondary-blue text-primary-text py-5 px-4 font-bold">
+    <footer className="flex justify-between items-center bg-secondary-blue text-primary-text py-5 px-4 font-bold">
       <div className="md:flex pr-5 md:pr-0  gap-4">
         <a href="#">
           <RiFacebookBoxFill size={22} />

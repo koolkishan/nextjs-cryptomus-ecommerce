@@ -9,13 +9,15 @@ import { removeProductFromCart } from "@/actions/remove-cart-action";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
+import ContainerLoader from "../loader";
 
 const Cart = () => {
   const user = useAuthUser();
+  const [loader, setLoader] = useState<boolean>(true);
   const [cart, setCart] = useState<CartTypes>();
   const [totalPrice, setTotalPrice] = useState<number>(0);
   const [totalDiscount, setTotalDiscount] = useState<number>(0);
-  const [isMounted, setIsMounted] = useState<boolean>(false);
+  const [isMounted, setIsMounted] = useState<boolean>(true);
   const router = useRouter();
 
   useEffect(() => {
@@ -24,14 +26,18 @@ const Cart = () => {
 
   useEffect(() => {
     async function getUserCart() {
+      setLoader(true);
       if (user && user.email) {
+        console.log('getUserCart ~ user:', user)
         const response = await getCartAction(user.email);
+        console.log('getUserCart ~ response:', response)
         if (response) {
           setCart(response);
         }
       }
     }
     getUserCart();
+    setLoader(false);
   }, [user]);
 
   useEffect(() => {
@@ -58,6 +64,7 @@ const Cart = () => {
     if (user && user.email) {
       const response = await removeProductFromCart(user.email, productId);
       const result = await getCartAction(user.email);
+      console.log('handleClick ~ result:', result)
       if (result) {
         setCart(result);
       }
@@ -72,20 +79,20 @@ const Cart = () => {
   };
 
   return (
-    <div className="relative">
-      <div className="lg:container lg:px-0 grid grid-cols-4 gap-5 pt-5">
+    <div className="">
+      <div className="lg:container  lg:px-0 grid grid-cols-4  gap-5 pt-5">
         <div className="col-span-3 overflow-y-auto scrollbar-hide">
           {cart && cart.products && cart.products.length > 0 ? (
             cart.products.map((p, index) => (
               <div key={p.id}>
-                <div className="mb-8 grid grid-cols-6 gap-4">
+                <div className="mb-8 grid grid-cols-6 gap-4 bg-white rounded-xl  py-4 items-center place-items-center">
                   <div className="flex  col-span-3 gap-4 w-[90%]">
                     <div className="grid grid-cols-3 items-center gap-x-4">
-                      <div className="relative w-[100px] h-[100px] border border-zinc-400/20 rounded-md col-span-1  ">
+                      <div className="relative  hover:scale-105 transition-all duration-500 w-[100px] h-[100px]  rounded-md col-span-1  ">
                         <Image
                           src={p.product.images[0]}
                           alt={p.product.productName}
-                          className="bg-secondary-white rounded-md py-2"
+                          className="rounded-md "
                           layout="fill"
                           loading="lazy"
                           objectFit="contain"
@@ -114,13 +121,13 @@ const Cart = () => {
                       {Math.round(
                         (p.product.price -
                           (p.product.price * p.product.discount) / 100) *
-                          p.quantity
+                        p.quantity
                       ).toLocaleString("us")}
                     </p>
                     <p className="text-sm text-zinc-400">
                       {`$${Math.round(
                         p.product.price -
-                          (p.product.price * p.product.discount) / 100
+                        (p.product.price * p.product.discount) / 100
                       ).toLocaleString("us")}/per item`}
                     </p>
                   </div>
@@ -136,18 +143,25 @@ const Cart = () => {
                 </div>
               </div>
             ))
-          ) : (
-            <div className="absolute z-[11111] h-[400px] inset-0 flex justify-center items-center">
-              <Image
-                src="/shopping-cart.png"
-                alt="cart is empty"
-                // className="bg-secondary-white rounded-md py-2"
-                layout="fill"
-                loading="lazy"
-                objectFit="contain"
-              />
-            </div>
-          )}
+          ) :
+            (
+              loader ? (
+                <div className=" absolute inset-0 h-[300px] w-full flex justify-center items-center">
+                  <ContainerLoader />
+                </div>
+              ) : (
+                <div className="absolute z-[11111] h-[300px] inset-0 flex justify-center items-center">
+                  <Image
+                    src="/shopping-cart.png"
+                    alt="cart is empty"
+                    layout="fill"
+                    loading="lazy"
+                    objectFit="contain"
+                  />
+                </div>
+              )
+            )
+          }
         </div>
         <div
           className={cn(
@@ -157,7 +171,7 @@ const Cart = () => {
               : "hidden"
           )}
         >
-          <div className="bg-secondary-white p-6 rounded-xl ">
+          <div className="bg-white p-6 rounded-xl ">
             <div className="flex my-2">
               <p className="flex-1">Total Price: </p>
               <p>${totalPrice.toLocaleString("us")}</p>
@@ -197,7 +211,7 @@ const Cart = () => {
           </div>
         </div>
       </div>
-    </div>
+    </div >
   );
 };
 export default Cart;

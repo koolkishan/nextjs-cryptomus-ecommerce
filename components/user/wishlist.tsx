@@ -13,16 +13,13 @@ import { ProductTypes } from "@/types";
 import { createOrderAndOrderProducts } from "@/actions/create-order";
 import { addToCart } from "@/actions/add-cart-action";
 import { toast } from "sonner";
+import { divide } from "lodash";
+import ContainerLoader from "../loader";
 
 const Wishlist = () => {
   const { userProductsData, setUserProductsData } = useAppStore();
   const router = useRouter();
   const user = useAuthUser();
-  useEffect(() => {
-    if (!user) {
-      router.push("/auth");
-    }
-  }, [router, user]);
 
   useEffect(() => {
     async function getProductsData() {
@@ -42,7 +39,7 @@ const Wishlist = () => {
         if (productResponse && productResponse.length > 0) {
           setUserProductsData(productResponse);
         }
-      toast.success("Product added to wish list." )
+        toast.success("Product added to wish list.")
       }
     } else {
       router.push("/auth");
@@ -105,18 +102,18 @@ const Wishlist = () => {
   };
 
   return (
-    <div className="lg:container lg:px-6 px-0 ">
+    <div className="lg:container lg:px-6 px-0 flex flex-col gap-4 my-4">
       {userProductsData &&
-        userProductsData.length > 0 &&
+        userProductsData.length > 0 ?
         userProductsData.map((product) =>
           product.wishlist && product.wishlist?.length > 0 ? (
             <div
               key={product.id}
-              className="cursor-pointer grid grid-cols-4 bg-secondary-white m-4 rounded-2xl shadow-[2px_2px_2px_2px_rgba(0,0,0,0.03)]"
+              className="cursor-pointer grid grid-cols-4 bg-white rounded-2xl shadow-[2px_2px_2px_2px_rgba(0,0,0,0.03)]"
             >
               <div key={product.id} className="m-4 ">
                 {product && product.images && (
-                  <div className="relative h-[200px]">
+                  <div className="relative  hover:scale-105 transition-all duration-500 h-[200px]">
                     <Image
                       src={product?.images[0]}
                       alt={product.productName}
@@ -146,10 +143,10 @@ const Wishlist = () => {
                     $
                     {Math.round(
                       product.price - (product?.price * product?.discount) / 100
-                    )}
+                    ).toLocaleString('us')}
                   </p>
                   <p className="text-custom-font line-through text-sm">
-                    ${product?.price}
+                    ${product?.price.toLocaleString('us')}
                   </p>
                 </div>
                 <div className="mb-4 inline-block text-xs font-bold py-1  text-emerald-500">
@@ -170,8 +167,8 @@ const Wishlist = () => {
                   </Button>
                   <p className="text-secondary-blue">
                     {product.wishlist &&
-                    product.wishlist?.length > 0 &&
-                    user ? (
+                      product.wishlist?.length > 0 &&
+                      user ? (
                       <IoHeart
                         size={22}
                         className="text-secondary-blue"
@@ -189,7 +186,9 @@ const Wishlist = () => {
               </div>
             </div>
           ) : null
-        )}
+        ) : <div className="h-[230px] w-full flex justify-center items-center">
+          <ContainerLoader />
+        </div>}
     </div>
   );
 };

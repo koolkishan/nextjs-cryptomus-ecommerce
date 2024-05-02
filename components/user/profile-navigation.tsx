@@ -16,11 +16,11 @@ const ProfileNavigation = () => {
   };
 
   return (
-    <div className="">
+    <div className="bg-white p-2 rounded-xl">
       <div>
         <p
           className={cn(
-            "flex items-center gap-3 cursor-pointer py-2 px-2 mb-4 hover:bg-blue-100 hver:border hover:rounded-lg hover:text-blue-600",
+            "flex items-center gap-3 cursor-pointer py-2 px-2 my-4 hover:bg-blue-100 hver:border hover:rounded-lg hover:text-blue-600",
             path === "/profile"
               ? "bg-blue-100 border rounded-lg text-blue-600    "
               : ""
@@ -78,7 +78,7 @@ const ProfileNavigation = () => {
         <p
           className={cn(
             "flex items-center gap-3 cursor-pointer py-2 px-2 mb-4 hover:bg-blue-100 hver:border hover:rounded-lg hover:text-blue-600",
-            path === "/profile/profile-setting"
+            path === "/profile/setting"
               ? "bg-blue-100 border rounded-lg text-blue-600    "
               : ""
           )}

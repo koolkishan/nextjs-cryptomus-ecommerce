@@ -2,7 +2,7 @@ import { EcommerceLandingPage } from "@/components/user";
 
 const UserPage = () => {
   return (
-    <div>
+    <div className="h-full">
       <EcommerceLandingPage />
     </div>
   );

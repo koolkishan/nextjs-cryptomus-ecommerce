@@ -14,9 +14,7 @@ export const ProductSchema = z.object({
     message: "Price required",
   }),
   discount: z.string().min(0).max(100),
-  tags: z.string().min(1, {
-    message: "Tags required",
-  }),
+ 
   qty: z.string().min(1, {
     message: "Quantity required",
   }),
@@ -45,3 +43,7 @@ export const UserProfileSchema = z.object({
     message: "Address required",
   })
 });
+
+export const CheckOutSchema = z.object({
+  
+})

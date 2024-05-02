@@ -45,8 +45,14 @@ const PieChart = ({ orders }: PieChartProps) => {
           },
         },
         showInLegend: true,
-        // colors: ["#67BBFC", "#78E0E1", "#7CE475"],
-        colors: ["#ffa500", "#ffa368", "#f28500"],
+        colors: [
+          "#4169E1",
+          "#6495ED",
+          "#87CEEB",
+          "#0000FF",
+          "#00008B",
+          "#ADD8E6",
+        ],
       },
     },
     legend: {

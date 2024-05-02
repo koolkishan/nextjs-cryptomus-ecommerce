@@ -16,7 +16,6 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { addProductToWishList, cn } from "@/lib/utils";
 import { ProductTypes } from "@/types";
-import { Products } from "@prisma/client";
 import { useAuthUser } from "@/hooks/useAuthUser";
 import { getProductsFormCategoryId } from "@/data/product";
 import { searchProductsByTagAction } from "@/actions/search-product-by-tag-action";
@@ -44,10 +43,24 @@ const VerticalProductList = ({
     setSearchProducts,
     searchProducts,
   } = useAppStore();
+    console.log('searchProducts --vertical:', searchProducts)
   const [currentPage, setCurrentPage] = useState(1);
   const [displayProductList, setDisplayProductList] = useState<
     ProductTypes[] | []
   >([]);
+
+    useEffect(() => {
+    (async function getProduct() {
+      if (tag) {
+        console.log('getProduct vertical~ tag:', tag)
+        const response = await searchProductsByTagAction(tag) as ProductTypes[];
+        if (response.length) {
+          console.log('getProduct ~ response:', response)
+          setSearchProducts(response);
+        }
+      }
+    })();
+  }, [setSearchProducts, tag]);
 
   useEffect(() => {
     if (filterProducts.length > 0 && categoryFilter) {
@@ -266,8 +279,9 @@ const VerticalProductList = ({
       <Pagination className="flex justify-end my-4 mr-4">
         <PaginationContent className="text-secondary-blue">
           <PaginationItem>
+            <Button variant={'link'} disabled={currentPage===1}>
             <PaginationPrevious
-              className="hover:bg-secondary-blue hover:text-primary-text"
+              className={cn('', currentPage===1 ? "cursor-not-allowed text-zinc-400 hover:text-zinc-400" :'hover:bg-secondary-blue hover:text-primary-text ')}
               href="#"
               onClick={() =>
                 handlePageChange(
@@ -275,6 +289,7 @@ const VerticalProductList = ({
                 )
               }
             />
+            </Button>
           </PaginationItem>
           {Array.from({ length: totalPages }).map((_, index) => (
             <PaginationItem key={index}>
@@ -294,8 +309,9 @@ const VerticalProductList = ({
             </PaginationItem>
           ))}
           <PaginationItem>
+            <Button variant={'link'} disabled={currentPage===totalPages}>
             <PaginationNext
-              className="hover:bg-secondary-blue hover:text-primary-text"
+              className={cn('', currentPage===totalPages ? "cursor-not-allowed text-zinc-400 hover:text-zinc-400" :'hover:bg-secondary-blue hover:text-primary-text ')}
               href="#"
               onClick={() =>
                 handlePageChange(
@@ -303,6 +319,7 @@ const VerticalProductList = ({
                 )
               }
             />
+            </Button>
           </PaginationItem>
         </PaginationContent>
       </Pagination>

@@ -18,7 +18,7 @@ export const updateProfileAction = async (
     const name = firstName + " " + lastName;
     const updateUserResponse = await updateUser(name,id, updatedEmail, image);
     const updateUserProfile =  await updateProfile([address],phone, profileId)
-    return { success: "profile updated successfully" };
+    return { success: "Profile updated successfully" };
   } catch (err: unknown) {
     if (err instanceof Error) {
       return {
