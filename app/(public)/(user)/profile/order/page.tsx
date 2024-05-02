@@ -12,7 +12,7 @@ const OrderPage = () => {
     async function getOrder() {
       if (user && user.email) {
         const response = await getOrderProductAction(user.email);
-        if (response && response.length>0) {
+        if (response && response.length > 0) {
           setOrders(response);
         }
       }
@@ -20,8 +20,8 @@ const OrderPage = () => {
     getOrder();
   }, [user]);
   return (
-    <div>
-      <OrderHistory orders={orders}/>
+    <div className="">
+      <OrderHistory orders={orders} />
       {/* <h1>order page</h1> */}
     </div>
   );

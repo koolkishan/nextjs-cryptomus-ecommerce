@@ -34,7 +34,7 @@ const Order = ({ order }: OrderProps) => {
       {userAndProfile &&
         userAndProfile.profile &&
         userAndProfile.profile.length > 0 && (
-          <div className="bg-secondary-white w-full shadow-[2px_2px_2px_2px_rgba(0,0,0,0.03)] mb-4 p-2">
+          <div className="bg-white rounded-xl  w-full shadow-[2px_2px_2px_2px_rgba(0,0,0,0.03)] mb-4 p-4">
             <div className="flex gap-5 mb-4">
               <p className="text-custom-font">
                 <span className="font-medium text-black">Date-Time:</span>{" "}
@@ -73,11 +73,11 @@ const Order = ({ order }: OrderProps) => {
                     Payment status:
                   </span>
                   {order.paymentStatus.toLocaleLowerCase() ===
-                  ("cancel" ||
-                    "fail" ||
-                    "system_fail" ||
-                    "refund_fail" ||
-                    "locked") ? (
+                    ("cancel" ||
+                      "fail" ||
+                      "system_fail" ||
+                      "refund_fail" ||
+                      "locked") ? (
                     <p className="border text-red-400 border-red-400 bg-red-400/20 px-4 rounded-lg">
                       {order.paymentStatus.charAt(0).toUpperCase() +
                         order.paymentStatus.slice(1)}
@@ -86,11 +86,11 @@ const Order = ({ order }: OrderProps) => {
                     ""
                   )}
                   {order.paymentStatus.toLowerCase() ===
-                  ("pending" ||
-                    "process" ||
-                    "confirm_check" ||
-                    "check" ||
-                    "refund_process") ? (
+                    ("pending" ||
+                      "process" ||
+                      "confirm_check" ||
+                      "check" ||
+                      "refund_process") ? (
                     <p className="border text-yellow-400 border-yellow-400 bg-yellow-400/20 px-4 rounded-lg">
                       {order.paymentStatus.charAt(0).toUpperCase() +
                         order.paymentStatus.slice(1)}
@@ -99,7 +99,7 @@ const Order = ({ order }: OrderProps) => {
                     ""
                   )}
                   {order.paymentStatus.toLowerCase() ===
-                  ("paid" || "paid_over" || "refund_paid") ? (
+                    ("paid" || "paid_over" || "refund_paid") ? (
                     <p className="border text-green-400 border-green-400 bg-green-400/20 px-4 rounded-lg">
                       {order.paymentStatus.charAt(0).toUpperCase() +
                         order.paymentStatus.slice(1)}
@@ -122,13 +122,13 @@ const Order = ({ order }: OrderProps) => {
                 <p>
                   <span className="ml-r">Shipping address:</span>
                   {userAndProfile.profile[0].addresses &&
-                  userAndProfile.profile[0].addresses.length > 0
+                    userAndProfile.profile[0].addresses.length > 0
                     ? ` ${userAndProfile.profile[0].addresses[0]}`
                     : ""}
                 </p>
               </div>
               <div className="">
-                <p className="text-black font-medium">Pyment Detail</p>
+                <p className="text-black font-medium">Pyment Details</p>
                 <div className="flex mt-4">
                   <p>
                     <p className="mr-2">Total price:</p>
@@ -136,10 +136,10 @@ const Order = ({ order }: OrderProps) => {
                     <p className="mr-2">Total:</p>
                   </p>
                   <p>
-                    <p className="">${order.totalPrice.toFixed(2)}</p>
-                    <p className="">-${order.totalDiscount.toFixed(2)}</p>
+                    <p className="">${order.totalPrice.toLocaleString('us')}</p>
+                    <p className="">-${order.totalDiscount.toLocaleString('us')}</p>
                     <p className="">
-                      ${(order.totalPrice - order.totalDiscount).toFixed(2)}
+                      ${(order.totalPrice - order.totalDiscount).toLocaleString('us')}
                     </p>
                   </p>
                 </div>
@@ -147,7 +147,7 @@ const Order = ({ order }: OrderProps) => {
             </div>
             <div>
               <p className="font-medium text-black my-4">Products</p>
-              <div className="grid grid-cols-5 ">
+              <div className="grid grid-cols-5 gap-x-4">
                 {order.products.map((product) => (
                   <div
                     key={product.id}
@@ -156,11 +156,11 @@ const Order = ({ order }: OrderProps) => {
                       router.push(`/products/${product.product.id}`)
                     }
                   >
-                    <div className=" relative w-[200px]   h-[100px] rounded-md col-span-1  ">
+                    <div className=" relative w-[200px] h-[100px] rounded-md col-span-1  ">
                       <Image
                         src={product.product.images[0]}
                         alt={product.product.productName}
-                        className="bg-secondary-white rounded-md py-2 ml-2"
+                        className="rounded-md py-2 ml-2"
                         layout="fill"
                         loading="lazy"
                         objectFit="contain"

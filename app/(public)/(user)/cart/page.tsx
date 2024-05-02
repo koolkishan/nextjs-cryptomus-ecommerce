@@ -2,7 +2,7 @@ import { Cart } from "@/components/user";
 
 const CartPage = () => {
   return (
-    <div>
+    <div className="">
       <Cart />
     </div>
   );

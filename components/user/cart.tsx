@@ -79,20 +79,20 @@ const Cart = () => {
   };
 
   return (
-    <div className="relative">
-      <div className="lg:container lg:px-0 grid grid-cols-4 gap-5 pt-5">
+    <div className="">
+      <div className="lg:container  lg:px-0 grid grid-cols-4  gap-5   pt-5">
         <div className="col-span-3 overflow-y-auto scrollbar-hide">
           {cart && cart.products && cart.products.length > 0 ? (
             cart.products.map((p, index) => (
               <div key={p.id}>
-                <div className="mb-8 grid grid-cols-6 gap-4">
+                <div className="mb-8 grid grid-cols-6 gap-4 bg-white rounded-xl  py-4 items-center place-items-center">
                   <div className="flex  col-span-3 gap-4 w-[90%]">
                     <div className="grid grid-cols-3 items-center gap-x-4">
-                      <div className="relative w-[100px] h-[100px] border border-zinc-400/20 rounded-md col-span-1  ">
+                      <div className="relative w-[100px] h-[100px]  rounded-md col-span-1  ">
                         <Image
                           src={p.product.images[0]}
                           alt={p.product.productName}
-                          className="bg-secondary-white rounded-md py-2"
+                          className="rounded-md "
                           layout="fill"
                           loading="lazy"
                           objectFit="contain"
@@ -171,7 +171,7 @@ const Cart = () => {
               : "hidden"
           )}
         >
-          <div className="bg-secondary-white p-6 rounded-xl ">
+          <div className="bg-white p-6 rounded-xl ">
             <div className="flex my-2">
               <p className="flex-1">Total Price: </p>
               <p>${totalPrice.toLocaleString("us")}</p>

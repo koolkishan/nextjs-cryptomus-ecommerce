@@ -71,10 +71,10 @@ const UserProfile = () => {
                 userAndProfile.profile[0]?.addresses &&
                 userAndProfile.profile[0]?.addresses.length > 0 &&
                 userAndProfile.profile[0]?.addresses[0].length > 0 ? (
-                <div className="">
+                <div className=" py-2">
                   <div className="grid grid-cols-2 gap-10">
-                    <div className="flex mt-5 bg-secondary-white rounded-xl items-center px-2">
-                      <div className="h-14 w-14 flex items-center justify-center rounded-full bg-primary-text mr-2">
+                    <div className="flex px-2 bg-secondary-white rounded-xl items-center ">
+                      <div className="h-12 w-12 flex items-center justify-center rounded-full bg-primary-text mr-2">
                         <IoLocationSharp
                           size={24}
                           className="text-yellow-400"

@@ -214,13 +214,11 @@ const SingleProduct = () => {
 
   return (
     <div>
-      {/* images and it details  */}
-      <div className="bg-white py-6">
+      <div className="bg-white py-6 ">
         {
           product ? (
             <div className=" grid grid-cols-3 lg:container lg:px-0 px-6 ">
 
-              {/* image  */}
               <div className="flex flex-col col-span-1 justify-center items-center gap-y-6 ">
                 <div className="relative w-[300px] h-[300px] rounded-xl">
                   <Image
@@ -230,8 +228,6 @@ const SingleProduct = () => {
                     layout="fill"
                     loading="lazy"
                     objectFit="contain"
-                  // width={250}
-                  // height={250}
                   />
                 </div>
                 <div className="flex gap-x-2">
@@ -250,8 +246,6 @@ const SingleProduct = () => {
                         src={image}
                         alt="sub image"
                         className="p-2"
-                        // width={60}
-                        // height={60}
                         layout="fill"
                         loading="lazy"
                         objectFit="contain"
@@ -261,7 +255,6 @@ const SingleProduct = () => {
                 </div>
               </div>
 
-              {/* details  */}
               <div className="flex flex-col col-span-2">
                 <div className="flex-1">
                   <div className="font-bold text-2xl mb-4">
@@ -358,7 +351,7 @@ const SingleProduct = () => {
           </div>
         }
       </div>
-      <div className="lg:container lg:px-0 px-6">
+      <div className="lg:container lg:px-0 px-6 my-8">
         <p className="text-2xl font-medium my-6">Similar products</p>
         {product && product?.categoryId ? (
           <SameCateGoryProducts categoryId={product?.categoryId} />

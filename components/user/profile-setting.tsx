@@ -88,7 +88,7 @@ const ProfileSetting = () => {
   };
 
   return (
-    <div className="h-full rounded-xl px-6">
+    <div className="h-full rounded-xl px-6 bg-white py-6">
       {user
         ? userAndProfile && (
           <div className="h-full">

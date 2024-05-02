@@ -47,7 +47,7 @@ const EcommerceLandingPage = () => {
           </div>
 
         </div>
-        <p className="text-2xl font-medium my-4">New Products</p>
+        <p className="text-2xl font-medium mt-6 mb-4">New Products</p>
         <NewProduct />
         <div className="flex justify-center items-center bg-secondary-blue my-8 py-4 text-white font-medium px-4">
           <div className="flex-1">

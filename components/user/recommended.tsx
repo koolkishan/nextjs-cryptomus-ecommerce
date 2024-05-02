@@ -29,7 +29,7 @@ const RecommendedProducts = ({
   return (
     <>
       {productsToDisplay && productsToDisplay.length > 0 ? (
-        <div className="px-6 lg:px-0 lg:container">
+        <div className="px-6 lg:px-0 lg:container mb-6">
           <HorizontalProductList products={productsToDisplay.slice(0, 4)} />
         </div>
       ) : (

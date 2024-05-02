@@ -2,7 +2,7 @@ import { Wishlist } from "@/components/user";
 
 const WishListPage = () => {
   return (
-    <div>
+    <div >
       <Wishlist />
     </div>
   );

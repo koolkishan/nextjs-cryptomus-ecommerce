@@ -13,14 +13,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="w-full h-full ">
-        <div className="bg-secondary-white">
+        <div className="bg-secondary-white ">
           <div className="sticky z-10 flex top-0 bg-white w-full py-1">
             <Header />
           </div>
-          <div className="flex flex-col marker:border-none w-full">
+          <div className="flex flex-col  marker:border-none w-full">
             <div
               className={cn(
-                "flex-1 h-full relative",
+                "flex-1 relative",
                 pathName === "/"
                   ? "min-h-[calc(100vh-85px)]"
                   : "min-h-[calc(100vh-210px)]"
@@ -29,7 +29,7 @@ export default function RootLayout({
               {children}
             </div>
           </div>
-          <div className="bottom-0">
+          <div className=" bottom-0">
             <Footer />
           </div>
         </div>

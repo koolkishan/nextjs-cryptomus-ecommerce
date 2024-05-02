@@ -102,14 +102,14 @@ const Wishlist = () => {
   };
 
   return (
-    <div className="lg:container lg:px-6 px-0 ">
+    <div className="lg:container lg:px-6 px-0 flex flex-col gap-4 my-4">
       {userProductsData &&
         userProductsData.length > 0 ?
         userProductsData.map((product) =>
           product.wishlist && product.wishlist?.length > 0 ? (
             <div
               key={product.id}
-              className="cursor-pointer grid grid-cols-4 bg-secondary-white m-4 rounded-2xl shadow-[2px_2px_2px_2px_rgba(0,0,0,0.03)]"
+              className="cursor-pointer grid grid-cols-4 bg-white rounded-2xl shadow-[2px_2px_2px_2px_rgba(0,0,0,0.03)]"
             >
               <div key={product.id} className="m-4 ">
                 {product && product.images && (
@@ -143,10 +143,10 @@ const Wishlist = () => {
                     $
                     {Math.round(
                       product.price - (product?.price * product?.discount) / 100
-                    )}
+                    ).toLocaleString('us')}
                   </p>
                   <p className="text-custom-font line-through text-sm">
-                    ${product?.price}
+                    ${product?.price.toLocaleString('us')}
                   </p>
                 </div>
                 <div className="mb-4 inline-block text-xs font-bold py-1  text-emerald-500">
