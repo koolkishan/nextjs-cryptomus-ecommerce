@@ -32,7 +32,7 @@ const CloudinaryUploadImages = ({
               <IoCloudUploadOutline size={22} className="text-custom-font" />
             </p>
             <p>
-              Brows to <span className="text-blue-700 underline">upload</span>{" "}
+              Browse to <span className="text-blue-700 underline">upload</span>{" "}
               images
             </p>
           </div>
