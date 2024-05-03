@@ -28,9 +28,9 @@ const Cart = () => {
     async function getUserCart() {
       setLoader(true);
       if (user && user.email) {
-        console.log('getUserCart ~ user:', user)
+        console.log("getUserCart ~ user:", user);
         const response = await getCartAction(user.email);
-        console.log('getUserCart ~ response:', response)
+        console.log("getUserCart ~ response:", response);
         if (response) {
           setCart(response);
         }
@@ -64,7 +64,7 @@ const Cart = () => {
     if (user && user.email) {
       const response = await removeProductFromCart(user.email, productId);
       const result = await getCartAction(user.email);
-      console.log('handleClick ~ result:', result)
+      console.log("handleClick ~ result:", result);
       if (result) {
         setCart(result);
       }
@@ -84,7 +84,7 @@ const Cart = () => {
         <div className="col-span-3 overflow-y-auto scrollbar-hide">
           {cart && cart.products && cart.products.length > 0 ? (
             cart.products.map((p, index) => (
-              <div key={p.id}>
+              <div key={p.id} onClick={() => router.push(`/products/${p.product.id}`)} className="cursor-pointer" >
                 <div className="mb-8 grid grid-cols-6 gap-4 bg-white rounded-xl  py-4 items-center place-items-center">
                   <div className="flex  col-span-3 gap-4 w-[90%]">
                     <div className="grid grid-cols-3 items-center gap-x-4">
@@ -121,13 +121,13 @@ const Cart = () => {
                       {Math.round(
                         (p.product.price -
                           (p.product.price * p.product.discount) / 100) *
-                        p.quantity
+                          p.quantity
                       ).toLocaleString("us")}
                     </p>
                     <p className="text-sm text-zinc-400">
                       {`$${Math.round(
                         p.product.price -
-                        (p.product.price * p.product.discount) / 100
+                          (p.product.price * p.product.discount) / 100
                       ).toLocaleString("us")}/per item`}
                     </p>
                   </div>
@@ -143,25 +143,21 @@ const Cart = () => {
                 </div>
               </div>
             ))
-          ) :
-            (
-              loader ? (
-                <div className=" absolute inset-0 h-[300px] w-full flex justify-center items-center">
-                  <ContainerLoader />
-                </div>
-              ) : (
-                <div className="absolute z-[11111] h-[300px] inset-0 flex justify-center items-center">
-                  <Image
-                    src="/shopping-cart.png"
-                    alt="cart is empty"
-                    layout="fill"
-                    loading="lazy"
-                    objectFit="contain"
-                  />
-                </div>
-              )
-            )
-          }
+          ) : loader ? (
+            <div className=" absolute inset-0 h-[300px] w-full flex justify-center items-center">
+              <ContainerLoader />
+            </div>
+          ) : (
+            <div className="absolute z-[11111] h-[300px] inset-0 flex justify-center items-center">
+              <Image
+                src="/shopping-cart.png"
+                alt="cart is empty"
+                layout="fill"
+                loading="lazy"
+                objectFit="contain"
+              />
+            </div>
+          )}
         </div>
         <div
           className={cn(
@@ -211,7 +207,7 @@ const Cart = () => {
           </div>
         </div>
       </div>
-    </div >
+    </div>
   );
 };
 export default Cart;

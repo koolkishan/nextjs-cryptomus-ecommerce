@@ -8,7 +8,7 @@ import ProfileNavigation from "./profile-navigation";
 import ProfileSetting from "./profile-setting";
 import Wishlist from "./wishlist";
 import Cart from "./cart";
-import CheckOut from "@/app/(public)/(user)/checkout/page";
+import CheckOut from "./checkout";
 import Footer from "./footer";
 import OrderHistory from "./order-history";
 
