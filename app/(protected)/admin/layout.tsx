@@ -18,7 +18,7 @@ export default async function RootLayout({
             <Side />
           </div>
           <div className="flex flex-col w-full overflow-y-auto">
-            <div className="w-full border-b py-1 border-secondary-black">
+            <div className="w-full border-b py-1 border-secondary-black mt-2">
               <Header />
             </div>
             <div className="flex-1">{children}</div>

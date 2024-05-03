@@ -10,8 +10,6 @@ import { Input } from "../ui/input";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import { updateCategory } from "@/actions/update-category";
-import { FormError } from "../form-error";
-import { FormSuccess } from "../form-success";
 import { getCategories } from "@/actions/get-all-categories";
 import { useAppStore } from "@/store";
 import { getAllCategorisWithProductCount } from "@/actions/get-all-categories-with-product-count";
@@ -27,8 +25,6 @@ export const CategoryModal = ({
   categoryModal,
 }: CategoryModalProps) => {
   const [newCategoryName, setNewCategoryName] = useState<string>("");
-  const [error, setError] = useState<string | undefined>();
-  const [success, setSuccess] = useState<string | undefined>();
   const { setCategoriesData, viewingCategoryId } = useAppStore();
   const [isMounted, setIsMounted] = useState<boolean>(false);
 
@@ -91,12 +87,6 @@ export const CategoryModal = ({
                   value={newCategoryName}
                   onChange={handleChange}
                 />
-              </div>
-              <div className="my-4">
-                <FormError message={error} />
-              </div>
-              <div className="my-4">
-                <FormSuccess message={success} />
               </div>
               <div>
                 <Button

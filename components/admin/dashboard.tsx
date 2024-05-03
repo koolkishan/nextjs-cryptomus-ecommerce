@@ -12,31 +12,37 @@ import { getTotalIncomeAndDeliveredOrder } from "@/lib/utils";
 import { LuCircleDollarSign } from "react-icons/lu";
 import { BsBarChartFill } from "react-icons/bs";
 import { RiUser3Fill } from "react-icons/ri";
+import { useAppStore } from "@/store";
 
 const DashBoard = () => {
-  const [allOrders, setAllOrders] = useState<orderTypes[] | []>([]);
   const [allCategoryWithProduct, setAllCategoryWithProduct] = useState<
     CtegoryWithProduct[] | []
   >([]);
   const [totalIncome, setTotalIncome] = useState<number>(0);
   const [totalSales, setTotalSales] = useState<number>(0);
   const [totalCustomers, setTotalCustomers] = useState<number>(0);
-  useEffect(() => {
-    async function getAllOrders() {
-      const allOrdersDetails = await getAllOrderAction();
-      console.log("getAllOrders ~ allOrdersDetails:", allOrdersDetails);
-      if (allOrdersDetails) {
-        setAllOrders(allOrdersDetails);
-        const { income, deliveredOrder, uniqueCustomers } = getTotalIncomeAndDeliveredOrder(allOrdersDetails);
+  const {orders, setOrders} = useAppStore();
+
+  useEffect(()=>{
+    const { income, deliveredOrder, uniqueCustomers } = getTotalIncomeAndDeliveredOrder(orders);
         setTotalIncome(income);
         setTotalSales(deliveredOrder);
         setTotalCustomers(uniqueCustomers.length)
+  },[orders])
+
+  useEffect(() => {
+    async function getAllOrders() {
+      const allOrdersDetails = await getAllOrderAction();
+      if (allOrdersDetails) {
+        setOrders(allOrdersDetails);
       }
       const categoryAndProducts = await getAllCategoriesWithProduct();
-      if (categoryAndProducts) setAllCategoryWithProduct(categoryAndProducts);
+      if (categoryAndProducts){
+        setAllCategoryWithProduct(categoryAndProducts);
+      } 
     }
     getAllOrders();
-  }, []);
+  }, [setOrders]);
 
   return (
     <div className="text-primary-text mx-5">
@@ -104,15 +110,15 @@ const DashBoard = () => {
       </div>
       <div className="flex justify-center mt-5 ">
         <div className="w-1/2">
-          <PieChart orders={allOrders} />
+          <PieChart orders={orders} />
         </div>
         <div className="w-1/2">
           <BarChart allCategoryWithProduct={allCategoryWithProduct} />
         </div>
       </div>
-      <div className="text-2xl font-medium my-4">
-        <p>Last Five Orders</p>
-        <OrderTable orders={allOrders.slice(0, 5)} />
+      <div className=" font-medium my-4">
+        <p className="text-2xl">Last Five Orders</p>
+        <OrderTable lastFiveOrders={true} orders={orders.slice(0, 5)} />
       </div>
     </div>
   );

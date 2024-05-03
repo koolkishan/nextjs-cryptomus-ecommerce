@@ -8,6 +8,14 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
 import { Input } from "../ui/input";
 import { IoIosSearch } from "react-icons/io";
 import {
@@ -184,7 +192,7 @@ export const DataTable = ({ products }: DataTableProps) => {
                       <TableCell>{index + 1}</TableCell>
                       <TableCell className="">{item.productName}</TableCell>
                       <TableCell className="">
-                        ${item.price}
+                        ${item.price.toLocaleString('us')}
                       </TableCell>
                       <TableCell>{item.discount}%</TableCell>
                       <TableCell className="">
@@ -231,45 +239,66 @@ export const DataTable = ({ products }: DataTableProps) => {
 
           {
             products && productsData.length > 0 && (
-              <div className="flex justify-end mt-1 pb-2 mx-5  ">
+                <div className="flex items-center">
+                <div className="flex-1 px-4 text-custom-font">Total {Math.ceil(productsData.length)} Products</div>
+              <div className="flex justify-end mt-1 pb-2   ">
                 <div className="flex justify-center items-center my-7">
-                  <Button
-                    className={`bg-primary-background hover:bg-primary-background disabled:cursor-not-allowed rounded-xl`}
-                    onClick={() => handlePageChange(currentPage - 1)}
-                    disabled={currentPage === 1}
-                  >
-                    <MdKeyboardArrowLeft size={22} />
-                  </Button>
-
-                  {[...Array(Math.ceil(productsData.length / itemsPerPage))].map(
-                    (_, i) =>
-                      i >= currentPage - 2 &&
-                      i <= currentPage + 2 && (
-                        <Button
-                          key={i}
+                  <Pagination className="flex justify-end ">
+                  <PaginationContent className="text-secondary-blue">
+                    <PaginationItem>
+                      <Button variant={"link"} disabled={currentPage === 1}>
+                        <PaginationPrevious
                           className={cn(
-                            "px-4 mx-3  h-9 rounded-xl hover:bg-secondary-blue",
-                            i + 1 === currentPage
-                              ? "bg-secondary-blue"
-                              : "bg-transparent"
+                            "",
+                            currentPage === 1
+                              ? "cursor-not-allowed text-zinc-400 hover:text-zinc-400"
+                              : "transition-all duration-500 hover:text-primary-text text-secondary-blue hover:bg-secondary-blue hove  "
                           )}
-                          onClick={() => handlePageChange(i + 1)}
+                          href="#"
+                          onClick={() => handlePageChange(currentPage - 1)}
+                        />
+                      </Button>
+                    </PaginationItem>
+                    {[...Array(Math.ceil(productsData.length / itemsPerPage))].map((_, index) => (
+                      <PaginationItem key={index}>
+                        <PaginationLink
+                          className={cn(
+                            "hover:bg-secondary-blue hover:text-primary-text border-none",
+                            currentPage === index + 1
+                              ? "bg-secondary-blue text-white"
+                              : ""
+                          )}
+                          href="#"
+                          onClick={() => handlePageChange(index + 1)}
+                          isActive={currentPage === index + 1}
                         >
-                          {i + 1}
-                        </Button>
-                      )
-                  )}
-                  <Button
-                    className={`bg-primary-background hover:bg-primary-background disabled:cursor-not-allowed rounded-xl`}
-                    onClick={() => handlePageChange(currentPage + 1)}
-                    disabled={
-                      currentPage === Math.ceil(productsData.length / itemsPerPage)
-                    }
-                  >
-                    <MdKeyboardArrowRight size={22} />
-                  </Button>
+                          {index + 1}
+                        </PaginationLink>
+                      </PaginationItem>
+                    ))}
+                    <PaginationItem>
+                      <Button
+                        variant={"link"}
+                        disabled={currentPage === Math.ceil(productsData.length / itemsPerPage)}
+                      >
+                        <PaginationNext
+                          className={cn(
+                            "",
+                            currentPage === Math.ceil(productsData.length / itemsPerPage)
+                              ? "cursor-not-allowed text-zinc-400 hover:text-zinc-400"
+                              : "transition-all duration-500 hover:text-primary-text text-secondary-blue hover:bg-secondary-blue hove  "
+
+                          )}
+                          href="#"
+                          onClick={() => handlePageChange(currentPage + 1)}
+                        />
+                      </Button>
+                    </PaginationItem>
+                  </PaginationContent>
+                </Pagination>
                 </div>
               </div>
+                </div>
             )
           }
         </div>

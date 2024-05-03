@@ -25,11 +25,9 @@ interface OrderModalProps {
 }
 
 const OrderModal = ({ setOrderModal, orderModal }: OrderModalProps) => {
-  const [IsDialogOpen, setIsDialogOpen] = useState<boolean>(false);
   const [order, setOrder] = useState<orderTypes | null>(null);
   const [orderStatus, setOrderStatus] = useState<string>("");
-  console.log("OrderModal ~ orderStatus:", orderStatus);
-  const { viewingOrderId, setOrders } = useAppStore();
+  const { viewingOrderId, setOrders,  } = useAppStore();
   useEffect(() => {
     async function getOrderformOrderId() {
       const response = await getOrderFromOrderIdAction(viewingOrderId);
@@ -39,6 +37,9 @@ const OrderModal = ({ setOrderModal, orderModal }: OrderModalProps) => {
       }
     }
     getOrderformOrderId();
+    return () => {
+      setOrderStatus("");
+    };
   }, [viewingOrderId]);
 
   const handleSave = async () => {
@@ -177,7 +178,7 @@ const OrderModal = ({ setOrderModal, orderModal }: OrderModalProps) => {
                         </div>
                         <div className="text-custom-font">Name</div>
                         <div>
-                          <p>{order?.user?.name}</p>
+                          <p>{order?.user?.name?.length ? order?.user?.name : 'Name not available'}</p>
                         </div>
                       </div>
                       <div className="mb-4">
@@ -186,14 +187,14 @@ const OrderModal = ({ setOrderModal, orderModal }: OrderModalProps) => {
                           <p>
                             {order?.user?.profile
                               ? order?.user?.profile[0]?.mobileNo
-                              : ""}
+                              : "Phone not available"}
                           </p>
                         </div>
                       </div>
                       <div className="mb-4">
                         <div className="text-custom-font">Email</div>
                         <div>
-                          <p>{order?.user?.email}</p>
+                          <p>{order?.user?.email?.length ? order?.user?.email : "Email not available"}</p>
                         </div>
                       </div>
                       <div className="mb-4">
@@ -203,7 +204,7 @@ const OrderModal = ({ setOrderModal, orderModal }: OrderModalProps) => {
                             {order?.user?.profile &&
                             order?.user?.profile[0]?.addresses
                               ? order?.user?.profile[0]?.addresses[0]
-                              : ""}
+                              : "Address not available"}
                           </p>
                         </div>
                       </div>
@@ -211,13 +212,14 @@ const OrderModal = ({ setOrderModal, orderModal }: OrderModalProps) => {
                         Update order status
                       </div>
                       <div>
-                        <Select
+                        {
+                          orderStatus.length>0 && <Select
                           onValueChange={(value) => setOrderStatus(value)}
                           value={orderStatus}
                           defaultValue={orderStatus}
                         >
                           <SelectTrigger className="bg-transparent outline-none border-secondary-black mt-2 mb-4">
-                            <SelectValue placeholder={orderStatus} />
+                            <SelectValue  placeholder="Select order status"/> 
                           </SelectTrigger>
                           <SelectContent className="font-light text-primary-text hover:bg-surface bg-primary-background outline-none border-secondary-black">
                             <SelectItem
@@ -234,6 +236,7 @@ const OrderModal = ({ setOrderModal, orderModal }: OrderModalProps) => {
                             </SelectItem>
                           </SelectContent>
                         </Select>
+                        }
                       </div>
                     </div>
                   )}
@@ -256,8 +259,6 @@ const OrderModal = ({ setOrderModal, orderModal }: OrderModalProps) => {
                                 alt={product.product.productName}
                                 className="rounded-md py-2 ml-2"
                                 layout="fill"
-                                // width={100}
-                                // height={100}
                                 loading="lazy"
                                 objectFit="contain"
                               />
@@ -267,7 +268,7 @@ const OrderModal = ({ setOrderModal, orderModal }: OrderModalProps) => {
                                 {product.product.productName}
                               </p>
                               <p className="flex gap-2">
-                                <p> Price: ${product.product.price}</p>
+                                <p> Price: ${product.product.price.toLocaleString('us')}</p>
                                 <p>Discount: {product.product.discount}%</p>
                               </p>
                               <p>Quantity:{product.quantity}</p>
