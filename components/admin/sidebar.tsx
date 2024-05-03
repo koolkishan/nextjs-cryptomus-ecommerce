@@ -88,14 +88,13 @@ const Side = () => {
             height={20}
             loading="lazy"
           />
-          <p className={cn(!collapsSidbar ? "text-start" : "hidden")}>Rocket</p>
+          <p className={cn(!collapsSidbar ? "text-start" : "hidden")}>Crypto Store</p>
         </div>
         <Menu
           className="text-white overflow-hidden border-none"
           menuItemStyles={{
             button: ({ level, active, disabled }) => {
               const backgroundColor = level === 0 ? "" : "#23262B";
-
               return {
                 backgroundColor: active ? "#23262B" : backgroundColor,
                 "&:hover": {

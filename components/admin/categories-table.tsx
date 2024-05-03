@@ -1,9 +1,15 @@
 import {
-  MdKeyboardArrowLeft,
-  MdKeyboardArrowRight,
   MdOutlineDelete,
   MdOutlineEdit,
 } from "react-icons/md";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
 import { Button } from "../ui/button";
 import { useAppStore } from "@/store";
 import { useEffect, useState } from "react";
@@ -243,45 +249,66 @@ const CategoriesTable = ({ categories }: CategoriesTableProps) => {
             </TableBody>
           </Table>
           {currentItems && currentItems.length > 0 && (
-            <div className="flex justify-end  pb-2 mx-5  ">
-              <div className="flex justify-center my-7 items-center">
-                <Button
-                  className={`bg-primary-background hover:bg-primary-background cursor-pointer rounded-xl`}
-                  onClick={() => handlePageChange(currentPage - 1)}
-                  disabled={currentPage === 1}
-                >
-                  <MdKeyboardArrowLeft size={22} />
-                </Button>
-
-                {[...Array(Math.ceil(categoriesData.length / itemsPerPage))].map(
-                  (_, i) =>
-                    i >= currentPage - 2 &&
-                    i <= currentPage + 2 && (
-                      <Button
-                        key={i}
+              <div className="flex items-center">
+              <div className="flex-1 px-4 text-custom-font">Total {Math.ceil(categoriesData.length)} Categories</div>
+            <div className="flex justify-end mt-1 pb-2   ">
+              <div className="flex justify-center items-center my-7">
+                <Pagination className="flex justify-end ">
+                <PaginationContent className="text-secondary-blue">
+                  <PaginationItem>
+                    <Button variant={"link"} disabled={currentPage === 1}>
+                      <PaginationPrevious
                         className={cn(
-                          "px-4 mx-3  h-9 rounded-xl hover:bg-secondary-blue",
-                          i + 1 === currentPage
-                            ? "bg-secondary-blue"
-                            : "bg-transparent"
+                          "",
+                          currentPage === 1
+                            ? "cursor-not-allowed text-zinc-400 hover:text-zinc-400"
+                            : "transition-all duration-500 hover:text-primary-text text-secondary-blue hover:bg-secondary-blue hove  "
                         )}
-                        onClick={() => handlePageChange(i + 1)}
+                        href="#"
+                        onClick={() => handlePageChange(currentPage - 1)}
+                      />
+                    </Button>
+                  </PaginationItem>
+                  {[...Array(Math.ceil(categoriesData.length / itemsPerPage))].map((_, index) => (
+                    <PaginationItem key={index}>
+                      <PaginationLink
+                        className={cn(
+                          "hover:bg-secondary-blue hover:text-primary-text border-none",
+                          currentPage === index + 1
+                            ? "bg-secondary-blue text-white"
+                            : ""
+                        )}
+                        href="#"
+                        onClick={() => handlePageChange(index + 1)}
+                        isActive={currentPage === index + 1}
                       >
-                        {i + 1}
-                      </Button>
-                    )
-                )}
-                <Button
-                  className={`bg-primary-background hover:bg-primary-background disabled:cursor-not-allowed rounded-xl`}
-                  onClick={() => handlePageChange(currentPage + 1)}
-                  disabled={
-                    currentPage === Math.ceil(categoriesData.length / itemsPerPage)
-                  }
-                >
-                  <MdKeyboardArrowRight size={22} />
-                </Button>
+                        {index + 1}
+                      </PaginationLink>
+                    </PaginationItem>
+                  ))}
+                  <PaginationItem>
+                    <Button
+                      variant={"link"}
+                      disabled={currentPage === Math.ceil(categoriesData.length / itemsPerPage)}
+                    >
+                      <PaginationNext
+                        className={cn(
+                          "",
+                          currentPage === Math.ceil(categoriesData.length / itemsPerPage)
+                            ? "cursor-not-allowed text-zinc-400 hover:text-zinc-400"
+                            : "transition-all duration-500 hover:text-primary-text text-secondary-blue hover:bg-secondary-blue hove  "
+   
+                        )}
+                        href="#"
+                        onClick={() => handlePageChange(currentPage + 1)}
+                      />
+                    </Button>
+                  </PaginationItem>
+                </PaginationContent>
+              </Pagination>
               </div>
             </div>
+              </div>
           )}
         </div>
 

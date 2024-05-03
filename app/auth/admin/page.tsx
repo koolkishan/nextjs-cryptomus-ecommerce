@@ -1,11 +1,8 @@
-"use client";
-import { register } from "@/instrumentation";
-import { useEffect, useState } from "react";
+'use client';
 import Image from "next/image";
-import {
-  GoogleSignInButton,
-} from "@/components/auth/authButtons";
 import { CredentialsForm } from "@/components/auth/credentialsForm";
+import { useEffect, useState } from "react";
+import { register } from "@/instrumentation";
 
 export default function Home() {
   const [isMounted, setIsMounted] = useState<boolean>(false);

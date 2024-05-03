@@ -2,11 +2,10 @@
 import { db } from "./lib/db";
 
 export const register = async () => {
-  // if (process.env.NEXT_RUNTIME === "nodejs") {
-  // Check for admins
+  if (process.env.NEXT_RUNTIME === "nodejs") {
 
   const admin = await db.admin_user.count();
-  // console.log("register ~ admin:", admin);
+  console.log("register ~ admin:", admin);
   if (!admin) {
     const data = await db.admin_user.create({
       data: {
@@ -20,4 +19,4 @@ export const register = async () => {
     });
   }
 };
-// };
+};  

@@ -13,8 +13,6 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CategorySchema } from "@/schemas";
 import * as z from "zod";
-import { FormError } from "../form-error";
-import { FormSuccess } from "../form-success";
 import { useState } from "react";
 import { Button } from "../ui/button";
 import { useAppStore } from "@/store";
@@ -24,8 +22,6 @@ import { updateCategory } from "@/actions/update-category";
 import { toast } from "sonner";
 
 const AddCategoryForm = () => {
-  const [error, setError] = useState<string | undefined>();
-  const [success, setSuccess] = useState<string | undefined>();
   const { setCategoriesData, setToggleSheet, editCategory, setEditCategory } =
     useAppStore();
   const [newCategoryName, setNewCategoryName] = useState<string | undefined>(
@@ -40,8 +36,6 @@ const AddCategoryForm = () => {
   });
 
   const onSubmit = async (values: z.infer<typeof CategorySchema>) => {
-    setError("");
-    setSuccess("");
     const { error, success } = await createCategory(values);
     if (error) {
       toast.error("Please provide a unique category name.");
@@ -144,8 +138,6 @@ const AddCategoryForm = () => {
                     )}
                   />
                 </div>
-                <FormError message={error} />
-                <FormSuccess message={success} />
               </div>
               <div className="fixed bottom-0 right-0 w-[384px]  p-4 flex justify-end gap-4">
                 <div className="w-full">
