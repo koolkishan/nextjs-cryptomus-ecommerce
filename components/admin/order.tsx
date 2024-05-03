@@ -35,7 +35,7 @@ useEffect(() => {
         <p className="flex-1">Orders</p>
       </div>
       <div className="">
-        <OrderTable orders={orders} />
+        <OrderTable  orders={orders} />
       </div>
     </div>
   );

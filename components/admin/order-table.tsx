@@ -33,7 +33,7 @@ import { FaLastfmSquare } from "react-icons/fa";
 
 interface OrderTable {
   orders: orderTypes[] | [];
-  lastFiveOrders: boolean; 
+  lastFiveOrders?: boolean; 
 }
 export const OrderTable = ({ lastFiveOrders=false ,orders }: OrderTable) => {
   const [isMounted, setIsMounted] = useState<boolean>(false);
