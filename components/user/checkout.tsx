@@ -24,7 +24,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { toast } from "sonner";
-import { UserProfileSchema } from "@/schemas";
+import { CheckOutInfoSceham } from "@/schemas";
 
 const CheckOut = () => {
   const [userAndProfile, setUserProfile] = useState<UserAndProfileTypes>();
@@ -34,6 +34,7 @@ const CheckOut = () => {
   const [address, setAddress] = useState<string>("");
   const [phone, setPhone] = useState<string>("");
   const [email, setEmail] = useState<string>("");
+  console.log('CheckOut ~ email:', email)
   const [totalPrice, setTotalPrice] = useState<number>(0);
   const [totalDiscount, setTotalDiscount] = useState<number>(0);
   const [profileUpdated, setProfileUpdated] = useState<boolean>(false);
@@ -109,11 +110,10 @@ const CheckOut = () => {
 
 
   const form = useForm({
-    resolver: zodResolver(UserProfileSchema),
+    resolver: zodResolver(CheckOutInfoSceham),
     defaultValues: {
       firstName: userAndProfile?.name ? userAndProfile.name.split(" ")[0] : "",
       lastName: userAndProfile?.name ? userAndProfile.name.split(" ")[1] : "",
-      updatedEmail: userAndProfile?.email ? userAndProfile.email : "",
       phone:
         userAndProfile?.profile &&
           userAndProfile?.profile[0] &&
@@ -131,14 +131,16 @@ const CheckOut = () => {
     },
   });
 
+
   const isLoading = form.formState.isSubmitting;
 
-  const onSubmit = async (values: z.infer<typeof UserProfileSchema>) => {
-    if (userAndProfile?.profile) {
+  const onSubmit = async (values: z.infer<typeof CheckOutInfoSceham>) => {
+    if (userAndProfile?.profile && email) {
       const { error, success } = await updateProfileAction(
         values,
         userAndProfile?.image ? userAndProfile?.image : '',
         userAndProfile?.profile[0].id,
+        email,
         userAndProfile?.id
       );
       if (success) {
@@ -197,17 +199,20 @@ const CheckOut = () => {
                     </div>
                     <div className="flex w-full gap-5 my-5">
                       <FormField
-                        control={form.control}
+                        // defaultValue={email}
+                        // control={form.control}
                         name="updatedEmail"
                         render={({ field }) => (
                           <FormItem className="w-1/2">
                             <FormLabel className="text-lg font-normal">
-                              Email
+                              Email <span className="text-xs text-custom-font">{`(Can not be change)`}</span>
                             </FormLabel>
                             <FormControl>
                               <Input
+                                value={email}
                                 placeholder="example@gmail.com"
-                                {...field}
+                                // {...field}
+                                disabled
                               />
                             </FormControl>
                             <FormMessage />
@@ -219,7 +224,7 @@ const CheckOut = () => {
                         name="phone"
                         render={({ field }) => (
                           <FormItem className="w-1/2">
-                            <FormLabel className="text-lg font-normal">
+                            <FormLabel className="text-lg font-normal mr-5">
                               Phone
                             </FormLabel>
                             <FormControl>
