@@ -52,10 +52,8 @@ const VerticalProductList = ({
     useEffect(() => {
     (async function getProduct() {
       if (tag) {
-        console.log('getProduct vertical~ tag:', tag)
         const response = await searchProductsByTagAction(tag) as ProductTypes[];
         if (response.length) {
-          console.log('getProduct ~ response:', response)
           setSearchProducts(response);
         }
       }
@@ -66,7 +64,7 @@ const VerticalProductList = ({
     if (filterProducts.length > 0 && categoryFilter) {
       setDisplayProductList(filterProducts);
     } else {
-      if (categoryProducts.length) {
+      if (categoryProducts.length > 0) {
         setDisplayProductList(categoryProducts);
       }
     }
@@ -233,10 +231,10 @@ const VerticalProductList = ({
                   $
                   {Math.round(
                     product.price - (product?.price * product?.discount) / 100
-                  )}
+                  ).toLocaleString('us')}
                 </p>
                 <p className="text-custom-font line-through text-sm">
-                  ${product?.price}
+                  ${product?.price.toLocaleString('us')}
                 </p>
               </div>
               <div className="mb-4 inline-block text-xs font-bold py-1  text-emerald-500">

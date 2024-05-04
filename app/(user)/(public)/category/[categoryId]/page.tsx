@@ -12,7 +12,7 @@ const CategoryPage = async ({ params }: CategoyPageProps) => {
   const products = await getProductsFormCategoryId(params.categoryId) as ProductTypes[];
   return (
     <div className="h-full">
-      <CategoryProducts products={products} />
+      <CategoryProducts categoryid={params.categoryId} products={products} />
     </div>
   );
 };

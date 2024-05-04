@@ -86,21 +86,20 @@ const UserProfile = () => {
                             userAndProfile.profile[0] &&
                             userAndProfile.profile[0].addresses &&
                             userAndProfile.profile[0].addresses[0]}
-                          <br />
                         </p>
                         <p>
                           <HoverCard>
                             <HoverCardTrigger>
                               <PiDotsThreeOutlineVerticalFill
                                 size={24}
-                                className="text-secondary-gray bg-secondary-white"
+                                className="text-secondary-gray bg-secondary-white cursor-pointer"
                               />
                             </HoverCardTrigger>
                             <HoverCardContent className="w-32 cursor-pointer">
                               <div className="text-custom-font ">
                                 <p
                                   onClick={() =>
-                                    router.push("/profile/profile-setting")
+                                    router.push("/profile/setting")
                                   }
                                   className="rounded-xl text-center bg-secondary-white py-2"
                                 >
