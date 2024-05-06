@@ -13,7 +13,7 @@ import ContainerLoader from "../loader";
 
 const Cart = () => {
   const user = useAuthUser();
-  const [loader, setLoader] = useState<boolean>(true);
+  const [loader, setLoader] = useState<boolean>(false);
   const [cart, setCart] = useState<CartTypes>();
   const [totalPrice, setTotalPrice] = useState<number>(0);
   const [totalDiscount, setTotalDiscount] = useState<number>(0);
@@ -30,14 +30,13 @@ const Cart = () => {
       if (user && user.email) {
         console.log("getUserCart ~ user:", user);
         const response = await getCartAction(user.email);
-        console.log("getUserCart ~ response:", response);
+          setLoader(false);
         if (response) {
           setCart(response);
         }
       }
     }
     getUserCart();
-    setLoader(false);
   }, [user]);
 
   useEffect(() => {
@@ -85,7 +84,7 @@ const Cart = () => {
           {cart && cart.products && cart.products.length > 0 ? (
             cart.products.map((p, index) => (
               <div key={p.id} onClick={() => router.push(`/products/${p.product.id}`)} className="cursor-pointer" >
-                <div className="mb-8 grid grid-cols-6 gap-4 bg-white rounded-xl  py-4 items-center place-items-center">
+                <div className="mb-8 grid grid-cols-6 gap-4 bg-white   py-4 items-center place-items-center">
                   <div className="flex  col-span-3 gap-4 w-[90%]">
                     <div className="grid grid-cols-3 items-center gap-x-4">
                       <div className="relative  hover:scale-105 transition-all duration-500 w-[100px] h-[100px]  rounded-md col-span-1  ">
@@ -167,7 +166,7 @@ const Cart = () => {
               : "hidden"
           )}
         >
-          <div className="bg-white p-6 rounded-xl ">
+          <div className="bg-white p-6  ">
             <div className="flex my-2">
               <p className="flex-1">Total Price: </p>
               <p>${totalPrice.toLocaleString("us")}</p>

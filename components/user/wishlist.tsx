@@ -109,7 +109,7 @@ const Wishlist = () => {
           product.wishlist && product.wishlist?.length > 0 ? (
             <div
               key={product.id}
-              className="cursor-pointer grid grid-cols-4 bg-white rounded-2xl shadow-[2px_2px_2px_2px_rgba(0,0,0,0.03)]"
+              className="cursor-pointer grid grid-cols-4 bg-white  "
             >
               <div key={product.id} className="m-4 ">
                 {product && product.images && (
