@@ -2,21 +2,21 @@
 
 import { updateProfile } from "@/data/profile";
 import { updateUser } from "@/data/user";
-import { UserProfileSchema } from "@/schemas";
+import { CheckOutInfoSceham, UserProfileSchema } from "@/schemas";
 import { z } from "zod";
 
 export const updateProfileAction = async (
-  values: z.infer<typeof UserProfileSchema>,
+  values: z.infer<typeof UserProfileSchema> | z.infer<typeof CheckOutInfoSceham>,
   image: string,
   profileId: string,
-  // email:string,
+  email:string,
   id:string
 ) => {
   try {
     // const validation = UserProfileSchema.safeParse(values);
-    const { firstName, lastName, updatedEmail, phone, address } = values;
+    const { firstName, lastName, phone, address } = values;
     const name = firstName + " " + lastName;
-    const updateUserResponse = await updateUser(name,id, updatedEmail, image);
+    const updateUserResponse = await updateUser(name,id, email, image);
     const updateUserProfile =  await updateProfile([address],phone, profileId)
     return { success: "Profile updated successfully" };
   } catch (err: unknown) {
