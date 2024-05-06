@@ -34,7 +34,7 @@ const Order = ({ order }: OrderProps) => {
       {userAndProfile &&
         userAndProfile.profile &&
         userAndProfile.profile.length > 0 && (
-          <div className="bg-white rounded-xl  w-full shadow-[2px_2px_2px_2px_rgba(0,0,0,0.03)] mb-4 p-4">
+          <div className="bg-white  w-full  mb-4 p-4">
             <div className="flex gap-5 mb-4">
               <p className="text-custom-font">
                 <span className="font-medium text-black">Date-Time:</span>{" "}

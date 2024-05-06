@@ -66,9 +66,14 @@ const ProfileSetting = () => {
 
   const onSubmit = async (values: z.infer<typeof UserProfileSchema>) => {
     if (userAndProfile?.profile && userAndProfile.email) {
+      const profileImg = uploadedImageUrl.length
+        ? uploadedImageUrl
+        : userAndProfile.image && userAndProfile.image.length > 0
+        ? userAndProfile.image
+        : "https://github.com/shadcn.png";
       const { error, success } = await updateProfileAction(
         values,
-        uploadedImageUrl,
+        profileImg,
         userAndProfile?.profile[0].id,
         userAndProfile?.email,
         userAndProfile?.id
@@ -88,7 +93,7 @@ const ProfileSetting = () => {
   };
 
   return (
-    <div className="h-full rounded-xl px-6 bg-white py-6">
+    <div className="h-full px-6 bg-white py-6">
       {user
         ? userAndProfile && (
             <div className="h-full">
@@ -139,7 +144,8 @@ const ProfileSetting = () => {
                           render={({ field }) => (
                             <FormItem className="w-1/2">
                               <FormLabel className="text-lg font-normal">
-                                Email <span className="text-xs text-custom-font">{`(Can not be change)`}</span>
+                                Email{" "}
+                                <span className="text-xs text-custom-font">{`(Can not be change)`}</span>
                               </FormLabel>
                               <FormControl>
                                 <Input

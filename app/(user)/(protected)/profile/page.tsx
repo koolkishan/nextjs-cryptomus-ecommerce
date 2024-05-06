@@ -12,7 +12,7 @@ const UserProfilePage = () => {
   // }
 
   return (
-    <div className="h-[calc(100vh-242px)] rounded-xl bg-white">
+    <div className="h-[calc(100vh-242px)] bg-white">
       <UserProfile />
     </div>
   );
