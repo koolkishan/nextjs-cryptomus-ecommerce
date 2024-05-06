@@ -16,7 +16,7 @@ const ProfileNavigation = () => {
   };
 
   return (
-    <div className="bg-white p-2 rounded-xl">
+    <div className="bg-white p-2 ">
       <div>
         <p
           className={cn(

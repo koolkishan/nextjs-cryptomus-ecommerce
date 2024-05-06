@@ -35,7 +35,7 @@ const UserProfile = () => {
   }, [router, setUserAndProfile, user]);
 
   return (
-    <div className="h-full w-full rounded-xl px-6">
+    <div className="h-full w-full  px-6">
       {user ? (
         userAndProfile && userAndProfile.name ? (
           <div>
@@ -73,7 +73,7 @@ const UserProfile = () => {
                 userAndProfile.profile[0]?.addresses[0].length > 0 ? (
                 <div className=" py-2">
                   <div className="grid grid-cols-2 gap-10">
-                    <div className="flex px-2 bg-secondary-white rounded-xl items-center ">
+                    <div className="flex px-2 bg-secondary-white  items-center ">
                       <div className="h-12 w-12 flex items-center justify-center rounded-full bg-primary-text mr-2">
                         <IoLocationSharp
                           size={24}
