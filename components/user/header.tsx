@@ -55,12 +55,27 @@ const Header = () => {
       <div className="  flex w-full items-center py-6 mb-2 lg:container px-6 lg:px-0 text-primary-txt ">
         <div className="flex w-[80%] md:w-[60%] lg:w-[70%]">
           <div
-            className="flex  cursor-pointer md:mr-10 lg:mr-32 text-secondary-blue"
+            className="flex  cursor-pointer md:mr-10 lg:mr-32 text-secondary-blue items-center justify-center gap-3"
             onClick={() => router.push("/")}
           >
-            <p className="ml-2 flex flex-col items-center justify-center">
-              <p className="text-2xl md:text-3xl font-bold">CRYPTO</p>
-              <p className="text-xl md:text-2xl font-bold">STORE</p>
+            <svg
+              fill="none"
+              height="48"
+              viewBox="0 0 44 48"
+              width="44"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <g fill="#7839ee">
+                <path d="m16 8 5.0912 10.9088 10.9088 5.0912-10.9088 5.0912-5.0912 10.9088-5.0912-10.9088-10.9088-5.0912 10.9088-5.0912z" />
+                <path
+                  d="m20.0469 31.3286 6.3539-1.0932 3.6 9.7646 3.6-9.7646 10.2565 1.7646-6.6564-8 6.6564-8-10.2565 1.7646-3.6-9.7646-3.6 9.7646-6.3539-1.0932 1.0442 2.2374 10.9088 5.0912-10.9088 5.0912z"
+                  opacity=".5"
+                />
+              </g>
+            </svg>
+            <p className="text-start text-lg font-semibold">
+              <span className="text-[#7839ee] opacity-70">Crypto</span>
+              <span className="text-[#7839ee]">Store</span>
             </p>
           </div>
           <div className=" hidden md:flex md:flex-col md:justify-center w-1/2">
@@ -79,7 +94,7 @@ const Header = () => {
                   <FaUser
                     size={18}
                     className=" md:mr-4  text-primary-gray"
-                  // onClick={handleClick}
+                    // onClick={handleClick}
                   />
                   <p className="hidden md:block font-medium">Profile</p>
                 </div>
@@ -108,10 +123,7 @@ const Header = () => {
                 onClick={() => router.push("/auth")}
               >
                 {" "}
-                <FiLogIn
-                  size={18}
-                  className=" md:mr-4  text-primary-gray"
-                />
+                <FiLogIn size={18} className=" md:mr-4  text-primary-gray" />
                 <p className="hidden md:block font-medium">Login</p>
               </div>
             )}
