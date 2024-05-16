@@ -35,7 +35,7 @@ const ProfileNavigation = () => {
                 : "text-custom-font"
             )}
           />
-          Account main
+          Account
         </p>
         <p
           className={cn(
@@ -54,7 +54,7 @@ const ProfileNavigation = () => {
                 : "text-custom-font"
             )}
           />
-          My wishlist
+          Wishlists
         </p>
         <p
           className={cn(
@@ -73,7 +73,7 @@ const ProfileNavigation = () => {
                 : "text-custom-font"
             )}
           />
-          Order history
+          Orders
         </p>
         <p
           className={cn(
@@ -92,14 +92,11 @@ const ProfileNavigation = () => {
                 : "text-custom-font"
             )}
           />
-          Profile setting
+          Settings
         </p>
         <p
           className={cn(
             "flex items-center gap-3 cursor-pointer py-2 px-2 mb-4 hover:bg-blue-100 hver:border hover:rounded-lg hover:text-blue-600"
-            // path === "/logout"
-            //   ? "bg-blue-100 border rounded-lg text-blue-600    "
-            //   : ""
           )}
           onClick={handleLogOut}
         >
@@ -111,7 +108,7 @@ const ProfileNavigation = () => {
                 : "text-custom-font  hover:text-blue-600"
             )}
           />
-          LogOut
+          Signout
         </p>
       </div>
     </div>

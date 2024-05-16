@@ -8,7 +8,6 @@ import {
   ProductTypes,
   orderTypes,
 } from "@/types";
-import { Slide } from "react-toastify";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));

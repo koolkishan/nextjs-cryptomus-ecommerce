@@ -164,38 +164,6 @@ const AddCategoryForm = () => {
           </form>
         </Form>
       )}
-      {/* <div className="fixed bottom-0 right-0 w-[384px]  p-4 flex justify-end gap-4">
-        <div className="w-full">
-          {editCategory && editCategory.categoryName.length > 0 ?
-            <Button
-              size={"sm"}
-              type="button"
-              disabled={isLoading}
-              className="w-1/4 bg-secondary-blue border-none hover:bg-secondary-blue rounded-xl mr-4"
-              onClick={() => handleUpdate()}
-            >
-              Update
-            </Button> :
-            <Button
-              size={"sm"}
-              type="submit"
-              disabled={isLoading}
-              className="w-1/4 bg-secondary-blue border-none hover:bg-secondary-blue rounded-xl mr-4"
-            >
-              Save
-            </Button>
-          }
-          <Button
-            size={"sm"}
-            type="reset"
-            disabled={isLoading}
-            onClick={handleCancle}
-            className="w-1/4 bg-transparent border border-secondary-black hover:bg-transparent rounded-xl"
-          >
-            Cancel
-          </Button>
-        </div>
-      </div> */}
     </div>
   );
 };
