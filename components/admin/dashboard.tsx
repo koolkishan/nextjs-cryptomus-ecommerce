@@ -21,14 +21,15 @@ const DashBoard = () => {
   const [totalIncome, setTotalIncome] = useState<number>(0);
   const [totalSales, setTotalSales] = useState<number>(0);
   const [totalCustomers, setTotalCustomers] = useState<number>(0);
-  const {orders, setOrders} = useAppStore();
+  const { orders, setOrders } = useAppStore();
 
-  useEffect(()=>{
-    const { income, deliveredOrder, uniqueCustomers } = getTotalIncomeAndDeliveredOrder(orders);
-        setTotalIncome(income);
-        setTotalSales(deliveredOrder);
-        setTotalCustomers(uniqueCustomers.length)
-  },[orders])
+  useEffect(() => {
+    const { income, deliveredOrder, uniqueCustomers } =
+      getTotalIncomeAndDeliveredOrder(orders);
+    setTotalIncome(income);
+    setTotalSales(deliveredOrder);
+    setTotalCustomers(uniqueCustomers.length);
+  }, [orders]);
 
   useEffect(() => {
     async function getAllOrders() {
@@ -37,9 +38,9 @@ const DashBoard = () => {
         setOrders(allOrdersDetails);
       }
       const categoryAndProducts = await getAllCategoriesWithProduct();
-      if (categoryAndProducts){
+      if (categoryAndProducts) {
         setAllCategoryWithProduct(categoryAndProducts);
-      } 
+      }
     }
     getAllOrders();
   }, [setOrders]);
@@ -56,16 +57,8 @@ const DashBoard = () => {
             <p className="sm:text-4xl">${totalIncome.toLocaleString("us")}</p>
           </div>
           <div className="py-3 flex items-center h-full">
-            {/* <Image
-              src="/Dollar.png"
-              className="mx-3"
-              alt="in dollar"
-              width={100}
-              height={100}
-              loading="lazy"
-            /> */}
-            <div className="p-3 rounded-2xl bg-blue-400/10">
-              <LuCircleDollarSign size={50} className="text-secondary-blue " />
+            <div className="p-3 rounded-2xl bg-purple-500/10">
+              <LuCircleDollarSign size={50} className="text-[#7839ee] " />
             </div>
           </div>
         </div>
@@ -75,16 +68,8 @@ const DashBoard = () => {
             <p className="sm:text-4xl">{totalSales.toLocaleString("us")}</p>
           </div>
           <div className="py-3 flex items-center h-full">
-            {/* <Image
-              src="/sales.png"
-              className="mx-3"
-              alt="in dollar"
-              width={100}
-              height={100}
-              loading="lazy"
-            /> */}
-            <div className="p-3 rounded-2xl bg-blue-400/10">
-              <BsBarChartFill size={50} className="text-secondary-blue " />
+            <div className="p-3 rounded-2xl bg-purple-500/10">
+              <BsBarChartFill size={50} className="text-[#7839ee] " />
             </div>
           </div>
         </div>
@@ -94,16 +79,8 @@ const DashBoard = () => {
             <p className="sm:text-4xl">{totalCustomers}</p>
           </div>
           <div className="py-3 flex items-center h-full">
-            {/* <Image
-              src="/customer.png"
-              className="mx-3"
-              alt="in dollar"
-              width={100}
-              height={100}
-              loading="lazy"
-            /> */}
-            <div className="p-3 rounded-2xl bg-blue-400/10">
-              <RiUser3Fill size={50} className="text-secondary-blue " />
+            <div className="p-3 rounded-2xl bg-purple-500/10">
+              <RiUser3Fill size={50} className="text-[#7839ee] " />
             </div>
           </div>
         </div>
@@ -117,8 +94,8 @@ const DashBoard = () => {
         </div>
       </div>
       <div className=" font-medium my-4">
-        <p className="text-2xl">Last Five Orders</p>
-        <OrderTable lastFiveOrders={true} orders={orders.slice(0, 5)} />
+        <p className="text-2xl">Recent Orders</p>
+        <OrderTable recentOrders={true} orders={orders.slice(0, 5)} />
       </div>
     </div>
   );

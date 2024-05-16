@@ -24,12 +24,11 @@ const BarChart = ({ allCategoryWithProduct }: BarChartProps) => {
 
   // Define an array of colors for the categories
   const categoryColors = [
-    "#4169E1",
-    "#6495ED",
-    "#87CEEB",
-    "#0000FF",
-    "#00008B",
-    "#ADD8E6",
+    "#7839ee",
+    "#5718ca",
+    "#b239ee",
+    "#ee3990",
+    "#7839ee",
   ];
 
   const options = {
@@ -56,6 +55,7 @@ const BarChart = ({ allCategoryWithProduct }: BarChartProps) => {
     },
     yAxis: {
       min: 0,
+      gridLineWidth: 0,
       title: {
         text: "Price",
         align: "middle",
@@ -76,7 +76,6 @@ const BarChart = ({ allCategoryWithProduct }: BarChartProps) => {
       column: {
         pointPadding: 0.2,
         borderWidth: 0,
-        // Use colors from the categoryColors array for each bar
         colorByPoint: true,
       },
     },
@@ -97,7 +96,7 @@ const BarChart = ({ allCategoryWithProduct }: BarChartProps) => {
     },
     series: [
       {
-        name: "Average Price",
+        name: "",
         data: avgPrices,
         colors: categoryColors,
       },

@@ -45,22 +45,33 @@ const Header = () => {
       </div>
       <div className="border border-l border-secondary-black mr-10 my-2"></div>
       <div className="mr-10 text-primary-text">
-        <div className="flex justify-center items-center gap-4 ">
-          {
-            adminDetails?.firstName && <>
+        <div className="flex justify-center items-center gap-4 py-1">
+          {adminDetails?.firstName && (
+            <>
               <Avatar className="rounded-full">
                 <AvatarImage
                   className="rounded-full"
-                  src={user?.image && adminDetails?.firstName ? user.image : `https://ui-avatars.com/api/?background=0000FF&color=fff&name=${adminDetails?.firstName + ' ' + adminDetails?.lastName}`}
-                  width={50}
-                  height={50}
+                  src={
+                    user?.image && adminDetails?.firstName
+                      ? user.image
+                      : `https://ui-avatars.com/api/?background=7839ee&color=fff&name=${
+                          adminDetails?.firstName + " " + adminDetails?.lastName
+                        }`
+                  }
+                  width={40}
+                  height={40}
                 />
                 <AvatarFallback>CN</AvatarFallback>
               </Avatar>
-              <p>{(adminDetails?.firstName?.charAt(0).toUpperCase() + adminDetails?.firstName?.slice(1)) + " " + (adminDetails?.lastName?.charAt(0).toUpperCase() + adminDetails?.lastName?.slice(1))}</p>
+              <p>
+                {adminDetails?.firstName?.charAt(0).toUpperCase() +
+                  adminDetails?.firstName?.slice(1) +
+                  " " +
+                  (adminDetails?.lastName?.charAt(0).toUpperCase() +
+                    adminDetails?.lastName?.slice(1))}
+              </p>
             </>
-          }
-
+          )}
         </div>
       </div>
       {/* <Button className="bg-red-700 flex mr-10" onClick={handleLogOut}>

@@ -53,7 +53,6 @@ const AddCategorySideBar = () => {
             </SheetTitle>
             <SheetDescription className="text-primary-txt h-full">
               <div className="h-full">
-                {/* <AddProductForm /> */}
                 <AddCategoryForm />
               </div>
             </SheetDescription>

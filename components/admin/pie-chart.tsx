@@ -19,7 +19,7 @@ const PieChart = ({ orders }: PieChartProps) => {
       backgroundColor: "transparent",
     },
     title: {
-      text: "Order Status Distribution",
+      text: "Order Status",
       style: {
         color: "white",
       },
@@ -35,6 +35,7 @@ const PieChart = ({ orders }: PieChartProps) => {
       pie: {
         allowPointSelect: true,
         cursor: "pointer",
+        borderWidth: 0,
         dataLabels: {
           enabled: true,
           format: "<b>{point.name}</b>: {point.percentage:.1f} %",
@@ -45,14 +46,7 @@ const PieChart = ({ orders }: PieChartProps) => {
           },
         },
         showInLegend: true,
-        colors: [
-          "#4169E1",
-          "#6495ED",
-          "#87CEEB",
-          "#0000FF",
-          "#00008B",
-          "#ADD8E6",
-        ],
+        colors: ["#7839ee", "#5718ca", "#b239ee", "#7839ee"],
       },
     },
     legend: {

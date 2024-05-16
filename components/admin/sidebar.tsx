@@ -79,17 +79,29 @@ const Side = () => {
           },
         }}
       >
-        <div className="text-primary-text flex  pl-[30px] my-5">
-          <Image
-            className="mr-4"
-            src="/Rocket.png"
-            alt="logo png"
-            width={20}
-            height={20}
-            loading="lazy"
-          />
-          <p className={cn(!collapsSidbar ? "text-start" : "hidden")}>
-            Crypto Store
+        <div className="text-primary-text flex  items-center justify-start gap-3 pl-[15px] my-5">
+          <svg
+            fill="none"
+            height="48"
+            viewBox="0 0 44 48"
+            width="44"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <g fill="#7839ee">
+              <path d="m16 8 5.0912 10.9088 10.9088 5.0912-10.9088 5.0912-5.0912 10.9088-5.0912-10.9088-10.9088-5.0912 10.9088-5.0912z" />
+              <path
+                d="m20.0469 31.3286 6.3539-1.0932 3.6 9.7646 3.6-9.7646 10.2565 1.7646-6.6564-8 6.6564-8-10.2565 1.7646-3.6-9.7646-3.6 9.7646-6.3539-1.0932 1.0442 2.2374 10.9088 5.0912-10.9088 5.0912z"
+                opacity=".5"
+              />
+            </g>
+          </svg>
+          <p
+            className={cn(
+              !collapsSidbar ? "text-start text-lg font-semibold" : "hidden"
+            )}
+          >
+            <span className="text-[#7839ee] opacity-70">Crypto</span>
+            <span className="text-[#7839ee]">Store</span>
           </p>
         </div>
         <Menu

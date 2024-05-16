@@ -33,9 +33,9 @@ import { FaLastfmSquare } from "react-icons/fa";
 
 interface OrderTable {
   orders: orderTypes[] | [];
-  lastFiveOrders?: boolean; 
+  recentOrders?: boolean;
 }
-export const OrderTable = ({ lastFiveOrders=false ,orders }: OrderTable) => {
+export const OrderTable = ({ recentOrders = false, orders }: OrderTable) => {
   const [isMounted, setIsMounted] = useState<boolean>(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [orderModal, setOrderModal] = useState<boolean>(false);
@@ -170,8 +170,8 @@ export const OrderTable = ({ lastFiveOrders=false ,orders }: OrderTable) => {
                 <TableHead className="text-primary-text ">
                   Payment Status
                 </TableHead>
-                {/* {!lastFiveOrders &&  */}
-                <TableHead className="text-primary-text ">Edit</TableHead> 
+                {/* {!recentOrders &&  */}
+                <TableHead className="text-primary-text ">Edit</TableHead>
                 {/* } */}
               </TableRow>
             </TableHeader>
@@ -188,8 +188,12 @@ export const OrderTable = ({ lastFiveOrders=false ,orders }: OrderTable) => {
                       <TableCell className="">{order.id}</TableCell>
                       <TableCell className="">{order.user?.name}</TableCell>
                       <TableCell>{order.products.length}</TableCell>
-                      <TableCell className="">${order.totalPrice.toLocaleString('us')}</TableCell>
-                      <TableCell>${order.totalDiscount.toLocaleString('us')}</TableCell>
+                      <TableCell className="">
+                        ${order.totalPrice.toLocaleString("us")}
+                      </TableCell>
+                      <TableCell>
+                        ${order.totalDiscount.toLocaleString("us")}
+                      </TableCell>
                       <TableCell>
                         {order?.orderStatus === "cancel" ? (
                           <p className="w-fit text-red-400 border  border-red-400 bg-red-400/20 px-4 rounded-lg">
@@ -271,7 +275,7 @@ export const OrderTable = ({ lastFiveOrders=false ,orders }: OrderTable) => {
                           ""
                         )}
                       </TableCell>
-                      {/* {!lastFiveOrders &&  */}
+                      {/* {!recentOrders &&  */}
                       <TableCell>
                         <MdOutlineEdit
                           size={22}
@@ -286,67 +290,74 @@ export const OrderTable = ({ lastFiveOrders=false ,orders }: OrderTable) => {
             </TableBody>
           </Table>
 
-          {!lastFiveOrders && currentItems && currentItems.length > 0 && (
-           <div className="flex items-center">
-           <div className="flex-1 px-4 text-custom-font">Total {Math.ceil(orders.length)} Orders</div>
-         <div className="flex justify-end mt-1 pb-2   ">
-           <div className="flex justify-center items-center my-7">
-             <Pagination className="flex justify-end ">
-             <PaginationContent className="text-secondary-blue">
-               <PaginationItem>
-                 <Button variant={"link"} disabled={currentPage === 1}>
-                   <PaginationPrevious
-                     className={cn(
-                       "",
-                       currentPage === 1
-                         ? "cursor-not-allowed text-zinc-400 hover:text-zinc-400"
-                         : "transition-all duration-500 hover:text-primary-text text-secondary-blue hover:bg-secondary-blue hove  "
-                     )}
-                     href="#"
-                     onClick={() => handlePageChange(currentPage - 1)}
-                   />
-                 </Button>
-               </PaginationItem>
-               {[...Array(Math.ceil(orders.length / itemsPerPage))].map((_, index) => (
-                 <PaginationItem key={index}>
-                   <PaginationLink
-                     className={cn(
-                       "hover:bg-secondary-blue hover:text-primary-text border-none",
-                       currentPage === index + 1
-                         ? "bg-secondary-blue text-white"
-                         : ""
-                     )}
-                     href="#"
-                     onClick={() => handlePageChange(index + 1)}
-                     isActive={currentPage === index + 1}
-                   >
-                     {index + 1}
-                   </PaginationLink>
-                 </PaginationItem>
-               ))}
-               <PaginationItem>
-                 <Button
-                   variant={"link"}
-                   disabled={currentPage === Math.ceil(orders.length / itemsPerPage)}
-                 >
-                   <PaginationNext
-                     className={cn(
-                       "",
-                       currentPage === Math.ceil(orders.length / itemsPerPage)
-                         ? "cursor-not-allowed text-zinc-400 hover:text-zinc-400"
-                         : "transition-all duration-500 hover:text-primary-text text-secondary-blue hover:bg-secondary-blue hove  "
-
-                     )}
-                     href="#"
-                     onClick={() => handlePageChange(currentPage + 1)}
-                   />
-                 </Button>
-               </PaginationItem>
-             </PaginationContent>
-           </Pagination>
-           </div>
-         </div>
-           </div>
+          {!recentOrders && currentItems && currentItems.length > 0 && (
+            <div className="flex items-center">
+              <div className="flex-1 px-4 text-custom-font">
+                Total {Math.ceil(orders.length)} Orders
+              </div>
+              <div className="flex justify-end mt-1 pb-2   ">
+                <div className="flex justify-center items-center my-7">
+                  <Pagination className="flex justify-end ">
+                    <PaginationContent className="text-secondary-blue">
+                      <PaginationItem>
+                        <Button variant={"link"} disabled={currentPage === 1}>
+                          <PaginationPrevious
+                            className={cn(
+                              "",
+                              currentPage === 1
+                                ? "cursor-not-allowed text-zinc-400 hover:text-zinc-400"
+                                : "transition-all duration-500 hover:text-primary-text text-secondary-blue hover:bg-secondary-blue hove  "
+                            )}
+                            href="#"
+                            onClick={() => handlePageChange(currentPage - 1)}
+                          />
+                        </Button>
+                      </PaginationItem>
+                      {[...Array(Math.ceil(orders.length / itemsPerPage))].map(
+                        (_, index) => (
+                          <PaginationItem key={index}>
+                            <PaginationLink
+                              className={cn(
+                                "hover:bg-secondary-blue hover:text-primary-text border-none",
+                                currentPage === index + 1
+                                  ? "bg-secondary-blue text-white"
+                                  : ""
+                              )}
+                              href="#"
+                              onClick={() => handlePageChange(index + 1)}
+                              isActive={currentPage === index + 1}
+                            >
+                              {index + 1}
+                            </PaginationLink>
+                          </PaginationItem>
+                        )
+                      )}
+                      <PaginationItem>
+                        <Button
+                          variant={"link"}
+                          disabled={
+                            currentPage ===
+                            Math.ceil(orders.length / itemsPerPage)
+                          }
+                        >
+                          <PaginationNext
+                            className={cn(
+                              "",
+                              currentPage ===
+                                Math.ceil(orders.length / itemsPerPage)
+                                ? "cursor-not-allowed text-zinc-400 hover:text-zinc-400"
+                                : "transition-all duration-500 hover:text-primary-text text-secondary-blue hover:bg-secondary-blue hove  "
+                            )}
+                            href="#"
+                            onClick={() => handlePageChange(currentPage + 1)}
+                          />
+                        </Button>
+                      </PaginationItem>
+                    </PaginationContent>
+                  </Pagination>
+                </div>
+              </div>
+            </div>
           )}
         </div>
       </div>
