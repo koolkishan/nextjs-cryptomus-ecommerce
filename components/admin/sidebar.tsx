@@ -52,7 +52,6 @@ const Side = () => {
       icon: <LuShoppingBag />,
       link: "/admin/order",
     },
-
   ];
 
   const handleItemClick = (link: string) => {
@@ -70,6 +69,7 @@ const Side = () => {
         className={cn("overflow-hidden border-none h-screen ")}
         toggled={toggled}
         onBackdropClick={() => setToggled((prev) => !prev)}
+        style={{ borderRightColor: "var(--secondary-black)" }}
         rootStyles={{
           [`.${sidebarClasses.container}`]: {
             backgroundColor: "#1D1E24",
@@ -88,7 +88,9 @@ const Side = () => {
             height={20}
             loading="lazy"
           />
-          <p className={cn(!collapsSidbar ? "text-start" : "hidden")}>Crypto Store</p>
+          <p className={cn(!collapsSidbar ? "text-start" : "hidden")}>
+            Crypto Store
+          </p>
         </div>
         <Menu
           className="text-white overflow-hidden border-none"
@@ -118,7 +120,9 @@ const Side = () => {
             </React.Fragment>
           ))}
           <MenuItem
-            onClick={() => signOut({ redirect: true, callbackUrl: "/auth/admin" })}
+            onClick={() =>
+              signOut({ redirect: true, callbackUrl: "/auth/admin" })
+            }
             icon={<LuLogOut />}
           >
             Logout
