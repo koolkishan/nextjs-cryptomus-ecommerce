@@ -124,11 +124,6 @@ const ProductModal = ({ setProductModal, productModal }: ProductModalProps) => {
               {["information", "pricing", "images", "inventory"].map((tab) => (
                 <TabsContent key={tab} value={tab} className="">
                   {tab === "information" && (
-                    <div className="text-3xl text-primary-text my-4">
-                      <p>Information</p>
-                    </div>
-                  )}
-                  {tab === "information" && (
                     <div className="text-primary-text">
                       <div className="mb-4">
                         <div className="text-custom-font">Product Name</div>
@@ -191,11 +186,6 @@ const ProductModal = ({ setProductModal, productModal }: ProductModalProps) => {
                     </div>
                   )}
                   {tab === "pricing" && (
-                    <div className="text-3xl text-primary-text my-4">
-                      <p>Pricing</p>
-                    </div>
-                  )}
-                  {tab === "pricing" && (
                     <div className="text-primary-text">
                       <div className="mb-4">
                         <div className="text-custom-font">Price</div>
@@ -226,11 +216,6 @@ const ProductModal = ({ setProductModal, productModal }: ProductModalProps) => {
                     </div>
                   )}
                   {tab === "inventory" && (
-                    <div className="text-3xl text-primary-text my-4">
-                      <p>Inventory</p>
-                    </div>
-                  )}
-                  {tab === "inventory" && (
                     <div className="text-primary-text">
                       <div className="mb-4">
                         <div className="text-custom-font">Quantity</div>
@@ -247,11 +232,7 @@ const ProductModal = ({ setProductModal, productModal }: ProductModalProps) => {
                       </div>
                     </div>
                   )}
-                  {tab === "images" && (
-                    <div className="text-3xl text-primary-text my-4">
-                      <p>Images</p>
-                    </div>
-                  )}
+
                   {tab === "images" && (
                     <div className="text-primary-text">
                       <div className="mb-4">
