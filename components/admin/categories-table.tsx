@@ -1,7 +1,4 @@
-import {
-  MdOutlineDelete,
-  MdOutlineEdit,
-} from "react-icons/md";
+import { MdOutlineDelete, MdOutlineEdit } from "react-icons/md";
 import {
   Pagination,
   PaginationContent,
@@ -63,6 +60,14 @@ const CategoriesTable = ({ categories }: CategoriesTableProps) => {
   }, []);
 
   useEffect(() => {
+    async function getCategoriesProduct() {
+      const result = await getAllCategorisWithProductCount();
+      setCategoriesWithProductCount(result);
+    }
+    getCategoriesProduct();
+  }, [categoriesData]);
+
+  useEffect(() => {
     if (debouncedSearchValue && debouncedSearchValue.length > 0) {
       const filteredData = categoriesWithProductCount.filter(
         (item: CategoryTypes) =>
@@ -108,9 +113,7 @@ const CategoriesTable = ({ categories }: CategoriesTableProps) => {
   const handleDelete = async (id: string, categoryName: string) => {
     const result = await getAllCategorisWithProductCount();
     setCategoriesWithProductCount(result);
-    const categoryDetails = categoriesWithProductCount.find(
-      (c) => c.categoryName === categoryName
-    );
+    const categoryDetails = categoriesWithProductCount.find((c) => c.id === id);
     if (categoryDetails?.products?.length === 0) {
       await deleteCategory(id);
       const response = await getCategories();
@@ -186,11 +189,21 @@ const CategoriesTable = ({ categories }: CategoriesTableProps) => {
               <TableRow className="hover:bg-surface text-primary-text font-medium border-b-secondary-black">
                 {/* {categories && categoriesData.length ? ( */}
                 <>
-                  <TableHead className="text-primary-text font-medium">No</TableHead>
-                  <TableHead className="text-primary-text font-medium">Category Name</TableHead>
-                  <TableHead className="text-primary-text font-medium">Total Products</TableHead>
-                  <TableHead className="text-primary-text font-medium">Edit</TableHead>
-                  <TableHead className="text-primary-text font-medium">Delete</TableHead>
+                  <TableHead className="text-primary-text font-medium">
+                    No
+                  </TableHead>
+                  <TableHead className="text-primary-text font-medium">
+                    Category Name
+                  </TableHead>
+                  <TableHead className="text-primary-text font-medium">
+                    Total Products
+                  </TableHead>
+                  <TableHead className="text-primary-text font-medium">
+                    Edit
+                  </TableHead>
+                  <TableHead className="text-primary-text font-medium">
+                    Delete
+                  </TableHead>
                 </>
                 {/* ) : null} */}
               </TableRow>
@@ -211,13 +224,13 @@ const CategoriesTable = ({ categories }: CategoriesTableProps) => {
                       <TableCell className="line-clamp-1">
                         <div className="flex-1">
                           {categoriesWithProductCount &&
-                            categoriesWithProductCount.length > 0 &&
-                            categoriesWithProductCount.find(
-                              (c) => c.categoryName === item.categoryName
-                            )
+                          categoriesWithProductCount.length > 0 &&
+                          categoriesWithProductCount.find(
+                            (c) => c.categoryName === item.categoryName
+                          )
                             ? categoriesWithProductCount.find(
-                              (c) => c.categoryName === item.categoryName
-                            )?.products?.length ?? 0
+                                (c) => c.categoryName === item.categoryName
+                              )?.products?.length ?? 0
                             : 0}
                         </div>
                       </TableCell>
@@ -249,74 +262,83 @@ const CategoriesTable = ({ categories }: CategoriesTableProps) => {
             </TableBody>
           </Table>
           {currentItems && currentItems.length > 0 && (
-              <div className="flex items-center">
-              <div className="flex-1 px-4 text-custom-font">Total {Math.ceil(categoriesData.length)} Categories</div>
-            <div className="flex justify-end mt-1 pb-2   ">
-              <div className="flex justify-center items-center my-7">
-                <Pagination className="flex justify-end ">
-                <PaginationContent className="text-secondary-blue">
-                  <PaginationItem>
-                    <Button variant={"link"} disabled={currentPage === 1}>
-                      <PaginationPrevious
-                        className={cn(
-                          "",
-                          currentPage === 1
-                            ? "cursor-not-allowed text-zinc-400 hover:text-zinc-400"
-                            : "transition-all duration-500 hover:text-primary-text text-secondary-blue hover:bg-secondary-blue hove  "
-                        )}
-                        href="#"
-                        onClick={() => handlePageChange(currentPage - 1)}
-                      />
-                    </Button>
-                  </PaginationItem>
-                  {[...Array(Math.ceil(categoriesData.length / itemsPerPage))].map((_, index) => (
-                    <PaginationItem key={index}>
-                      <PaginationLink
-                        className={cn(
-                          "hover:bg-secondary-blue hover:text-primary-text border-none",
-                          currentPage === index + 1
-                            ? "bg-secondary-blue text-white"
-                            : ""
-                        )}
-                        href="#"
-                        onClick={() => handlePageChange(index + 1)}
-                        isActive={currentPage === index + 1}
-                      >
-                        {index + 1}
-                      </PaginationLink>
-                    </PaginationItem>
-                  ))}
-                  <PaginationItem>
-                    <Button
-                      variant={"link"}
-                      disabled={currentPage === Math.ceil(categoriesData.length / itemsPerPage)}
-                    >
-                      <PaginationNext
-                        className={cn(
-                          "",
-                          currentPage === Math.ceil(categoriesData.length / itemsPerPage)
-                            ? "cursor-not-allowed text-zinc-400 hover:text-zinc-400"
-                            : "transition-all duration-500 hover:text-primary-text text-secondary-blue hover:bg-secondary-blue hove  "
-   
-                        )}
-                        href="#"
-                        onClick={() => handlePageChange(currentPage + 1)}
-                      />
-                    </Button>
-                  </PaginationItem>
-                </PaginationContent>
-              </Pagination>
+            <div className="flex items-center">
+              <div className="flex-1 px-4 text-custom-font">
+                Total {Math.ceil(categoriesData.length)} Categories
+              </div>
+              <div className="flex justify-end mt-1 pb-2   ">
+                <div className="flex justify-center items-center my-7">
+                  <Pagination className="flex justify-end ">
+                    <PaginationContent className="text-secondary-blue">
+                      <PaginationItem>
+                        <Button variant={"link"} disabled={currentPage === 1}>
+                          <PaginationPrevious
+                            className={cn(
+                              "",
+                              currentPage === 1
+                                ? "cursor-not-allowed text-zinc-400 hover:text-zinc-400"
+                                : "transition-all duration-500 hover:text-primary-text text-secondary-blue hover:bg-secondary-blue hove  "
+                            )}
+                            href="#"
+                            onClick={() => handlePageChange(currentPage - 1)}
+                          />
+                        </Button>
+                      </PaginationItem>
+                      {[
+                        ...Array(
+                          Math.ceil(categoriesData.length / itemsPerPage)
+                        ),
+                      ].map((_, index) => (
+                        <PaginationItem key={index}>
+                          <PaginationLink
+                            className={cn(
+                              "hover:bg-secondary-blue hover:text-primary-text border-none",
+                              currentPage === index + 1
+                                ? "bg-secondary-blue text-white"
+                                : ""
+                            )}
+                            href="#"
+                            onClick={() => handlePageChange(index + 1)}
+                            isActive={currentPage === index + 1}
+                          >
+                            {index + 1}
+                          </PaginationLink>
+                        </PaginationItem>
+                      ))}
+                      <PaginationItem>
+                        <Button
+                          variant={"link"}
+                          disabled={
+                            currentPage ===
+                            Math.ceil(categoriesData.length / itemsPerPage)
+                          }
+                        >
+                          <PaginationNext
+                            className={cn(
+                              "",
+                              currentPage ===
+                                Math.ceil(categoriesData.length / itemsPerPage)
+                                ? "cursor-not-allowed text-zinc-400 hover:text-zinc-400"
+                                : "transition-all duration-500 hover:text-primary-text text-secondary-blue hover:bg-secondary-blue hove  "
+                            )}
+                            href="#"
+                            onClick={() => handlePageChange(currentPage + 1)}
+                          />
+                        </Button>
+                      </PaginationItem>
+                    </PaginationContent>
+                  </Pagination>
+                </div>
               </div>
             </div>
-              </div>
           )}
         </div>
-
       </div>
       {currentItems && currentItems.length === 0 && (
-        <div className="text-center text-custom-font mt-4">No Categoryies Are Availabe</div>
+        <div className="text-center text-custom-font mt-4">
+          No Categoryies Are Availabe
+        </div>
       )}
-
     </div>
   );
 };

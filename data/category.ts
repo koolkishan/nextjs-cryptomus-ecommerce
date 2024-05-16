@@ -98,6 +98,6 @@ export const getCategoryWithAllProductsData = async () => {
     });
     return result;
   } catch (error) {
-    console.log('Cannot find category',error);
+    console.log("Cannot find category", error);
   }
-}
+};
