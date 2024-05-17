@@ -13,12 +13,13 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export async function addProductToWishList(user: any, productId: string) {
-  const dbUser = await getUserByEmailAction(user.email);
-  if (dbUser) {
-    const response = await wishListAction(dbUser?.id, productId);
+export async function addProductToWishList(id: string, productId: string) {
+  // const dbUser = await getUserByEmailAction(user.email);
+  // console.log('addProductToWishList ~ dbUser:', dbUser);
+  // if (dbUser) {
+    const response = await wishListAction(id, productId);
     return response;
-  }
+  // }
 }
 
 export function makePieChartOptions(orders: orderTypes[]) {

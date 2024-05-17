@@ -3,7 +3,7 @@ import { getProducts } from "@/actions/get-products";
 import { useAppStore } from "@/store";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import { IoHeart, IoHeartOutline } from "react-icons/io5";
 import { useAuthUser } from "@/hooks/useAuthUser";
@@ -13,23 +13,44 @@ import { ProductTypes } from "@/types";
 import { createOrderAndOrderProducts } from "@/actions/create-order";
 import { addToCart } from "@/actions/add-cart-action";
 import { toast } from "sonner";
-import { divide } from "lodash";
 import ContainerLoader from "../loader";
+import { getUserByEmailAction } from "@/actions/get-user-by-email-action";
 
 const Wishlist = () => {
   const { userProductsData, setUserProductsData } = useAppStore();
+  const [userWishListProducts, setuserWishListProducts] = useState<
+    ProductTypes[] | []
+  >([]);
   const router = useRouter();
   const user = useAuthUser();
 
   useEffect(() => {
-    async function getProductsData() {
-      const productResponse = await getProducts();
-      if (productResponse && productResponse.length > 0) {
-        setUserProductsData(productResponse);
+    const fetchProducts = async () => {
+      try {
+        const productResponse = await getProducts();
+        if (productResponse && productResponse.length > 0) {
+          setUserProductsData(productResponse);
+        }
+      } catch (error) {
+        console.error('Error fetching products:', error);
       }
+    };
+    fetchProducts();
+  }, [setUserProductsData]);
+
+  useEffect(() => {
+    async function getProductsData() {
+      const filteredProducts = userProductsData.filter((product) => {
+        if (product.wishlist && user) {
+          return product.wishlist.some(
+            (wishlistItem) => wishlistItem.userId === user.id
+          );
+        }
+      });
+      setuserWishListProducts(filteredProducts);
     }
     getProductsData();
-  }, [setUserProductsData]);
+  }, [setUserProductsData, user, userProductsData]);
 
   const handleWishList = async (productId: string) => {
     if (user && user.email) {
@@ -39,11 +60,11 @@ const Wishlist = () => {
         if (productResponse && productResponse.length > 0) {
           setUserProductsData(productResponse);
         }
-        toast.success("Product added to wish list.")
+        toast.success("Product added to wish list.");
       }
     } else {
       router.push("/auth");
-      toast.error('Please sign in to proceed.')
+      toast.error("Please sign in to proceed.");
     }
   };
 
@@ -58,7 +79,7 @@ const Wishlist = () => {
         toast.success("Product removed from wish list.");
       } else {
         router.push("/auth");
-        toast.error('Please sign in to proceed.')
+        toast.error("Please sign in to proceed.");
       }
     }
   };
@@ -95,7 +116,7 @@ const Wishlist = () => {
   const handleCart = async (productId: string | undefined) => {
     if (user && user.email && productId) {
       const response = await addToCart(user.email, productId, 1);
-      toast.success('Product added to cart.')
+      toast.success("Product added to cart.");
     } else {
       router.push("/auth");
     }
@@ -103,9 +124,8 @@ const Wishlist = () => {
 
   return (
     <div className="lg:container lg:px-6 px-0 flex flex-col gap-4 my-4">
-      {userProductsData &&
-        userProductsData.length > 0 ?
-        userProductsData.map((product) =>
+      {userWishListProducts && userWishListProducts.length > 0 ? (
+        userWishListProducts.map((product) =>
           product.wishlist && product.wishlist?.length > 0 ? (
             <div
               key={product.id}
@@ -143,10 +163,10 @@ const Wishlist = () => {
                     $
                     {Math.round(
                       product.price - (product?.price * product?.discount) / 100
-                    ).toLocaleString('us')}
+                    ).toLocaleString("us")}
                   </p>
                   <p className="text-custom-font line-through text-sm">
-                    ${product?.price.toLocaleString('us')}
+                    ${product?.price.toLocaleString("us")}
                   </p>
                 </div>
                 <div className="mb-4 inline-block text-xs font-bold py-1  text-emerald-500">
@@ -167,8 +187,8 @@ const Wishlist = () => {
                   </Button>
                   <p className="text-secondary-blue">
                     {product.wishlist &&
-                      product.wishlist?.length > 0 &&
-                      user ? (
+                    product.wishlist?.length > 0 &&
+                    user ? (
                       <IoHeart
                         size={22}
                         className="text-secondary-blue"
@@ -186,9 +206,16 @@ const Wishlist = () => {
               </div>
             </div>
           ) : null
-        ) : <div className="h-[230px] w-full flex justify-center items-center">
-          <ContainerLoader />
-        </div>}
+        )
+      ) : (
+        <div className="h-[230px] w-full flex justify-center items-center">
+          {userWishListProducts && userWishListProducts.length === 0 ? (
+            <p>Please browse products and add to wishlist</p>
+          ) : (
+            <ContainerLoader />
+          )}
+        </div>
+      )}
     </div>
   );
 };

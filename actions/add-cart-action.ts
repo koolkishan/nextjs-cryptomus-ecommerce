@@ -6,7 +6,6 @@ import { getUserByEmailAction } from "./get-user-by-email-action";
 
 export async function addToCart(email:string,  productId: string, quantity: number) {
   try {
-    // Check if the user already has a cart
     const existingUser = await getUserByEmailAction(email);
 
     if(existingUser) {
@@ -15,14 +14,11 @@ export async function addToCart(email:string,  productId: string, quantity: numb
     if (!existingCart) {
       await createCart(existingUser.id, productId, quantity);
     } else {
-      // If the user already has a cart, check if the product is already in the cart
       const existingProductInCart = await findProductInCart(existingCart.id, productId)
 
       if (existingProductInCart) {
-        // If the product is already in the cart, update its quantity
         await updateProductCart(existingProductInCart.id, quantity)
       } else {
-        // If the product is not in the cart, add it
         await createProdcutCart(existingCart.id, productId, quantity);
       }
     }

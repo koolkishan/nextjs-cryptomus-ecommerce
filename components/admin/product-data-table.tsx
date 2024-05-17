@@ -97,7 +97,6 @@ export const DataTable = ({ products }: DataTableProps) => {
   }
 
   const handleDelete = async (id: string) => {
-    console.log('handleDelete ~ id:', id);
     await deleteProduct(id);
     const response = await getProducts();
     if (response && response.length > 0) {

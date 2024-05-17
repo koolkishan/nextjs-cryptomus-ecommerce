@@ -16,20 +16,7 @@ interface SearchPageProps {
 
 const SearchPage = ({params}:SearchPageProps) => {
   // const {setSearchProducts, searchProducts} = useAppStore()
-  // console.log('SearchPage ~ searchProducts:', searchProducts);
   const tag = decodeURIComponent(params.tag);
-
-  // useEffect(() => {
-  //   (async function getProduct() {
-  //     if (tag) {
-  //       const response = await searchProductsByTagAction(tag) as ProductTypes[];
-  //       console.log('getProduct ~ response:', response);
-  //       if (response) {
-  //         setSearchProducts(response);
-  //       }
-  //     }
-  //   })();
-  // }, [setSearchProducts, tag]);
   return (
     <Suspense>
       <div>

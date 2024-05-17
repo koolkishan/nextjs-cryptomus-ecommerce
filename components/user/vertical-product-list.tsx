@@ -43,7 +43,6 @@ const VerticalProductList = ({
     setSearchProducts,
     searchProducts,
   } = useAppStore();
-    console.log('searchProducts --vertical:', searchProducts)
   const [currentPage, setCurrentPage] = useState(1);
   const [displayProductList, setDisplayProductList] = useState<
     ProductTypes[] | []
@@ -55,10 +54,11 @@ const VerticalProductList = ({
         const response = await searchProductsByTagAction(tag) as ProductTypes[];
         if (response.length) {
           setSearchProducts(response);
+          setCategoryProducts([]);
         }
       }
     })();
-  }, [setSearchProducts, tag]);
+  }, [setCategoryProducts, setSearchProducts, tag]);
 
   useEffect(() => {
     if (filterProducts.length > 0 && categoryFilter) {
@@ -81,9 +81,9 @@ const VerticalProductList = ({
   }, [searchProducts, searchFilter, filterProducts]);
 
   const handleWishList = async (productId: string, categoryId: string) => {
-    if (user && user.email) {
+    if (user && user.id) {
       if (categoryFilter) {
-        const response = await addProductToWishList(user.email, productId);
+        const response = await addProductToWishList(user.id, productId);
         if (response?.success) {
           const productResponse = (await getProductsFormCategoryId(
             categoryId
@@ -94,7 +94,7 @@ const VerticalProductList = ({
         }
         toast.success("Product added to wishlist.");
       } else {
-        const response = await addProductToWishList(user.email, productId);
+        const response = await addProductToWishList(user.id, productId);
         if (response?.success) {
           if (tag) {
             const productResponse = (await searchProductsByTagAction(
@@ -252,7 +252,7 @@ const VerticalProductList = ({
                   className="text-secondary-blue"
                   // onClick={() => handleWishList(product.id, product.categoryId)}
                 >
-                  {product.wishlist && product.wishlist?.length > 0 && user ? (
+                  {/* {product.wishlist && product.wishlist?.length > 0 && user ? (
                     <IoHeart
                       size={22}
                       className="text-secondary-blue"
@@ -268,7 +268,26 @@ const VerticalProductList = ({
                         handleWishList(product.id, product.categoryId)
                       }
                     />
-                  )}
+                  )} */}
+                  <p className="text-secondary-blue">
+                    {product.wishlist &&
+                    product.wishlist.length > 0 &&
+                    product.wishlist.find(
+                      (item) => item.userId === user?.id
+                    ) ? (
+                      <IoHeart
+                        size={22}
+                        className="text-secondary-blue"
+                        onClick={() => handleRemoveWishList(product.id, product.categoryId)}
+                      />
+                    ) : (
+                      <IoHeartOutline
+                        size={22}
+                        className="text-secondary-blue"
+                        onClick={() => handleWishList(product.id, product.categoryId)}
+                      />
+                    )}
+                  </p>
                 </p>
               </div>
             </div>

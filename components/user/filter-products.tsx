@@ -32,9 +32,7 @@ const FilterProducts = ({
   searchFilter,
 }: // searchProducts,
 FilterProductsProps) => {
-  console.log("searchFilter in search :", searchFilter);
   const { categoryProducts, setFilterProducts, searchProducts } = useAppStore();
-  console.log("searchProducts in search:", searchProducts);
   const [sortBy, setSortBy] = useState<string>("");
   const [minPrice, setMinPrice] = useState<number>(0);
   const [maxPrice, setMaxPrice] = useState<number>(0);
@@ -47,9 +45,7 @@ FilterProductsProps) => {
     if (categoryFilter && categoryProducts) {
       setIsMinMaxPrice(false);
       let max = 0;
-      // console.log('useEffect category ~ max:', max)
       let min = 0;
-      // console.log('useEffect category ~ min:', min)
       categoryProducts.forEach((product) => {
         if (product.price > max) {
           max = product.price;
@@ -65,24 +61,16 @@ FilterProductsProps) => {
   }, [categoryFilter, categoryProducts]);
 
   useEffect(() => {
-    console.log("useEffect search ~ searchFilter:", searchFilter);
     if (searchFilter && searchProducts.length) {
       setIsMinMaxPrice(false);
 
       let max = 0;
       let min = 0;
-      console.log("searchProducts.forEach search~ max:", max);
-      console.log("searchProducts.forEach search ~ min:", min);
       searchProducts.forEach((product) => {
         if (product.price > max) {
-          console.log(
-            "searchProducts.forEach ~ product.price: in max",
-            product.price
-          );
           max = product.price;
         }
         if (product.price < min) {
-          console.log("searchProducts.forEach ~ product.price:", product.price);
           min = product.price;
         }
       });

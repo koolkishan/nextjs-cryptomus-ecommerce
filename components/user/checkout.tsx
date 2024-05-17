@@ -34,7 +34,6 @@ const CheckOut = () => {
   const [address, setAddress] = useState<string>("");
   const [phone, setPhone] = useState<string>("");
   const [email, setEmail] = useState<string>("");
-  console.log('CheckOut ~ email:', email)
   const [totalPrice, setTotalPrice] = useState<number>(0);
   const [totalDiscount, setTotalDiscount] = useState<number>(0);
   const [profileUpdated, setProfileUpdated] = useState<boolean>(false);
@@ -79,10 +78,7 @@ const CheckOut = () => {
   }, [cart]);
 
   const handlePayment = async () => {
-    console.log('inside handle payment')
     if (cart && cart.products && user && user.email && profileUpdated) {
-      console.log('inside handle payment')
-
       const products = cart?.products.map((p) => {
         return {
           productId: p.product.id,

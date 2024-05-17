@@ -5,7 +5,6 @@ export const register = async () => {
   if (process.env.NEXT_RUNTIME === "nodejs") {
 
   const admin = await db.admin_user.count();
-  console.log("register ~ admin:", admin);
   if (!admin) {
     const data = await db.admin_user.create({
       data: {
