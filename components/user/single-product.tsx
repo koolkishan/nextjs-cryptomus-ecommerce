@@ -45,8 +45,8 @@ const SingleProduct = () => {
   };
 
   const handleWishList = async (productId: string) => {
-    if (user && user.email) {
-      const response = await addProductToWishList(user.email, productId);
+    if (user && user.id) {
+      const response = await addProductToWishList(user.id, productId);
       if (response?.success) {
         const response = (await getProductFromProductId(
           productId
@@ -80,6 +80,22 @@ const SingleProduct = () => {
     }
   };
 
+  // const handleRemoveWishList = async (productId: string) => {
+  //   if (user && user.email) {
+  //     const response = await removeWishListAction(user.email, productId);
+  //     if (response?.success) {
+  //       const productResponse = await getProducts();
+  //       if (productResponse && productResponse.length > 0) {
+  //         setUserProductsData(productResponse);
+  //       }
+  //       toast.success("Product removed from wish list.");
+  //     } else {
+  //       router.push("/auth");
+  //       toast.error("Please sign in to proceed.");
+  //     }
+  //   }
+  // };
+
   const handleCart = async (productId: string | undefined) => {
     if (user && user.email && productId) {
       const response = await addToCart(user.email, productId, quantity);
@@ -112,7 +128,6 @@ const SingleProduct = () => {
         return;
       }
       if (paymentUrl && window && window.location) {
-        // console.log("handleBuy ~ productId:", productId);
         window.location.href = paymentUrl;
       }
     } else {
@@ -230,7 +245,7 @@ const SingleProduct = () => {
                   {/* <p className="text-secondary-blue">
                 <IoHeartOutline size={22} />
               </p> */}
-                  {product &&
+                  {/* {product &&
                   product.wishlist &&
                   product.wishlist?.length > 0 &&
                   product.id &&
@@ -250,7 +265,24 @@ const SingleProduct = () => {
                         }
                       }}
                     />
-                  )}
+                  )} */}
+                  {product.wishlist &&
+                    product.wishlist.length > 0 &&
+                    product.wishlist.find(
+                      (item) => item.userId === user?.id
+                    ) ? (
+                      <IoHeart
+                        size={22}
+                        className="text-secondary-blue"
+                        onClick={() => handleRemoveWishList(product.id)}
+                      />
+                    ) : (
+                      <IoHeartOutline
+                        size={22}
+                        className="text-secondary-blue"
+                        onClick={() => handleWishList(product.id)}
+                      />
+                    )}
                 </div>
               </div>
             </div>

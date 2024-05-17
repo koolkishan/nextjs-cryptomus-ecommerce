@@ -24,18 +24,18 @@ const HorizontalProductList = ({ products }: HorizontalProductListProps) => {
   };
 
   const handleWishList = async (productId: string) => {
-    if (user && user.email) {
-      const response = await addProductToWishList(user.email, productId);
+    if (user && user.id) {
+      const response = await addProductToWishList(user.id, productId);
       if (response?.success) {
         const productResponse = await getProducts();
         if (productResponse && productResponse.length > 0) {
           setUserProductsData(productResponse);
         }
       }
-      toast.success("Product added to wish list.")
+      toast.success("Product added to wish list.");
     } else {
       router.push("/auth");
-      toast.error('Please sign in to proceed.')
+      toast.error("Please sign in to proceed.");
     }
   };
 
@@ -50,7 +50,7 @@ const HorizontalProductList = ({ products }: HorizontalProductListProps) => {
         toast.success("Product removed from wish list.");
       } else {
         router.push("/auth");
-        toast.error('Please sign in to proceed.')
+        toast.error("Please sign in to proceed.");
       }
     }
   };
@@ -59,7 +59,10 @@ const HorizontalProductList = ({ products }: HorizontalProductListProps) => {
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 h-[50%] gap-6">
       {products &&
         products.map((product: ProductTypes) => (
-          <div key={product.id} className="bg-primary-text shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),0px_1px_0px_0px_rgba(25,28,33,0.02),0px_0px_0px_1px_rgba(25,28,33,0.08)] h-full my-2 cursor-pointer">
+          <div
+            key={product.id}
+            className="bg-primary-text shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),0px_1px_0px_0px_rgba(25,28,33,0.02),0px_0px_0px_1px_rgba(25,28,33,0.08)] h-full my-2 cursor-pointer"
+          >
             <div className="flex flex-col  h-full">
               {product.images && product.images.length > 0 && (
                 <div className="flex justify-center items-center mt-4">
@@ -68,7 +71,6 @@ const HorizontalProductList = ({ products }: HorizontalProductListProps) => {
                       onClick={() => handleProductClick(product.id)}
                       src={product.images[0]}
                       alt="alt image"
-
                       // width={150}
                       // height={150}
                       loading="lazy"
@@ -88,17 +90,37 @@ const HorizontalProductList = ({ products }: HorizontalProductListProps) => {
                     <p>
                       $
                       {Math.round(
-                        (product.price - (product?.price * product?.discount) / 100)
-                      ).toLocaleString('us')}
+                        product.price -
+                          (product?.price * product?.discount) / 100
+                      ).toLocaleString("us")}
                     </p>
                     <p className="text-custom-font line-through text-sm">
-                      ${product?.price.toLocaleString('us')}
+                      ${product?.price.toLocaleString("us")}
                     </p>
                   </div>
+                  {/* <p className="text-secondary-blue">
+                    {product.wishlist &&
+                      product.wishlist?.length > 0 && 
+                    product.wishlist.find(item.userId === user?.id)? (
+                      <IoHeart
+                        size={22}
+                        className="text-secondary-blue"
+                        onClick={() => handleRemoveWishList(product.id)}
+                      />
+                    ) : (
+                      <IoHeartOutline
+                        size={22}
+                        className="text-secondary-blue"
+                        onClick={() => handleWishList(product.id)}
+                      />
+                    )}
+                  </p> */}
                   <p className="text-secondary-blue">
                     {product.wishlist &&
-                      product.wishlist?.length > 0 &&
-                      user ? (
+                    product.wishlist.length > 0 &&
+                    product.wishlist.find(
+                      (item) => item.userId === user?.id
+                    ) ? (
                       <IoHeart
                         size={22}
                         className="text-secondary-blue"

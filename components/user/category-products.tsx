@@ -20,7 +20,7 @@ import { getCategoryFromDb } from "@/data/category";
 import Image from "next/image";
 
 const CategoryProducts = ({ categoryid, products }: CategoryProductsProps) => {
-  const { allCategories, setCategoryProducts, setFilterProducts } =
+  const { allCategories, setCategoryProducts, setFilterProducts, setSearchProducts } =
     useAppStore();
 
   const [isMounted, setIsMounted] = useState<boolean>(false);
@@ -28,13 +28,14 @@ const CategoryProducts = ({ categoryid, products }: CategoryProductsProps) => {
   useEffect(() => {
     setFilterProducts([]);
     setCategoryProducts(products);
+    setSearchProducts([]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [products, setCategoryProducts, setFilterProducts]);
 
   useEffect(() => {
     setIsMounted(true);
     (async () => {
       const category = await getCategoryFromDb(categoryid);
-      console.log("category:", category);
       if (category) {
         setCategory(category);
       }

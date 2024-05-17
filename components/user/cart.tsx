@@ -28,7 +28,6 @@ const Cart = () => {
     async function getUserCart() {
       setLoader(true);
       if (user && user.email) {
-        console.log("getUserCart ~ user:", user);
         const response = await getCartAction(user.email);
           setLoader(false);
         if (response) {
@@ -63,7 +62,6 @@ const Cart = () => {
     if (user && user.email) {
       const response = await removeProductFromCart(user.email, productId);
       const result = await getCartAction(user.email);
-      console.log("handleClick ~ result:", result);
       if (result) {
         setCart(result);
       }

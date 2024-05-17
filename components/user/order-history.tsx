@@ -13,7 +13,6 @@ interface OrderHistoryProps {
 }
 
 const OrderHistory = ({ loader, orders }: OrderHistoryProps) => {
-  console.log("OrderHistory ~ orders:", orders);
   const user = useAuthUser();
   const router = useRouter();
 

@@ -37,7 +37,6 @@ const AddProductForm = () => {
   const [uploadedImageUrl, setUploadedImageUrl] = useState<string[] | []>([]);
   const [selected, setSelected] = useState<string[] | []>([]);
   const [tagError, setTagError] = useState<boolean>(false);
-  console.log("AddProductForm ~ tagError:", tagError);
   const { setProductsData, setToggleSheet, setCategoriesData, categoriesData } =
     useAppStore();
 

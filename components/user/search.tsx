@@ -95,7 +95,7 @@ const Search = () => {
       {showSearchContainer ? (
         <div
           ref={searchContainerRef}
-          className="absolute max-h-80 overflow-auto w-full bg-secondary-white shadow-2xl rounded-b-xl"
+          className="absolute  max-h-80 overflow-auto w-full bg-secondary-white shadow-2xl rounded-b-xl"
         >
           {tagsSuggetion.map((t, index) => (
             <p
